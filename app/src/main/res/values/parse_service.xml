@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="applicationId">KSDJFKASJFI3S8DSJFDH</string>
+    <string name="clientKey">LASDK823JKHR87SDFJSDHF8DFHASFDF</string>
+    <string name="server">http://178.62.196.28:1337/parse/</string>
+</resources>

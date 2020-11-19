@@ -7,14 +7,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.harnet.sharesomephoto.R
+import com.harnet.sharesomephoto.viewModel.FeedsViewModel
 
-class MainFragment : Fragment() {
+class FeedsFragment : Fragment() {
 
     companion object {
-        fun newInstance() = MainFragment()
+        fun newInstance() = FeedsFragment()
     }
 
-    private lateinit var viewModel: MainViewModel
+    private lateinit var viewModel: FeedsViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
@@ -23,7 +24,7 @@ class MainFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(FeedsViewModel::class.java)
         // TODO: Use the ViewModel
     }
 
