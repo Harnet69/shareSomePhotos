@@ -3,9 +3,12 @@ package com.harnet.sharesomephoto.view
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.view.*
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.navigation.Navigation
 import com.harnet.sharesomephoto.viewModel.FeedsViewModel
 import com.harnet.sharesomephoto.R
+import com.harnet.sharesomephoto.databinding.ProfileFragmentBinding
 
 class FeedsFragment : Fragment() {
 
@@ -33,7 +36,20 @@ class FeedsFragment : Fragment() {
         inflater.inflate(R.menu.main_menu, menu)
     }
 
-    private fun observeViewModel(){
+    // click listener for menu items
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.profile -> {
+                view?.let {
+                    Navigation.findNavController(it)
+                        .navigate(FeedsFragmentDirections.actionFeedsFragmentToProfileFragment())
+                }
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    private fun observeViewModel() {
 
     }
 }
