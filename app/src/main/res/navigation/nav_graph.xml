@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/feedsFragment">
+
+    <fragment
+        android:id="@+id/feedsFragment"
+        android:name="com.harnet.sharesomephoto.view.FeedsFragment"
+        android:label="feeds_fragment"
+        tools:layout="@layout/feeds_fragment" >
+        <action
+            android:id="@+id/action_feedsFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.harnet.sharesomephoto.view.ProfileFragment"
+        android:label="profile_fragment"
+        tools:layout="@layout/profile_fragment" />
+</navigation>
