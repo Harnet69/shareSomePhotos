@@ -1,7 +1,7 @@
 package com.harnet.sharesomephoto.viewModel
 
-import androidx.lifecycle.ViewModel
+import android.app.Application
 
-class FeedsViewModel : ViewModel() {
-    // TODO: Implement the ViewModel
+class FeedsViewModel(application: Application) : BaseViewModel(application) {
+
 }

@@ -1,7 +1,12 @@
 package com.harnet.sharesomephoto.viewModel
 
-import androidx.lifecycle.ViewModel
+import android.app.Application
+import kotlinx.coroutines.launch
 
-class ProfileViewModel : ViewModel() {
-    // TODO: Implement the ViewModel
+class ProfileViewModel(application: Application) : BaseViewModel(application) {
+
+    fun doSomething(){
+        launch {  }
+    }
+
 }
