@@ -2,18 +2,12 @@ package com.harnet.sharesomephoto.view
 
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import com.harnet.sharesomephoto.viewModel.FeedsViewModel
 import com.harnet.sharesomephoto.R
 
 class FeedsFragment : Fragment() {
-
-    companion object {
-        fun newInstance() = FeedsFragment()
-    }
 
     private lateinit var viewModel: FeedsViewModel
 
@@ -24,10 +18,22 @@ class FeedsFragment : Fragment() {
         return inflater.inflate(R.layout.feeds_fragment, container, false)
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        // switch on a menu
+        setHasOptionsMenu(true)
         viewModel = ViewModelProvider(this).get(FeedsViewModel::class.java)
-        // TODO: Use the ViewModel
+
+        observeViewModel()
     }
 
+    // options menu
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.main_menu, menu)
+    }
+
+    private fun observeViewModel(){
+
+    }
 }
