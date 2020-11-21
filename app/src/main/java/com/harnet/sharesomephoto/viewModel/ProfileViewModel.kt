@@ -15,7 +15,7 @@ class ProfileViewModel(application: Application) : BaseViewModel(application), U
     //TODO implement MutableList IsUserLogged, isUserExists
 
     fun addNewUser(newUser: User){
-        launch {
+//        launch {
             val parseUser = ParseUser()
 
             //create a new user
@@ -33,6 +33,6 @@ class ProfileViewModel(application: Application) : BaseViewModel(application), U
                     mIsUserExists.setValue(true)
                 }
             }
-        }
+//        }
     }
 }

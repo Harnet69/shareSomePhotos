@@ -12,6 +12,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.harnet.lookatthis.model.User
 import com.harnet.sharesomephoto.R
 import com.harnet.sharesomephoto.databinding.ProfileFragmentBinding
 import com.harnet.sharesomephoto.viewModel.ProfileViewModel
@@ -35,10 +36,22 @@ class ProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val userNameField = view.findViewById<EditText>(R.id.userName_editText)
+        val userPswField = view.findViewById<EditText>(R.id.userPassword_editText)
+        val userEmailField = view.findViewById<EditText>(R.id.userEmail_editText)
+        val signUpBtn = view.findViewById<Button>(R.id.sign_up_btn)
+
         viewModel = ViewModelProvider(this).get(ProfileViewModel::class.java)
 
-        view.findViewById<Button>(R.id.sign_up_btn).setOnClickListener {
-                Toast.makeText(context, "Click on add", Toast.LENGTH_SHORT).show()
+        signUpBtn.setOnClickListener {
+            viewModel.addNewUser(
+                User(
+                    userEmailField.text.toString(),
+                    userPswField.text.toString(),
+                    userEmailField.text.toString()
+                )
+            )
+//            Toast.makeText(context, "Click on add", Toast.LENGTH_SHORT).show()
         }
 
         observeModel()
@@ -47,10 +60,10 @@ class ProfileFragment : Fragment() {
     private fun observeModel() {
         viewModel.mIsUserExists.observe(viewLifecycleOwner, Observer { isExists ->
             Log.i("tweet", "observeModel: ")
-            if(isExists){
+            if (isExists) {
                 Toast.makeText(context, "User exists", Toast.LENGTH_SHORT).show()
-            }else{
-                Toast.makeText(context, "Log In", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(context, "Log In Successfully", Toast.LENGTH_SHORT).show()
             }
         })
     }
