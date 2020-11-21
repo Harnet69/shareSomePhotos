@@ -23,7 +23,7 @@ class ProfileFragment : Fragment() {
     private lateinit var dataBinding: ProfileFragmentBinding
 
     lateinit var userLoginBlock: LinearLayout
-    lateinit var userNameField:EditText
+    lateinit var userNameField: EditText
     lateinit var userPswField: EditText
     lateinit var userEmailField: EditText
     lateinit var signUpBtn: Button
@@ -53,7 +53,7 @@ class ProfileFragment : Fragment() {
 
         // if user have been logged already
         val isLogged = viewModel.isLogged()
-        if(isLogged == null){
+        if (isLogged == null) {
             signUpBtn.setOnClickListener {
                 viewModel.addNewUser(
                     User(
@@ -68,24 +68,25 @@ class ProfileFragment : Fragment() {
                 viewModel.logIn(userNameField.text.toString(), userPswField.text.toString())
             }
             observeModel()
-        }else{
+        } else {
             userLoginBlock.setVisibility(View.GONE)
             Toast.makeText(context, "Hello ${isLogged.username}", Toast.LENGTH_LONG).show()
-            //TODO switch on the profile details block
+            //TODO profile details block
+
         }
     }
 
     private fun observeModel() {
         viewModel.mIsUserExists.observe(viewLifecycleOwner, Observer { isExists ->
             if (isExists) {
-                userNameField.setBackgroundColor(Color.rgb( 201, 54, 49 ))
+                userNameField.setBackgroundColor(Color.rgb(201, 54, 49))
             } else {
                 //TODO log successfully
             }
         })
 
         viewModel.mIsUserLogged.observe(viewLifecycleOwner, Observer { isLogged ->
-            if(isLogged){
+            if (isLogged) {
                 userLoginBlock.setVisibility(View.GONE)
                 //TODO switch on the profile details block
                 Toast.makeText(context, "Hello", Toast.LENGTH_LONG).show()
