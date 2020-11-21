@@ -9,11 +9,11 @@ import com.harnet.lookatthis.model.UserParsable
 import com.parse.ParseUser
 import kotlinx.coroutines.launch
 
-class ProfileViewModel(application: Application) : BaseViewModel(application), UserParsable {
+class ProfileViewModel(application: Application) : BaseViewModel(application) {
     val mIsUserExists = MutableLiveData<Boolean>()
     val mIsUserLogged = MutableLiveData<Boolean>()
 
-    //TODO implement MutableList IsUserLogged, isUserExists
+    // sign Up a new user
     fun addNewUser(newUser: User){
         mIsUserExists.setValue(false)
 
@@ -29,11 +29,23 @@ class ProfileViewModel(application: Application) : BaseViewModel(application), U
                 if(e == null){
                     Toast.makeText(getApplication(), "Signed Up Successfully", Toast.LENGTH_SHORT).show()
                     mIsUserExists.setValue(false)
+                    isLogged()
                 }else{
                     Log.i("tweet", "addUser: smth wrong with sign in" + e.printStackTrace())
                     Toast.makeText(getApplication(), "User exists", Toast.LENGTH_SHORT).show()
                     mIsUserExists.setValue(true)
                 }
             }
+    }
+
+    //check if the user logged in
+    private fun isLogged(){
+        if(ParseUser.getCurrentUser() != null){
+            mIsUserLogged.setValue(true)
+            Log.i("tweet", "isLogged: you logged as: ${ParseUser.getCurrentUser().username}")
+        }else{
+            mIsUserLogged.setValue(false)
+            Log.i("tweet", "isLogged: ${ParseUser.getCurrentUser()}")
+        }
     }
 }

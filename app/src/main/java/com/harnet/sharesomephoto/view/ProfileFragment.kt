@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.LinearLayout
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -20,6 +21,7 @@ class ProfileFragment : Fragment() {
     private lateinit var viewModel: ProfileViewModel
     private lateinit var dataBinding: ProfileFragmentBinding
 
+    lateinit var userLoginBlock: LinearLayout
     lateinit var userNameField:EditText
     lateinit var userPswField: EditText
     lateinit var userEmailField: EditText
@@ -38,10 +40,11 @@ class ProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        userNameField = view.findViewById<EditText>(R.id.userName_editText)
-        userPswField = view.findViewById<EditText>(R.id.userPassword_editText)
-        userEmailField = view.findViewById<EditText>(R.id.userEmail_editText)
-        signUpBtn = view.findViewById<Button>(R.id.sign_up_btn)
+        userLoginBlock = view.findViewById(R.id.login_block)
+        userNameField = view.findViewById(R.id.userName_editText)
+        userPswField = view.findViewById(R.id.userPassword_editText)
+        userEmailField = view.findViewById(R.id.userEmail_editText)
+        signUpBtn = view.findViewById(R.id.sign_up_btn)
 
         viewModel = ViewModelProvider(this).get(ProfileViewModel::class.java)
 
@@ -64,6 +67,13 @@ class ProfileFragment : Fragment() {
                 userNameField.setBackgroundColor(Color.rgb( 201, 54, 49 ))
             } else {
                 //TODO log successfully
+            }
+        })
+
+        viewModel.mIsUserLogged.observe(viewLifecycleOwner, Observer { isLogged ->
+            if(isLogged){
+                userLoginBlock.setVisibility(View.GONE)
+                //TODO switch on the profile details block
             }
         })
     }
