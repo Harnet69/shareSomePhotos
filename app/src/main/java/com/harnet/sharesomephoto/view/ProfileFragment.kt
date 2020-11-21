@@ -2,6 +2,7 @@ package com.harnet.sharesomephoto.view
 
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -30,6 +31,7 @@ class ProfileFragment : Fragment(), UserParsable {
     lateinit var userEmailField: EditText
     lateinit var signUpBtn: Button
     lateinit var logInBtn: Button
+    lateinit var logOut: Button
 
     lateinit var userNameTextView: TextView
     lateinit var userEmailTextView: TextView
@@ -56,6 +58,7 @@ class ProfileFragment : Fragment(), UserParsable {
         userEmailField = view.findViewById(R.id.userEmail_editText)
         signUpBtn = view.findViewById(R.id.sign_up_btn)
         logInBtn = view.findViewById(R.id.login_btn)
+        logOut = view.findViewById(R.id.logOut_btn)
 
         userNameTextView = view.findViewById(R.id.userName_TextView)
         userEmailTextView = view.findViewById(R.id.userEmail_TextView)
@@ -66,7 +69,7 @@ class ProfileFragment : Fragment(), UserParsable {
         currentUser = viewModel.isLogged()
         if (currentUser == null) {
             signUpBtn.setOnClickListener {
-                viewModel.addNewUser(
+                viewModel.signUp(
                     User(
                         userNameField.text.toString(),
                         userPswField.text.toString(),
@@ -78,6 +81,11 @@ class ProfileFragment : Fragment(), UserParsable {
             logInBtn.setOnClickListener {
                 viewModel.logIn(userNameField.text.toString(), userPswField.text.toString())
             }
+
+            logOut.setOnClickListener {
+                viewModel.logOut()
+            }
+
             observeModel()
         } else {
             userLoginBlock.setVisibility(View.GONE)
@@ -100,12 +108,17 @@ class ProfileFragment : Fragment(), UserParsable {
 
         viewModel.mIsUserLogged.observe(viewLifecycleOwner, Observer { isLogged ->
             if (isLogged) {
-                userLoginBlock.setVisibility(View.GONE)
+                userLoginBlock.setVisibility(View.INVISIBLE)
                 userProfileDetailsBlock.setVisibility(View.VISIBLE)
                 //TODO switch on the profile details block
                 Toast.makeText(context, "Hello " + isLogged()?.username, Toast.LENGTH_LONG).show()
                 userNameTextView.text = "Name " + isLogged()?.username
                 userEmailTextView.text = "E-mail: " + isLogged()?.email
+            }else{
+                userLoginBlock.setVisibility(View.VISIBLE)
+                userProfileDetailsBlock.setVisibility(View.INVISIBLE)
+                Toast.makeText(context, "Log out", Toast.LENGTH_SHORT)
+                    .show()
             }
         })
     }

@@ -16,7 +16,7 @@ class ProfileViewModel(application: Application) : BaseViewModel(application) {
     val mIsUserLogged = MutableLiveData<Boolean>()
 
     // sign Up a new user
-    fun addNewUser(newUser: User) {
+    fun signUp(newUser: User) {
         mIsUserExists.setValue(false)
 
         // check if all fields not empty
@@ -56,6 +56,14 @@ class ProfileViewModel(application: Application) : BaseViewModel(application) {
                 e.printStackTrace()
             }
         })
+    }
+
+    //log out
+    fun logOut(){
+        ParseUser.logOut()
+//        Toast.makeText(getApplication(), "Log out", Toast.LENGTH_SHORT)
+//            .show()
+        mIsUserLogged.setValue(false)
     }
 
     //check if the user logged in
