@@ -39,7 +39,7 @@ class ProfileViewModel(application: Application) : BaseViewModel(application) {
     }
 
     //check if the user logged in
-    private fun isLogged(){
+    fun isLogged(): ParseUser?{
         if(ParseUser.getCurrentUser() != null){
             mIsUserLogged.setValue(true)
             Log.i("tweet", "isLogged: you logged as: ${ParseUser.getCurrentUser().username}")
@@ -47,5 +47,6 @@ class ProfileViewModel(application: Application) : BaseViewModel(application) {
             mIsUserLogged.setValue(false)
             Log.i("tweet", "isLogged: ${ParseUser.getCurrentUser()}")
         }
+        return ParseUser.getCurrentUser()
     }
 }

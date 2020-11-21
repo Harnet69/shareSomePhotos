@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.LinearLayout
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -48,17 +49,26 @@ class ProfileFragment : Fragment() {
 
         viewModel = ViewModelProvider(this).get(ProfileViewModel::class.java)
 
-        signUpBtn.setOnClickListener {
-            viewModel.addNewUser(
-                User(
-                    userNameField.text.toString(),
-                    userPswField.text.toString(),
-                    userEmailField.text.toString()
+        // if user have been logged already
+        val isLogged = viewModel.isLogged()
+        if(isLogged == null){
+            signUpBtn.setOnClickListener {
+                viewModel.addNewUser(
+                    User(
+                        userNameField.text.toString(),
+                        userPswField.text.toString(),
+                        userEmailField.text.toString()
+                    )
                 )
-            )
-        }
+            }
+            //TODO implement Login functionality for button here
 
-        observeModel()
+            observeModel()
+        }else{
+            userLoginBlock.setVisibility(View.GONE)
+            Toast.makeText(context, "Hello ${isLogged.username}", Toast.LENGTH_LONG).show()
+            //TODO switch on the profile details block
+        }
     }
 
     private fun observeModel() {
@@ -73,7 +83,6 @@ class ProfileFragment : Fragment() {
         viewModel.mIsUserLogged.observe(viewLifecycleOwner, Observer { isLogged ->
             if(isLogged){
                 userLoginBlock.setVisibility(View.GONE)
-                //TODO switch on the profile details block
             }
         })
     }
