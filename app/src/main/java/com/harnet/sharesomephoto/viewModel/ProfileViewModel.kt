@@ -6,6 +6,7 @@ import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import com.harnet.lookatthis.model.User
 import com.harnet.lookatthis.model.UserParsable
+import com.parse.LogInCallback
 import com.parse.ParseUser
 import kotlinx.coroutines.launch
 
@@ -36,6 +37,19 @@ class ProfileViewModel(application: Application) : BaseViewModel(application) {
                     mIsUserExists.setValue(true)
                 }
             }
+    }
+
+
+    //log in
+    fun logIn(userName: String, userPassword: String){
+        ParseUser.logInInBackground(userName, userPassword, LogInCallback { user, e ->
+            if (user != null) {
+                mIsUserLogged.setValue(true)
+            } else {
+                Toast.makeText(getApplication(), "Invalid username/password", Toast.LENGTH_SHORT).show()
+                e.printStackTrace()
+            }
+        })
     }
 
     //check if the user logged in

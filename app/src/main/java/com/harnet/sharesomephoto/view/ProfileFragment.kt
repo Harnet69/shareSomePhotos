@@ -27,6 +27,7 @@ class ProfileFragment : Fragment() {
     lateinit var userPswField: EditText
     lateinit var userEmailField: EditText
     lateinit var signUpBtn: Button
+    lateinit var logInBtn: Button
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -46,6 +47,7 @@ class ProfileFragment : Fragment() {
         userPswField = view.findViewById(R.id.userPassword_editText)
         userEmailField = view.findViewById(R.id.userEmail_editText)
         signUpBtn = view.findViewById(R.id.sign_up_btn)
+        logInBtn = view.findViewById(R.id.login_btn)
 
         viewModel = ViewModelProvider(this).get(ProfileViewModel::class.java)
 
@@ -62,7 +64,9 @@ class ProfileFragment : Fragment() {
                 )
             }
             //TODO implement Login functionality for button here
-
+            logInBtn.setOnClickListener {
+                viewModel.logIn(userNameField.text.toString(), userPswField.text.toString())
+            }
             observeModel()
         }else{
             userLoginBlock.setVisibility(View.GONE)
@@ -83,6 +87,8 @@ class ProfileFragment : Fragment() {
         viewModel.mIsUserLogged.observe(viewLifecycleOwner, Observer { isLogged ->
             if(isLogged){
                 userLoginBlock.setVisibility(View.GONE)
+                //TODO switch on the profile details block
+                Toast.makeText(context, "Hello", Toast.LENGTH_LONG).show()
             }
         })
     }
