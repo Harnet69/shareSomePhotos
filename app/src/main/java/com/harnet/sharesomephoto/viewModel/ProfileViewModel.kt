@@ -15,52 +15,77 @@ class ProfileViewModel(application: Application) : BaseViewModel(application) {
     val mIsUserLogged = MutableLiveData<Boolean>()
 
     // sign Up a new user
-    fun addNewUser(newUser: User){
+    fun addNewUser(newUser: User) {
         mIsUserExists.setValue(false)
 
+        // check if all fields not empty
+        if (checkUserInput(newUser)) {
             val parseUser = ParseUser()
-
             //create a new user
             parseUser.username = newUser.name
             parseUser.setPassword(newUser.password)
             parseUser.email = newUser.email
 
+
             // sign in user automatically, till login functionality will be implemented
-            parseUser.signUpInBackground {e ->
-                if(e == null){
-                    Toast.makeText(getApplication(), "Signed Up Successfully", Toast.LENGTH_SHORT).show()
+            parseUser.signUpInBackground { e ->
+                if (e == null) {
+                    Toast.makeText(getApplication(), "Signed Up Successfully", Toast.LENGTH_SHORT)
+                        .show()
                     mIsUserExists.setValue(false)
                     isLogged()
-                }else{
+                } else {
                     Log.i("tweet", "addUser: smth wrong with sign in" + e.printStackTrace())
                     Toast.makeText(getApplication(), "User exists", Toast.LENGTH_SHORT).show()
                     mIsUserExists.setValue(true)
                 }
             }
+        }
     }
 
 
     //log in
-    fun logIn(userName: String, userPassword: String){
+    fun logIn(userName: String, userPassword: String) {
         ParseUser.logInInBackground(userName, userPassword, LogInCallback { user, e ->
             if (user != null) {
                 mIsUserLogged.setValue(true)
             } else {
-                Toast.makeText(getApplication(), "Invalid username/password", Toast.LENGTH_SHORT).show()
+                Toast.makeText(getApplication(), "Invalid username/password", Toast.LENGTH_SHORT)
+                    .show()
                 e.printStackTrace()
             }
         })
     }
 
     //check if the user logged in
-    fun isLogged(): ParseUser?{
-        if(ParseUser.getCurrentUser() != null){
+    fun isLogged(): ParseUser? {
+        if (ParseUser.getCurrentUser() != null) {
             mIsUserLogged.setValue(true)
             Log.i("tweet", "isLogged: you logged as: ${ParseUser.getCurrentUser().username}")
-        }else{
+        } else {
             mIsUserLogged.setValue(false)
             Log.i("tweet", "isLogged: ${ParseUser.getCurrentUser()}")
         }
         return ParseUser.getCurrentUser()
+    }
+
+    fun checkUserInput(newUser: User): Boolean {
+        // check if fields not empty
+        if (!newUser.name.equals("")) {
+            if (!newUser.password.equals("")) {
+                if (!newUser.email.equals("")) {
+                    return true
+                } else {
+                    Toast.makeText(getApplication(), "E-mail is required", Toast.LENGTH_SHORT)
+                        .show()
+                }
+            } else {
+                Toast.makeText(getApplication(), "Password can't be empty", Toast.LENGTH_SHORT)
+                    .show()
+            }
+        } else {
+            Toast.makeText(getApplication(), "Name can't be empty", Toast.LENGTH_SHORT).show()
+        }
+        return false
     }
 }

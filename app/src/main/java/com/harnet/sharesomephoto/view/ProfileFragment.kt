@@ -48,7 +48,7 @@ class ProfileFragment : Fragment(), UserParsable {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        
         userLoginBlock = view.findViewById(R.id.login_block)
         userProfileDetailsBlock = view.findViewById(R.id.profile_details_block)
         userNameField = view.findViewById(R.id.userName_editText)
@@ -84,8 +84,8 @@ class ProfileFragment : Fragment(), UserParsable {
             Toast.makeText(context, "Hello ${currentUser?.username}", Toast.LENGTH_LONG).show()
             userProfileDetailsBlock.setVisibility(View.VISIBLE)
             //TODO profile details block
-            userNameTextView.text = currentUser?.username
-            userEmailTextView.text = currentUser?.email
+            userNameTextView.text = "Name: " + currentUser?.username
+            userEmailTextView.text = "E-mail: " + currentUser?.email
         }
     }
 
@@ -104,8 +104,8 @@ class ProfileFragment : Fragment(), UserParsable {
                 userProfileDetailsBlock.setVisibility(View.VISIBLE)
                 //TODO switch on the profile details block
                 Toast.makeText(context, "Hello " + isLogged()?.username, Toast.LENGTH_LONG).show()
-                userNameTextView.text = isLogged()?.username
-                userEmailTextView.text = isLogged()?.email
+                userNameTextView.text = "Name " + isLogged()?.username
+                userEmailTextView.text = "E-mail: " + isLogged()?.email
             }
         })
     }
