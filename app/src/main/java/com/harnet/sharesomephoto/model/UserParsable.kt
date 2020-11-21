@@ -22,7 +22,7 @@ interface UserParsable {
                 Log.i("tweet", "addUser: add and sign up successfully")
                 return@signUpInBackground
             }else{
-                Log.i("tweet", "addUser: smth wrong with sign in + e.printStackTrace()")
+                Log.i("tweet", "addUser: smth wrong with sign in" + e.printStackTrace())
                 return@signUpInBackground
             }
         }
@@ -32,7 +32,6 @@ interface UserParsable {
     fun logIn(userName: String, userPassword: String){
         ParseUser.logInInBackground(userName, userPassword, LogInCallback { user, e ->
             if (user != null) {
-                Log.i("tweet", "logIn: ${user.username}")
             } else {
                 e.printStackTrace()
             }

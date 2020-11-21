@@ -2,6 +2,7 @@ package com.harnet.sharesomephoto.viewModel
 
 import android.app.Application
 import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import com.harnet.lookatthis.model.User
 import com.harnet.lookatthis.model.UserParsable
@@ -13,9 +14,9 @@ class ProfileViewModel(application: Application) : BaseViewModel(application), U
     val mIsUserLogged = MutableLiveData<Boolean>()
 
     //TODO implement MutableList IsUserLogged, isUserExists
-
     fun addNewUser(newUser: User){
-//        launch {
+        mIsUserExists.setValue(false)
+
             val parseUser = ParseUser()
 
             //create a new user
@@ -26,13 +27,13 @@ class ProfileViewModel(application: Application) : BaseViewModel(application), U
             // sign in user automatically, till login functionality will be implemented
             parseUser.signUpInBackground {e ->
                 if(e == null){
-                    Log.i("tweet", "addUser: add and sign up successfully")
+                    Toast.makeText(getApplication(), "Signed Up Successfully", Toast.LENGTH_SHORT).show()
                     mIsUserExists.setValue(false)
                 }else{
-                    Log.i("tweet", "addUser: smth wrong with sign in + e.printStackTrace()")
+                    Log.i("tweet", "addUser: smth wrong with sign in" + e.printStackTrace())
+                    Toast.makeText(getApplication(), "User exists", Toast.LENGTH_SHORT).show()
                     mIsUserExists.setValue(true)
                 }
             }
-//        }
     }
 }

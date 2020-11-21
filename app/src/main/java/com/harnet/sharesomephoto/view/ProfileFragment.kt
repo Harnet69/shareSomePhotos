@@ -1,13 +1,12 @@
 package com.harnet.sharesomephoto.view
 
+import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -18,10 +17,13 @@ import com.harnet.sharesomephoto.databinding.ProfileFragmentBinding
 import com.harnet.sharesomephoto.viewModel.ProfileViewModel
 
 class ProfileFragment : Fragment() {
-
     private lateinit var viewModel: ProfileViewModel
-
     private lateinit var dataBinding: ProfileFragmentBinding
+
+    lateinit var userNameField:EditText
+    lateinit var userPswField: EditText
+    lateinit var userEmailField: EditText
+    lateinit var signUpBtn: Button
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,22 +38,21 @@ class ProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val userNameField = view.findViewById<EditText>(R.id.userName_editText)
-        val userPswField = view.findViewById<EditText>(R.id.userPassword_editText)
-        val userEmailField = view.findViewById<EditText>(R.id.userEmail_editText)
-        val signUpBtn = view.findViewById<Button>(R.id.sign_up_btn)
+        userNameField = view.findViewById<EditText>(R.id.userName_editText)
+        userPswField = view.findViewById<EditText>(R.id.userPassword_editText)
+        userEmailField = view.findViewById<EditText>(R.id.userEmail_editText)
+        signUpBtn = view.findViewById<Button>(R.id.sign_up_btn)
 
         viewModel = ViewModelProvider(this).get(ProfileViewModel::class.java)
 
         signUpBtn.setOnClickListener {
             viewModel.addNewUser(
                 User(
-                    userEmailField.text.toString(),
+                    userNameField.text.toString(),
                     userPswField.text.toString(),
                     userEmailField.text.toString()
                 )
             )
-//            Toast.makeText(context, "Click on add", Toast.LENGTH_SHORT).show()
         }
 
         observeModel()
@@ -59,11 +60,10 @@ class ProfileFragment : Fragment() {
 
     private fun observeModel() {
         viewModel.mIsUserExists.observe(viewLifecycleOwner, Observer { isExists ->
-            Log.i("tweet", "observeModel: ")
             if (isExists) {
-                Toast.makeText(context, "User exists", Toast.LENGTH_SHORT).show()
+                userNameField.setBackgroundColor(Color.rgb( 201, 54, 49 ))
             } else {
-                Toast.makeText(context, "Log In Successfully", Toast.LENGTH_SHORT).show()
+                //TODO log successfully
             }
         })
     }
