@@ -9,6 +9,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.Toast
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -23,6 +24,8 @@ class ProfileFragment : Fragment() {
     private lateinit var dataBinding: ProfileFragmentBinding
 
     lateinit var userLoginBlock: LinearLayout
+    lateinit var userProfileDetailsBlock: ConstraintLayout
+
     lateinit var userNameField: EditText
     lateinit var userPswField: EditText
     lateinit var userEmailField: EditText
@@ -43,6 +46,7 @@ class ProfileFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         userLoginBlock = view.findViewById(R.id.login_block)
+        userProfileDetailsBlock = view.findViewById(R.id.profile_details_block)
         userNameField = view.findViewById(R.id.userName_editText)
         userPswField = view.findViewById(R.id.userPassword_editText)
         userEmailField = view.findViewById(R.id.userEmail_editText)
@@ -71,6 +75,8 @@ class ProfileFragment : Fragment() {
         } else {
             userLoginBlock.setVisibility(View.GONE)
             Toast.makeText(context, "Hello ${isLogged.username}", Toast.LENGTH_LONG).show()
+            userProfileDetailsBlock.setVisibility(View.VISIBLE)
+
             //TODO profile details block
 
         }
@@ -88,6 +94,7 @@ class ProfileFragment : Fragment() {
         viewModel.mIsUserLogged.observe(viewLifecycleOwner, Observer { isLogged ->
             if (isLogged) {
                 userLoginBlock.setVisibility(View.GONE)
+                userProfileDetailsBlock.setVisibility(View.VISIBLE)
                 //TODO switch on the profile details block
                 Toast.makeText(context, "Hello", Toast.LENGTH_LONG).show()
             }

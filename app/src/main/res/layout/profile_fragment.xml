@@ -33,6 +33,11 @@
                 android:layout_height="wrap_content"
                 layout="@layout/login_block" />
 
+            <include
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                layout="@layout/profile_details_block" />
+
         </FrameLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
