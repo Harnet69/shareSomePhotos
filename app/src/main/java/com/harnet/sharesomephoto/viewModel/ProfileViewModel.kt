@@ -1,14 +1,15 @@
 package com.harnet.sharesomephoto.viewModel
 
 import android.app.Application
+import android.text.TextUtils
 import android.util.Log
+import android.util.Patterns
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import com.harnet.lookatthis.model.User
-import com.harnet.lookatthis.model.UserParsable
 import com.parse.LogInCallback
 import com.parse.ParseUser
-import kotlinx.coroutines.launch
+
 
 class ProfileViewModel(application: Application) : BaseViewModel(application) {
     val mIsUserExists = MutableLiveData<Boolean>()
@@ -69,12 +70,17 @@ class ProfileViewModel(application: Application) : BaseViewModel(application) {
         return ParseUser.getCurrentUser()
     }
 
-    fun checkUserInput(newUser: User): Boolean {
+    private fun checkUserInput(newUser: User): Boolean {
         // check if fields not empty
         if (!newUser.name.equals("")) {
             if (!newUser.password.equals("")) {
                 if (!newUser.email.equals("")) {
-                    return true
+                    if (isValidEmail(newUser.email)) {
+                        return true
+                    } else {
+                        Toast.makeText(getApplication(), "Wrong e-mail format", Toast.LENGTH_SHORT)
+                            .show()
+                    }
                 } else {
                     Toast.makeText(getApplication(), "E-mail is required", Toast.LENGTH_SHORT)
                         .show()
@@ -87,5 +93,9 @@ class ProfileViewModel(application: Application) : BaseViewModel(application) {
             Toast.makeText(getApplication(), "Name can't be empty", Toast.LENGTH_SHORT).show()
         }
         return false
+    }
+
+    private fun isValidEmail(target: CharSequence): Boolean {
+        return !TextUtils.isEmpty(target) && Patterns.EMAIL_ADDRESS.matcher(target).matches()
     }
 }
