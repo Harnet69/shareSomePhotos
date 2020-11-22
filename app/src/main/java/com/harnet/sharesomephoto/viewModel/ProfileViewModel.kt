@@ -134,13 +134,4 @@ class ProfileViewModel(application: Application) : BaseViewModel(application) {
     private fun isValidEmail(target: CharSequence): Boolean {
         return !TextUtils.isEmpty(target) && Patterns.EMAIL_ADDRESS.matcher(target).matches()
     }
-
-    fun submitUserData(textView: TextView, aimBtn: Button){
-        textView.setOnEditorActionListener(OnEditorActionListener { v, actionId, event ->
-            if (event != null && event.keyCode === KeyEvent.KEYCODE_ENTER || actionId == EditorInfo.IME_ACTION_DONE) {
-                Log.i("tweet", "Enter pressed")
-            }
-            false
-        })
-    }
 }

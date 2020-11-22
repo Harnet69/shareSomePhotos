@@ -3,9 +3,12 @@ package com.harnet.sharesomephoto.view
 import android.graphics.Color
 import android.graphics.PorterDuff
 import android.os.Bundle
+import android.util.Log
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import android.widget.*
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.DataBindingUtil
@@ -85,12 +88,12 @@ class ProfileFragment : Fragment(), UserParsable {
         // LogIn signUp switcher
         logInSignUpTextView.setOnClickListener {
             //TODO here is all functionality of switching and Text btns
-            if(isLogInMode){
+            if (isLogInMode) {
                 logInSignUpBtn.text = "Sign Up"
                 logInSignUpTextView.text = "or, Log in"
                 userEmailField.visibility = View.VISIBLE
                 isLogInMode = false
-            }else{
+            } else {
                 logInSignUpBtn.text = "Log in"
                 logInSignUpTextView.text = "or, Sign Up"
                 userEmailField.visibility = View.GONE
@@ -99,24 +102,14 @@ class ProfileFragment : Fragment(), UserParsable {
 
         }
 
-        //login button
+        //login/signUp button
         logInSignUpBtn.setOnClickListener {
-            if(isLogInMode){
-                viewModel.logIn(userNameField.text.toString(), userPswField.text.toString())
-            }else{
-                viewModel.signUp(
-                    User(
-                        userNameField.text.toString(),
-                        userPswField.text.toString(),
-                        userEmailField.text.toString()
-                    )
-                )
-            }
+            logInSignUp()
         }
 
         // push on DONE btn of keyboard submit data
-        viewModel.submitUserData(userPswField, logInSignUpBtn)
-        viewModel.submitUserData(userEmailField, logInSignUpBtn)
+        submitUserData(userPswField)
+        submitUserData(userEmailField)
 
         // logout button
         logOut.setOnClickListener {
@@ -147,6 +140,31 @@ class ProfileFragment : Fragment(), UserParsable {
                 userLoginBlock.setVisibility(View.VISIBLE)
                 userProfileDetailsBlock.setVisibility(View.INVISIBLE)
             }
+        })
+    }
+
+    // handle logIn signUp functionality
+    private fun logInSignUp() {
+        if (isLogInMode) {
+            viewModel.logIn(userNameField.text.toString(), userPswField.text.toString())
+        } else {
+            viewModel.signUp(
+                User(
+                    userNameField.text.toString(),
+                    userPswField.text.toString(),
+                    userEmailField.text.toString()
+                )
+            )
+        }
+    }
+
+    // when user push DONE(Enter) after filling logIn or SignUp form
+    private fun submitUserData(textView: TextView) {
+        textView.setOnEditorActionListener(TextView.OnEditorActionListener { v, actionId, event ->
+            if (event != null && event.keyCode === KeyEvent.KEYCODE_ENTER || actionId == EditorInfo.IME_ACTION_DONE) {
+                logInSignUp()
+            }
+            false
         })
     }
 }
