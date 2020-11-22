@@ -50,7 +50,7 @@ class ProfileFragment : Fragment(), UserParsable {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        
+
         userLoginBlock = view.findViewById(R.id.login_block)
         userProfileDetailsBlock = view.findViewById(R.id.profile_details_block)
         userNameField = view.findViewById(R.id.userName_editText)
@@ -66,35 +66,39 @@ class ProfileFragment : Fragment(), UserParsable {
         viewModel = ViewModelProvider(this).get(ProfileViewModel::class.java)
 
         // if user have been logged already
-        currentUser = viewModel.isLogged()
-        if (currentUser == null) {
-            signUpBtn.setOnClickListener {
-                viewModel.signUp(
-                    User(
-                        userNameField.text.toString(),
-                        userPswField.text.toString(),
-                        userEmailField.text.toString()
-                    )
-                )
-            }
-            //TODO implement Login functionality for button here
-            logInBtn.setOnClickListener {
-                viewModel.logIn(userNameField.text.toString(), userPswField.text.toString())
-            }
+        if (ParseUser.getCurrentUser() == null) {
+            userLoginBlock.setVisibility(View.VISIBLE)
+            userProfileDetailsBlock.setVisibility(View.INVISIBLE)
 
-            logOut.setOnClickListener {
-                viewModel.logOut()
-            }
-
-            observeModel()
         } else {
-            userLoginBlock.setVisibility(View.GONE)
-            Toast.makeText(context, "Hello ${currentUser?.username}", Toast.LENGTH_LONG).show()
+            userLoginBlock.setVisibility(View.INVISIBLE)
             userProfileDetailsBlock.setVisibility(View.VISIBLE)
+//            Toast.makeText(context, "Hello ${currentUser?.username}", Toast.LENGTH_LONG).show()
             //TODO profile details block
             userNameTextView.text = "Name: " + currentUser?.username
             userEmailTextView.text = "E-mail: " + currentUser?.email
         }
+
+        currentUser = viewModel.isLogged()
+        signUpBtn.setOnClickListener {
+            viewModel.signUp(
+                User(
+                    userNameField.text.toString(),
+                    userPswField.text.toString(),
+                    userEmailField.text.toString()
+                )
+            )
+        }
+        //login button
+        logInBtn.setOnClickListener {
+            viewModel.logIn(userNameField.text.toString(), userPswField.text.toString())
+        }
+        // logout button
+        logOut.setOnClickListener {
+            viewModel.logOut()
+        }
+
+        observeModel()
     }
 
     private fun observeModel() {
@@ -110,15 +114,13 @@ class ProfileFragment : Fragment(), UserParsable {
             if (isLogged) {
                 userLoginBlock.setVisibility(View.INVISIBLE)
                 userProfileDetailsBlock.setVisibility(View.VISIBLE)
-                //TODO switch on the profile details block
+                //switching between profile details and login blocks
                 Toast.makeText(context, "Hello " + isLogged()?.username, Toast.LENGTH_LONG).show()
                 userNameTextView.text = "Name " + isLogged()?.username
                 userEmailTextView.text = "E-mail: " + isLogged()?.email
-            }else{
+            } else {
                 userLoginBlock.setVisibility(View.VISIBLE)
                 userProfileDetailsBlock.setVisibility(View.INVISIBLE)
-                Toast.makeText(context, "Log out", Toast.LENGTH_SHORT)
-                    .show()
             }
         })
     }

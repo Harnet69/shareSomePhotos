@@ -33,7 +33,6 @@ class ProfileViewModel(application: Application) : BaseViewModel(application) {
                 if (e == null) {
                     Toast.makeText(getApplication(), "Signed Up Successfully", Toast.LENGTH_SHORT)
                         .show()
-                    mIsUserExists.setValue(false)
                     isLogged()
                 } else {
                     Log.i("tweet", "addUser: smth wrong with sign in" + e.printStackTrace())
@@ -61,8 +60,8 @@ class ProfileViewModel(application: Application) : BaseViewModel(application) {
     //log out
     fun logOut(){
         ParseUser.logOut()
-//        Toast.makeText(getApplication(), "Log out", Toast.LENGTH_SHORT)
-//            .show()
+        Toast.makeText(getApplication(), "Log out", Toast.LENGTH_SHORT)
+            .show()
         mIsUserLogged.setValue(false)
     }
 
@@ -70,10 +69,8 @@ class ProfileViewModel(application: Application) : BaseViewModel(application) {
     fun isLogged(): ParseUser? {
         if (ParseUser.getCurrentUser() != null) {
             mIsUserLogged.setValue(true)
-            Log.i("tweet", "isLogged: you logged as: ${ParseUser.getCurrentUser().username}")
         } else {
             mIsUserLogged.setValue(false)
-            Log.i("tweet", "isLogged: ${ParseUser.getCurrentUser()}")
         }
         return ParseUser.getCurrentUser()
     }
