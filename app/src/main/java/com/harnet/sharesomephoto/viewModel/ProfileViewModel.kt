@@ -20,11 +20,11 @@ class ProfileViewModel(application: Application) : BaseViewModel(application) {
         mIsUserExists.setValue(false)
 
         // check if all fields not empty
-        if (checkUserInput(newUser)) {
+        if (checkUserInputForEmpty(newUser) && checkUserInputForWhiteSpaces(newUser)) {
             val parseUser = ParseUser()
             //create a new user
             parseUser.username = newUser.name
-            parseUser.setPassword(newUser.password)
+            parseUser.setPassword(newUser.password.trim())
             parseUser.email = newUser.email
 
 
@@ -75,7 +75,7 @@ class ProfileViewModel(application: Application) : BaseViewModel(application) {
         return ParseUser.getCurrentUser()
     }
 
-    private fun checkUserInput(newUser: User): Boolean {
+    private fun checkUserInputForEmpty(newUser: User): Boolean {
         // check if fields not empty
         if (!newUser.name.equals("")) {
             if (!newUser.password.equals("")) {
@@ -97,6 +97,21 @@ class ProfileViewModel(application: Application) : BaseViewModel(application) {
         } else {
             Toast.makeText(getApplication(), "Name can't be empty", Toast.LENGTH_SHORT).show()
         }
+        return false
+    }
+
+    private fun checkUserInputForWhiteSpaces(newUser: User): Boolean{
+        if(!newUser.name.contains(" ")){
+            if(!newUser.password.contains(" ")){
+                return true
+            }else{
+                Toast.makeText(getApplication(), "Whitespaces not allowed in password", Toast.LENGTH_SHORT).show()
+            }
+        }else{
+            Toast.makeText(getApplication(), "Whitespaces not allowed in name", Toast.LENGTH_SHORT).show()
+        }
+
+
         return false
     }
 
