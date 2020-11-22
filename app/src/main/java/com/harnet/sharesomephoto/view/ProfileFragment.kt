@@ -65,7 +65,7 @@ class ProfileFragment : Fragment(), UserParsable {
 
         viewModel = ViewModelProvider(this).get(ProfileViewModel::class.java)
 
-        // if user have been logged already
+        // if user have been logged already !!! Hove to be in a separate block
         if (ParseUser.getCurrentUser() == null) {
             userLoginBlock.setVisibility(View.VISIBLE)
             userProfileDetailsBlock.setVisibility(View.INVISIBLE)
@@ -80,6 +80,7 @@ class ProfileFragment : Fragment(), UserParsable {
         }
 
         currentUser = viewModel.isLogged()
+        // sign up button
         signUpBtn.setOnClickListener {
             viewModel.signUp(
                 User(
