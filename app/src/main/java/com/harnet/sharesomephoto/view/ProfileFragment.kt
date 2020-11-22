@@ -73,6 +73,9 @@ class ProfileFragment : Fragment(), UserParsable {
 
         currentUser = viewModel.isLogged()
 
+        //set focus to user name edit field
+        userNameField.requestFocus()
+
         // if user have been logged already !!! Should be in a separate block
         if (ParseUser.getCurrentUser() == null) {
             userLoginBlock.setVisibility(View.VISIBLE)
@@ -161,7 +164,7 @@ class ProfileFragment : Fragment(), UserParsable {
     // when user push DONE(Enter) after filling logIn or SignUp form
     private fun submitUserData(textView: TextView) {
         textView.setOnEditorActionListener(TextView.OnEditorActionListener { v, actionId, event ->
-            if (event != null && event.keyCode === KeyEvent.KEYCODE_ENTER || actionId == EditorInfo.IME_ACTION_DONE) {
+            if (event != null && event.keyCode == KeyEvent.KEYCODE_ENTER || actionId == EditorInfo.IME_ACTION_DONE) {
                 logInSignUp()
             }
             false
