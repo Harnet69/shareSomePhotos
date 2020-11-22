@@ -35,7 +35,7 @@ class ProfileViewModel(application: Application) : BaseViewModel(application) {
                         .show()
                     isLogged()
                 } else {
-                    Log.i("tweet", "addUser: smth wrong with sign in" + e.printStackTrace())
+                    e.printStackTrace()
                     Toast.makeText(getApplication(), "User exists", Toast.LENGTH_SHORT).show()
                     mIsUserExists.setValue(true)
                 }
@@ -43,22 +43,27 @@ class ProfileViewModel(application: Application) : BaseViewModel(application) {
         }
     }
 
-
     //log in
     fun logIn(userName: String, userPassword: String) {
-        ParseUser.logInInBackground(userName, userPassword, LogInCallback { user, e ->
-            if (user != null) {
-                mIsUserLogged.setValue(true)
-            } else {
-                Toast.makeText(getApplication(), "Invalid username/password", Toast.LENGTH_SHORT)
-                    .show()
-                e.printStackTrace()
-            }
-        })
+        if (checkUserInputForWhiteSpaces(User(userName, userPassword, ""))) {
+            ParseUser.logInInBackground(userName, userPassword, LogInCallback { user, e ->
+                if (user != null) {
+                    mIsUserLogged.setValue(true)
+                } else {
+                    Toast.makeText(
+                        getApplication(),
+                        "Invalid username/password",
+                        Toast.LENGTH_SHORT
+                    )
+                        .show()
+                    e.printStackTrace()
+                }
+            })
+        }
     }
 
     //log out
-    fun logOut(){
+    fun logOut() {
         ParseUser.logOut()
         Toast.makeText(getApplication(), "Log out", Toast.LENGTH_SHORT)
             .show()
@@ -100,19 +105,28 @@ class ProfileViewModel(application: Application) : BaseViewModel(application) {
         return false
     }
 
-    private fun checkUserInputForWhiteSpaces(newUser: User): Boolean{
-        if(!newUser.name.contains(" ")){
-            if(!newUser.password.contains(" ")){
+    private fun checkUserInputForWhiteSpaces(newUser: User): Boolean {
+        if (!newUser.name.contains(" ")) {
+            if (!newUser.password.contains(" ")) {
                 return true
-            }else{
-                Toast.makeText(getApplication(), "Whitespaces not allowed in password", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(
+                    getApplication(),
+                    "Whitespaces not allowed in password",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
-        }else{
-            Toast.makeText(getApplication(), "Whitespaces not allowed in name", Toast.LENGTH_SHORT).show()
+        } else {
+            Toast.makeText(getApplication(), "Whitespaces not allowed in name", Toast.LENGTH_SHORT)
+                .show()
         }
 
 
         return false
+    }
+
+    private fun checkStringForWhiteSpaces(string: String): Boolean{
+        return string.contains(" ")
     }
 
     private fun isValidEmail(target: CharSequence): Boolean {
