@@ -2,7 +2,6 @@ package com.harnet.sharesomephoto.view
 
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -29,12 +28,14 @@ class ProfileFragment : Fragment(), UserParsable {
     lateinit var userNameField: EditText
     lateinit var userPswField: EditText
     lateinit var userEmailField: EditText
-    lateinit var signUpBtn: Button
-    lateinit var logInBtn: Button
+    lateinit var signUpLogInTextView: TextView
+    lateinit var logInSignUpBtn: Button
     lateinit var logOut: Button
 
     lateinit var userNameTextView: TextView
     lateinit var userEmailTextView: TextView
+
+    var isLogInMode: Boolean = true
 
     var currentUser: ParseUser? = null
 
@@ -56,8 +57,8 @@ class ProfileFragment : Fragment(), UserParsable {
         userNameField = view.findViewById(R.id.userName_editText)
         userPswField = view.findViewById(R.id.userPassword_editText)
         userEmailField = view.findViewById(R.id.userEmail_editText)
-        signUpBtn = view.findViewById(R.id.sign_up_btn)
-        logInBtn = view.findViewById(R.id.login_btn)
+        signUpLogInTextView = view.findViewById(R.id.sign_up_TextView)
+        logInSignUpBtn = view.findViewById(R.id.login_signUp_btn)
         logOut = view.findViewById(R.id.logOut_btn)
 
         userNameTextView = view.findViewById(R.id.userName_TextView)
@@ -79,19 +80,31 @@ class ProfileFragment : Fragment(), UserParsable {
             userEmailTextView.text = "E-mail: " + currentUser?.email
         }
 
-        // sign up button
-        signUpBtn.setOnClickListener {
-            viewModel.signUp(
-                User(
-                    userNameField.text.toString(),
-                    userPswField.text.toString(),
-                    userEmailField.text.toString()
-                )
-            )
+        // LogIn signUp switcher
+        signUpLogInTextView.setOnClickListener {
+            //TODO here is all functionality of switching and Text btns
+            if(isLogInMode){
+                logInSignUpBtn.text = "Sign Up"
+                isLogInMode = false
+            }else{
+                logInSignUpBtn.text = "Log in"
+                isLogInMode = true
+            }
+
         }
         //login button
-        logInBtn.setOnClickListener {
-            viewModel.logIn(userNameField.text.toString(), userPswField.text.toString())
+        logInSignUpBtn.setOnClickListener {
+            if(isLogInMode){
+                viewModel.logIn(userNameField.text.toString(), userPswField.text.toString())
+            }else{
+                viewModel.signUp(
+                    User(
+                        userNameField.text.toString(),
+                        userPswField.text.toString(),
+                        userEmailField.text.toString()
+                    )
+                )
+            }
         }
         // logout button
         logOut.setOnClickListener {
