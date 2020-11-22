@@ -37,14 +37,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="e-mail*"
+            android:hint="e-mail"
+            android:visibility="gone"
             android:inputType="textEmailAddress" />
-
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="* required for signing up" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"

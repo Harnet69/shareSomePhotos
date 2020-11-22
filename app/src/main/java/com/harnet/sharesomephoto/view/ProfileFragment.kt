@@ -1,6 +1,7 @@
 package com.harnet.sharesomephoto.view
 
 import android.graphics.Color
+import android.graphics.PorterDuff
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +12,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.google.android.material.textfield.TextInputLayout
 import com.harnet.lookatthis.model.User
 import com.harnet.lookatthis.model.UserParsable
 import com.harnet.sharesomephoto.R
@@ -86,14 +88,17 @@ class ProfileFragment : Fragment(), UserParsable {
             if(isLogInMode){
                 logInSignUpBtn.text = "Sign Up"
                 logInSignUpTextView.text = "or, Log in"
+                userEmailField.visibility = View.VISIBLE
                 isLogInMode = false
             }else{
                 logInSignUpBtn.text = "Log in"
                 logInSignUpTextView.text = "or, Sign Up"
+                userEmailField.visibility = View.GONE
                 isLogInMode = true
             }
 
         }
+
         //login button
         logInSignUpBtn.setOnClickListener {
             if(isLogInMode){
@@ -108,6 +113,7 @@ class ProfileFragment : Fragment(), UserParsable {
                 )
             }
         }
+
         // logout button
         logOut.setOnClickListener {
             viewModel.logOut()
@@ -119,7 +125,7 @@ class ProfileFragment : Fragment(), UserParsable {
     private fun observeModel() {
         viewModel.mIsUserExists.observe(viewLifecycleOwner, Observer { isExists ->
             if (isExists) {
-                userNameField.setBackgroundColor(Color.rgb(201, 54, 49))
+//                userNameField.setBackgroundColor(Color.rgb(201, 54, 49))
             } else {
                 //TODO log successfully
             }

@@ -125,10 +125,6 @@ class ProfileViewModel(application: Application) : BaseViewModel(application) {
         return false
     }
 
-    private fun checkStringForWhiteSpaces(string: String): Boolean{
-        return string.contains(" ")
-    }
-
     private fun isValidEmail(target: CharSequence): Boolean {
         return !TextUtils.isEmpty(target) && Patterns.EMAIL_ADDRESS.matcher(target).matches()
     }
