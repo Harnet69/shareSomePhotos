@@ -114,6 +114,10 @@ class ProfileFragment : Fragment(), UserParsable {
             }
         }
 
+        // push on DONE btn of keyboard submit data
+        viewModel.submitUserData(userPswField, logInSignUpBtn)
+        viewModel.submitUserData(userEmailField, logInSignUpBtn)
+
         // logout button
         logOut.setOnClickListener {
             viewModel.logOut()

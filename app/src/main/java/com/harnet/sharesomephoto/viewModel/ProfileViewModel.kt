@@ -4,6 +4,12 @@ import android.app.Application
 import android.text.TextUtils
 import android.util.Log
 import android.util.Patterns
+import android.view.KeyEvent
+import android.view.View
+import android.view.inputmethod.EditorInfo
+import android.widget.Button
+import android.widget.TextView
+import android.widget.TextView.OnEditorActionListener
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import com.harnet.lookatthis.model.User
@@ -127,5 +133,14 @@ class ProfileViewModel(application: Application) : BaseViewModel(application) {
 
     private fun isValidEmail(target: CharSequence): Boolean {
         return !TextUtils.isEmpty(target) && Patterns.EMAIL_ADDRESS.matcher(target).matches()
+    }
+
+    fun submitUserData(textView: TextView, aimBtn: Button){
+        textView.setOnEditorActionListener(OnEditorActionListener { v, actionId, event ->
+            if (event != null && event.keyCode === KeyEvent.KEYCODE_ENTER || actionId == EditorInfo.IME_ACTION_DONE) {
+                Log.i("tweet", "Enter pressed")
+            }
+            false
+        })
     }
 }
