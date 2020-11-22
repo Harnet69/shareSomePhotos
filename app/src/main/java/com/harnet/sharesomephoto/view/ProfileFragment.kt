@@ -65,7 +65,9 @@ class ProfileFragment : Fragment(), UserParsable {
 
         viewModel = ViewModelProvider(this).get(ProfileViewModel::class.java)
 
-        // if user have been logged already !!! Hove to be in a separate block
+        currentUser = viewModel.isLogged()
+
+        // if user have been logged already !!! Should be in a separate block
         if (ParseUser.getCurrentUser() == null) {
             userLoginBlock.setVisibility(View.VISIBLE)
             userProfileDetailsBlock.setVisibility(View.INVISIBLE)
@@ -73,13 +75,10 @@ class ProfileFragment : Fragment(), UserParsable {
         } else {
             userLoginBlock.setVisibility(View.INVISIBLE)
             userProfileDetailsBlock.setVisibility(View.VISIBLE)
-//            Toast.makeText(context, "Hello ${currentUser?.username}", Toast.LENGTH_LONG).show()
-            //TODO profile details block
             userNameTextView.text = "Name: " + currentUser?.username
             userEmailTextView.text = "E-mail: " + currentUser?.email
         }
 
-        currentUser = viewModel.isLogged()
         // sign up button
         signUpBtn.setOnClickListener {
             viewModel.signUp(
@@ -112,12 +111,12 @@ class ProfileFragment : Fragment(), UserParsable {
         })
 
         viewModel.mIsUserLogged.observe(viewLifecycleOwner, Observer { isLogged ->
-            if (isLogged) {
+            if (isLogged && ParseUser.getCurrentUser() != null) {
                 userLoginBlock.setVisibility(View.INVISIBLE)
                 userProfileDetailsBlock.setVisibility(View.VISIBLE)
                 //switching between profile details and login blocks
                 Toast.makeText(context, "Hello " + isLogged()?.username, Toast.LENGTH_LONG).show()
-                userNameTextView.text = "Name " + isLogged()?.username
+                userNameTextView.text = "Name: " + isLogged()?.username
                 userEmailTextView.text = "E-mail: " + isLogged()?.email
             } else {
                 userLoginBlock.setVisibility(View.VISIBLE)

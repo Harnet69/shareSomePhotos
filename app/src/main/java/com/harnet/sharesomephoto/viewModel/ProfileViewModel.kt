@@ -36,7 +36,7 @@ class ProfileViewModel(application: Application) : BaseViewModel(application) {
                     isLogged()
                 } else {
                     e.printStackTrace()
-                    Toast.makeText(getApplication(), "User exists", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(getApplication(), e.message, Toast.LENGTH_SHORT).show()
                     mIsUserExists.setValue(true)
                 }
             }
@@ -52,7 +52,7 @@ class ProfileViewModel(application: Application) : BaseViewModel(application) {
                 } else {
                     Toast.makeText(
                         getApplication(),
-                        "Invalid username/password",
+                        e.message,
                         Toast.LENGTH_SHORT
                     )
                         .show()
