@@ -28,7 +28,7 @@ class ProfileFragment : Fragment(), UserParsable {
     lateinit var userNameField: EditText
     lateinit var userPswField: EditText
     lateinit var userEmailField: EditText
-    lateinit var signUpLogInTextView: TextView
+    lateinit var logInSignUpTextView: TextView
     lateinit var logInSignUpBtn: Button
     lateinit var logOut: Button
 
@@ -57,7 +57,7 @@ class ProfileFragment : Fragment(), UserParsable {
         userNameField = view.findViewById(R.id.userName_editText)
         userPswField = view.findViewById(R.id.userPassword_editText)
         userEmailField = view.findViewById(R.id.userEmail_editText)
-        signUpLogInTextView = view.findViewById(R.id.sign_up_TextView)
+        logInSignUpTextView = view.findViewById(R.id.logIn_signUp_TextView)
         logInSignUpBtn = view.findViewById(R.id.login_signUp_btn)
         logOut = view.findViewById(R.id.logOut_btn)
 
@@ -81,13 +81,15 @@ class ProfileFragment : Fragment(), UserParsable {
         }
 
         // LogIn signUp switcher
-        signUpLogInTextView.setOnClickListener {
+        logInSignUpTextView.setOnClickListener {
             //TODO here is all functionality of switching and Text btns
             if(isLogInMode){
                 logInSignUpBtn.text = "Sign Up"
+                logInSignUpTextView.text = "or, Log in"
                 isLogInMode = false
             }else{
                 logInSignUpBtn.text = "Log in"
+                logInSignUpTextView.text = "or, Sign Up"
                 isLogInMode = true
             }
 
