@@ -47,6 +47,9 @@ class FeedsFragment : Fragment() {
     // click listener for menu items
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
+            R.id.users -> {
+                goToUsers()
+            }
             R.id.profile -> {
                 goToProfile()
             }
@@ -62,6 +65,13 @@ class FeedsFragment : Fragment() {
         view?.let {
             Navigation.findNavController(it)
                 .navigate(FeedsFragmentDirections.actionFeedsFragmentToProfileFragment())
+        }
+    }
+
+    private fun goToUsers(){
+        view?.let {
+            Navigation.findNavController(it)
+                .navigate(FeedsFragmentDirections.actionFeedsFragmentToUsersFragment())
         }
     }
 }

@@ -2,8 +2,14 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:title="Profile"
+        android:id="@+id/users"
+        android:icon="@drawable/ic_users"
+        android:title="Users"
+        app:showAsAction="ifRoom" />
+
+    <item
         android:id="@+id/profile"
         android:icon="@drawable/ic_account"
-        app:showAsAction="ifRoom"/>
+        android:title="Profile"
+        app:showAsAction="ifRoom" />
 </menu>
