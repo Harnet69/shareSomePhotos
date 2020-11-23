@@ -118,6 +118,10 @@ class ProfileFragment : Fragment(), UserParsable {
             viewModel.logOut()
         }
 
+        dataBinding.userImageImageView.setOnClickListener {
+            (activity as MainActivity).appPermissions.imagePermissionService.checkPermission()
+        }
+
         observeModel()
     }
 
@@ -168,5 +172,11 @@ class ProfileFragment : Fragment(), UserParsable {
             }
             false
         })
+    }
+
+    // method is called when activity get a result of user  permission decision
+    fun onPermissionsResult(permissionGranted: Boolean) {
+        // create sms dialog and send SMS
+//        createSmsDialog(context, currentArticle, isSendSmsStarted, permissionGranted)
     }
 }
