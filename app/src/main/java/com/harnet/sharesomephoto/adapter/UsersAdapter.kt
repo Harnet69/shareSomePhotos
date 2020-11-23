@@ -13,7 +13,7 @@ class UsersAdapter(private var usersList: ArrayList<User>): RecyclerView.Adapter
     //for updating information from a backend
     fun updateUsersList(newUsersList: List<User>) {
         // get new parsed articles
-        if (newUsersList.size > 0) {
+        if (newUsersList.isNotEmpty()) {
             val newCastedUsersList = newUsersList as ArrayList<User>
 
         usersList.clear()

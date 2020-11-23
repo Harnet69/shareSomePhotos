@@ -53,7 +53,18 @@ class UsersFragment : Fragment() {
             )
         )
 
+        // Swiper refresh listener(screen refreshing process)
+        dataBinding.refreshLayout.setOnRefreshListener {
+            dataBinding.usersList.visibility = View.GONE
+            dataBinding.listErrorTextView.visibility = View.GONE
+            dataBinding.loadingViewProgressBar.visibility = View.VISIBLE
+            viewModel.refresh()
+            dataBinding.refreshLayout.isRefreshing = false // disappears little spinner on the top
+
+        }
+
         observeViewModel()
+
     }
 
     private fun observeViewModel() {

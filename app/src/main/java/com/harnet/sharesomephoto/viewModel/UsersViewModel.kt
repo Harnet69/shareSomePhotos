@@ -14,9 +14,13 @@ class UsersViewModel : ViewModel() {
         // TODO add getting from Parse service method
         val user1 = User("Adam", "","")
         val user2 = User("Pawel", "","")
+        val user3 = User("George", "","")
+        val user4 = User("Mirek", "","")
         val users = ArrayList<User>()
         users.add(user1)
         users.add(user2)
+        users.add(user3)
+        users.add(user4)
 
         retrieveUsers(users)
     }
