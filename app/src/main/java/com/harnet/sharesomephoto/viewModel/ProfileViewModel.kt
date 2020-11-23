@@ -22,12 +22,12 @@ class ProfileViewModel(application: Application) : BaseViewModel(application) {
         if (checkUserInputForEmpty(newUser) && checkUserInputForWhiteSpaces(newUser)) {
             val parseUser = ParseUser()
             //create a new user
-            parseUser.username = newUser.name
+            parseUser.username = newUser.name.trim()
             parseUser.setPassword(newUser.password.trim())
             parseUser.email = newUser.email
 
 
-            // sign in user automatically, till login functionality will be implemented
+            // sign in user
             parseUser.signUpInBackground { e ->
                 if (e == null) {
                     Toast.makeText(getApplication(), "Signed Up Successfully", Toast.LENGTH_SHORT)
