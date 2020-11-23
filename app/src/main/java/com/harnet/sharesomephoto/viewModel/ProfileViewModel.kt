@@ -2,17 +2,10 @@ package com.harnet.sharesomephoto.viewModel
 
 import android.app.Application
 import android.text.TextUtils
-import android.util.Log
 import android.util.Patterns
-import android.view.KeyEvent
-import android.view.View
-import android.view.inputmethod.EditorInfo
-import android.widget.Button
-import android.widget.TextView
-import android.widget.TextView.OnEditorActionListener
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
-import com.harnet.lookatthis.model.User
+import com.harnet.sharesomephoto.model.User
 import com.parse.LogInCallback
 import com.parse.ParseUser
 

@@ -15,11 +15,10 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.google.android.material.textfield.TextInputLayout
-import com.harnet.lookatthis.model.User
-import com.harnet.lookatthis.model.UserParsable
 import com.harnet.sharesomephoto.R
 import com.harnet.sharesomephoto.databinding.ProfileFragmentBinding
+import com.harnet.sharesomephoto.model.User
+import com.harnet.sharesomephoto.model.UserParsable
 import com.harnet.sharesomephoto.viewModel.ProfileViewModel
 import com.parse.ParseUser
 

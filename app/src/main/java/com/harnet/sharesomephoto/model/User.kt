@@ -1,3 +1,3 @@
-package com.harnet.lookatthis.model
+package com.harnet.sharesomephoto.model
 
 data class User(val name: String, val password: String, val email: String)

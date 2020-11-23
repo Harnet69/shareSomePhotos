@@ -1,6 +1,7 @@
-package com.harnet.lookatthis.model
+package com.harnet.sharesomephoto.model
 
 import android.util.Log
+import com.harnet.sharesomephoto.model.User
 import com.parse.LogInCallback
 import com.parse.ParseUser
 import com.parse.SignUpCallback
