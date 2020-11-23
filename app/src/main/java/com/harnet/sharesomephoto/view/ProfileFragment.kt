@@ -1,9 +1,6 @@
 package com.harnet.sharesomephoto.view
 
-import android.graphics.Color
-import android.graphics.PorterDuff
 import android.os.Bundle
-import android.util.Log
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
@@ -135,13 +132,13 @@ class ProfileFragment : Fragment(), UserParsable {
         })
 
         viewModel.mIsUserLogged.observe(viewLifecycleOwner, Observer { isLogged ->
+            //switching between profile details and login blocks
             if (isLogged && ParseUser.getCurrentUser() != null) {
+                dataBinding.user = isLogged()?.let { isLogged()?.let { it1 -> User(it.username, "", it1.email) } }
+
                 userLoginBlock.setVisibility(View.INVISIBLE)
                 userProfileDetailsBlock.setVisibility(View.VISIBLE)
-                //switching between profile details and login blocks
                 Toast.makeText(context, "Hello " + isLogged()?.username, Toast.LENGTH_LONG).show()
-                userNameTextView.text = "Name: " + isLogged()?.username
-                userEmailTextView.text = "E-mail: " + isLogged()?.email
             } else {
                 userLoginBlock.setVisibility(View.VISIBLE)
                 userProfileDetailsBlock.setVisibility(View.INVISIBLE)

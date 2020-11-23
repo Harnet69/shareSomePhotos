@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
         <variable
@@ -10,6 +10,8 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:bind="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".view.ProfileFragment">
@@ -35,14 +37,15 @@
             app:layout_constraintTop_toBottomOf="@id/userImage_ImageView">
 
             <include
+                layout="@layout/login_block"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                layout="@layout/login_block" />
+                android:layout_height="wrap_content" />
 
             <include
+                layout="@layout/profile_details_block"
+                bind:user="@{user}"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                layout="@layout/profile_details_block" />
+                android:layout_height="wrap_content" />
 
         </FrameLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>

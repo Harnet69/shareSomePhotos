@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        appPermissions = AppPermissions(this, fragments) // can be cause of a crash
+        appPermissions = AppPermissions(this, fragments)
         //for back arrow
         navController = Navigation.findNavController(this, R.id.fragments)
         NavigationUI.setupActionBarWithNavController(this, navController)
@@ -58,5 +58,4 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
-
 }
