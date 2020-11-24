@@ -80,15 +80,17 @@ class MainActivity : AppCompatActivity() {
             bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImage)
 
             // find current fragment
-            val myFragment = this.getFragment(ProfileFragment::class.java)
+            val profileFragment = this.getFragment(ProfileFragment::class.java)
+            val usersFragment = this.getFragment(UsersFragment::class.java)
 
             //TODO implement when instead if
-            if(myFragment != null){
+            if(profileFragment != null){
                 fragments.userImage_ImageView.setImageBitmap(bitmap)
                 //TODO record this image to User account on Parse server
-            }else{
-                Toast.makeText(this, "Another fragment", Toast.LENGTH_LONG).show()
-                //TODO implement method for an another fragment
+            }
+            if(usersFragment != null){
+                Toast.makeText(this, "Users fragment", Toast.LENGTH_LONG).show()
+                //TODO implement method for an users fragment
             }
         }catch (e: Exception){
             e.printStackTrace()

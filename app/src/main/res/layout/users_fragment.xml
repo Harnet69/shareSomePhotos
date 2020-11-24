@@ -64,7 +64,9 @@
                 android:backgroundTint="#00c9ff"
                 android:contentDescription="submit"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent" />
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:src="@drawable/ic_user_photo"
+                />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
