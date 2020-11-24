@@ -119,6 +119,7 @@ class ProfileFragment : Fragment(), UserParsable, Imageable {
             viewModel.logOut()
         }
 
+        // Add/change user image
         dataBinding.userImageImageView.setOnClickListener {
             if(! isLogInMode){
                 (activity as MainActivity).appPermissions.imagePermissionService.checkPermission()

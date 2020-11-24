@@ -5,8 +5,11 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.widget.ImageView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat.startActivityForResult
 import androidx.databinding.BindingAdapter
+import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.NavHostFragment
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
@@ -67,4 +70,18 @@ fun ImageView.loadImage(uri: String?, progressDrawable: CircularProgressDrawable
 @BindingAdapter("android:bindImageUrl")
 fun loadBindingImage(view: ImageView, url: String?) {
     view.loadImage(url, getProgressDrawable(view.context))
+}
+
+// Fragment checking for image loading
+@Suppress("UNCHECKED_CAST")
+fun <F : Fragment> AppCompatActivity.getFragment(fragmentClass: Class<F>): F? {
+    val navHostFragment = this.supportFragmentManager.fragments.first() as NavHostFragment
+
+    navHostFragment.childFragmentManager.fragments.forEach {
+        if (fragmentClass.isAssignableFrom(it.javaClass)) {
+            return it as F
+        }
+    }
+
+    return null
 }

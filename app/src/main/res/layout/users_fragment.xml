@@ -55,7 +55,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/fab_btn"
+                android:id="@+id/addImage_btn"
                 android:alpha="0.8"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

@@ -1,11 +1,14 @@
 package com.harnet.sharesomephoto.view
 
+import android.app.Activity
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -13,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.harnet.sharesomephoto.R
 import com.harnet.sharesomephoto.adapter.UsersAdapter
 import com.harnet.sharesomephoto.databinding.UsersFragmentBinding
+import com.harnet.sharesomephoto.util.openImageChooser
 import com.harnet.sharesomephoto.viewModel.UsersViewModel
 
 class UsersFragment : Fragment() {
@@ -63,6 +67,13 @@ class UsersFragment : Fragment() {
 
         }
 
+        // Add/change user image
+        dataBinding.addImageBtn.setOnClickListener {
+            (activity as MainActivity).appPermissions.imagePermissionService.checkPermission()
+            openImageChooser(activity as Activity)
+            Log.i("AddImageClicked", "AddImageClicked ")
+        }
+
         observeViewModel()
 
     }
@@ -98,5 +109,17 @@ class UsersFragment : Fragment() {
             }
         })
 
+    }
+
+    // method is called when activity get a result of user  permission decision
+    fun onPermissionsResult(permissionGranted: Boolean) {
+        if(permissionGranted){
+            openImageChooser(activity as Activity)
+//            chooseImage()
+//        view?.let {
+//            Navigation.findNavController(it).navigate(ProfileFragmentDirections.actionProfileFragmentToImageFragment())
+//        }
+            //TODO implement image choosing functionality Imageable interface
+        }
     }
 }

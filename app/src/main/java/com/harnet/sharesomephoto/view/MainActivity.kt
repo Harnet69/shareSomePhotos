@@ -7,12 +7,14 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.view.MotionEvent
 import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.ui.NavigationUI
 import com.harnet.sharesomephoto.R
 import com.harnet.sharesomephoto.model.AppPermissions
+import com.harnet.sharesomephoto.util.getFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.profile_fragment.*
 
@@ -50,7 +52,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     // when user was asked for a permission
-    override fun onRequestPermissionsResult( requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         //here is the switcher of different kinds of permissions
         when(permissions[0]){
@@ -64,7 +70,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    // when get image from Image Cooser
+    // when get image from Image Chooser
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
@@ -72,7 +78,18 @@ class MainActivity : AppCompatActivity() {
         val bitmap: Bitmap
         try {
             bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImage)
-            fragments.userImage_ImageView.setImageBitmap(bitmap)
+
+            // find current fragment
+            val myFragment = this.getFragment(ProfileFragment::class.java)
+
+            //TODO implement when instead if
+            if(myFragment != null){
+                fragments.userImage_ImageView.setImageBitmap(bitmap)
+                //TODO record this image to User account on Parse server
+            }else{
+                Toast.makeText(this, "Another fragment", Toast.LENGTH_LONG).show()
+                //TODO implement method for an another fragment
+            }
         }catch (e: Exception){
             e.printStackTrace()
         }
