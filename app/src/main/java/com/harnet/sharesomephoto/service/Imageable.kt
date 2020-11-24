@@ -7,6 +7,10 @@ import android.net.Uri
 import android.provider.MediaStore
 import java.net.URI
 
+/**
+ * Interface NOT USED! was created for keeping methods to get user images Uri from the device
+ */
+
 interface Imageable {
     /**
      * Getting All Images Path.

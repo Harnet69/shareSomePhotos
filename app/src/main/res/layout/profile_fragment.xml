@@ -18,8 +18,8 @@
 
         <ImageView
             android:id="@+id/userImage_ImageView"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="wrap_content"
+            android:layout_height="200dp"
             android:layout_marginTop="5dp"
             android:focusable="true"
             app:layout_constraintEnd_toEndOf="parent"

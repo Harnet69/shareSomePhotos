@@ -5,7 +5,6 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.provider.MediaStore
-import android.util.Log
 import android.view.MotionEvent
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
@@ -15,6 +14,7 @@ import androidx.navigation.ui.NavigationUI
 import com.harnet.sharesomephoto.R
 import com.harnet.sharesomephoto.model.AppPermissions
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.profile_fragment.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -64,6 +64,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    // when get image from Image Cooser
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
@@ -71,10 +72,9 @@ class MainActivity : AppCompatActivity() {
         val bitmap: Bitmap
         try {
             bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImage)
-            Log.i("ImageBitMap", "onActivityResult: $bitmap")
+            fragments.userImage_ImageView.setImageBitmap(bitmap)
         }catch (e: Exception){
             e.printStackTrace()
         }
-
     }
 }

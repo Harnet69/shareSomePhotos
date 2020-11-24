@@ -19,6 +19,9 @@ import com.harnet.sharesomephoto.util.loadImage
 import com.harnet.sharesomephoto.viewModel.ImageViewModel
 import kotlinx.android.synthetic.main.image_fragment.*
 
+/**
+ * Class NOT USED! was created for keeping methods to get user images Uri from the device
+ */
 
 class ImageFragment : Fragment() {
     private lateinit var viewModel: ImageViewModel
