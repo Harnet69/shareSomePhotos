@@ -10,7 +10,6 @@ import androidx.navigation.Navigation
 import com.harnet.sharesomephoto.viewModel.FeedsViewModel
 import com.harnet.sharesomephoto.R
 import com.harnet.sharesomephoto.databinding.ProfileFragmentBinding
-import com.harnet.sharesomephoto.util.isLogged
 import com.parse.ParseUser
 
 class FeedsFragment : Fragment() {

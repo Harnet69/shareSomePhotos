@@ -3,7 +3,6 @@ package com.harnet.sharesomephoto.viewModel
 import android.app.Application
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import com.harnet.sharesomephoto.model.User
 import com.parse.FindCallback
 import com.parse.ParseQuery
@@ -14,12 +13,11 @@ class UsersViewModel(application: Application) : BaseViewModel(application) {
     val mIsArticleLoadError = MutableLiveData<Boolean>()
     val mIsLoading = MutableLiveData<Boolean>()
 
-    // refresh mArticles with a new data TWO WAYS TO DO IT: PARSER & RETROFIT
     fun refresh() {
         getUsersFromParseServer()
     }
 
-    // retrieve articles
+    // retrieve users
     private fun retrieveUsers(usersFromParse: List<User>) {
         // set received list to observable mutable list
         mUsers.postValue(usersFromParse)
