@@ -1,6 +1,7 @@
 package com.harnet.sharesomephoto.view
 
 import android.app.Activity
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -13,11 +14,11 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.harnet.sharesomephoto.R
 import com.harnet.sharesomephoto.databinding.ImageFragmentBinding
-import com.harnet.sharesomephoto.databinding.ProfileFragmentBinding
 import com.harnet.sharesomephoto.util.getProgressDrawable
 import com.harnet.sharesomephoto.util.loadImage
 import com.harnet.sharesomephoto.viewModel.ImageViewModel
 import kotlinx.android.synthetic.main.image_fragment.*
+
 
 class ImageFragment : Fragment() {
     private lateinit var viewModel: ImageViewModel
@@ -42,11 +43,24 @@ class ImageFragment : Fragment() {
             for (image in listOfImage) {
                 Log.i("userImages", "onViewCreated: $image")
             }
-                userImage_imageView.loadImage(listOfImage[100].toString(), getProgressDrawable(view.context))
+            userImage_imageView.loadImage(
+                listOfImage[2].toString(),
+                getProgressDrawable(view.context)
+            )
         })
 
         // load images
         viewModel.getAllImages(activity as Activity)
 
+        // open gallery
+//        val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
+//        intent.addCategory(Intent.CATEGORY_OPENABLE)
+//        intent.type = "image/*"
+//        startActivityForResult(intent, 123)
+
+        val intent = Intent()
+        intent.type = "image/*"
+        intent.action = Intent.ACTION_GET_CONTENT
+        startActivityForResult(Intent.createChooser(intent, "Select image"), 123)
     }
 }

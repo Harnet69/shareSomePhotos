@@ -1,8 +1,11 @@
 package com.harnet.sharesomephoto.util
 
+import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.widget.ImageView
+import androidx.core.app.ActivityCompat.startActivityForResult
 import androidx.databinding.BindingAdapter
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.bumptech.glide.Glide
@@ -12,6 +15,13 @@ import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.Target
 import com.harnet.sharesomephoto.R
+
+fun openImageChooser(activity: Activity){
+    val intent = Intent()
+    intent.type = "image/*"
+    intent.action = Intent.ACTION_GET_CONTENT
+    activity.startActivityForResult(Intent.createChooser(intent, "Select image"), 123)
+}
 
 //little loading spinner for image loading
 fun getProgressDrawable(context: Context): CircularProgressDrawable {

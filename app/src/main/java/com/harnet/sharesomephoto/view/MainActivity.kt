@@ -1,20 +1,21 @@
 package com.harnet.sharesomephoto.view
 
 import android.content.Context
+import android.content.Intent
+import android.graphics.Bitmap
 import android.os.Bundle
-import android.util.AttributeSet
+import android.provider.MediaStore
+import android.util.Log
 import android.view.MotionEvent
-import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
-import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 import com.harnet.sharesomephoto.R
 import com.harnet.sharesomephoto.model.AppPermissions
 import kotlinx.android.synthetic.main.activity_main.*
+
 
 class MainActivity : AppCompatActivity() {
     // permission service
@@ -49,13 +50,31 @@ class MainActivity : AppCompatActivity() {
     }
 
     // when user was asked for a permission
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+    override fun onRequestPermissionsResult( requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         //here is the switcher of different kinds of permissions
         when(permissions[0]){
             android.Manifest.permission.READ_EXTERNAL_STORAGE -> {
-                appPermissions.imagePermissionService.onRequestPermissionsResult(requestCode, permissions, grantResults)
+                appPermissions.imagePermissionService.onRequestPermissionsResult(
+                    requestCode,
+                    permissions,
+                    grantResults
+                )
             }
         }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        val selectedImage = data?.data
+        val bitmap: Bitmap
+        try {
+            bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImage)
+            Log.i("ImageBitMap", "onActivityResult: $bitmap")
+        }catch (e: Exception){
+            e.printStackTrace()
+        }
+
     }
 }

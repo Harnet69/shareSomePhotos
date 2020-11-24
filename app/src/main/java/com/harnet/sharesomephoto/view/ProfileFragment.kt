@@ -1,5 +1,6 @@
 package com.harnet.sharesomephoto.view
 
+import android.app.Activity
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.LayoutInflater
@@ -18,6 +19,7 @@ import com.harnet.sharesomephoto.databinding.ProfileFragmentBinding
 import com.harnet.sharesomephoto.model.User
 import com.harnet.sharesomephoto.model.UserParsable
 import com.harnet.sharesomephoto.service.Imageable
+import com.harnet.sharesomephoto.util.openImageChooser
 import com.harnet.sharesomephoto.viewModel.ProfileViewModel
 import com.parse.ParseUser
 
@@ -178,11 +180,14 @@ class ProfileFragment : Fragment(), UserParsable, Imageable {
     // method is called when activity get a result of user  permission decision
     fun onPermissionsResult(permissionGranted: Boolean) {
         if(permissionGranted){
+            openImageChooser(activity as Activity)
 //            chooseImage()
-        view?.let {
-            Navigation.findNavController(it).navigate(ProfileFragmentDirections.actionProfileFragmentToImageFragment())
-        }
+//        view?.let {
+//            Navigation.findNavController(it).navigate(ProfileFragmentDirections.actionProfileFragmentToImageFragment())
+//        }
             //TODO implement image choosing functionality Imageable interface
         }
     }
+
+
 }
