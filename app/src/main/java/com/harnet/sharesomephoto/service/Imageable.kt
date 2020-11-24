@@ -1,10 +1,10 @@
 package com.harnet.sharesomephoto.service
 
-import android.content.Context
-import android.view.LayoutInflater
-import androidx.appcompat.app.AlertDialog
-import androidx.databinding.DataBindingUtil
+import android.util.Log
 
 interface Imageable {
-  
+
+    fun chooseImage() {
+        Log.i("ChooseImageFor Profile", "chooseImage: ChooseImageFor Profile")
+    }
 }

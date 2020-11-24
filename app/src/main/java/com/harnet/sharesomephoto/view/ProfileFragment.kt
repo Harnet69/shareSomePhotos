@@ -1,6 +1,7 @@
 package com.harnet.sharesomephoto.view
 
 import android.os.Bundle
+import android.util.Log
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
@@ -16,10 +17,11 @@ import com.harnet.sharesomephoto.R
 import com.harnet.sharesomephoto.databinding.ProfileFragmentBinding
 import com.harnet.sharesomephoto.model.User
 import com.harnet.sharesomephoto.model.UserParsable
+import com.harnet.sharesomephoto.service.Imageable
 import com.harnet.sharesomephoto.viewModel.ProfileViewModel
 import com.parse.ParseUser
 
-class ProfileFragment : Fragment(), UserParsable {
+class ProfileFragment : Fragment(), UserParsable, Imageable {
     private lateinit var viewModel: ProfileViewModel
     private lateinit var dataBinding: ProfileFragmentBinding
 
@@ -43,7 +45,7 @@ class ProfileFragment : Fragment(), UserParsable {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // DataBinding
         dataBinding = DataBindingUtil.inflate(inflater, R.layout.profile_fragment, container, false)
 
@@ -116,7 +118,11 @@ class ProfileFragment : Fragment(), UserParsable {
         }
 
         dataBinding.userImageImageView.setOnClickListener {
-            (activity as MainActivity).appPermissions.imagePermissionService.checkPermission()
+            if(! isLogInMode){
+                (activity as MainActivity).appPermissions.imagePermissionService.checkPermission()
+            }else{
+                Toast.makeText(context, "Log in at first", Toast.LENGTH_SHORT).show()
+            }
         }
 
         observeModel()
@@ -139,9 +145,11 @@ class ProfileFragment : Fragment(), UserParsable {
                 userLoginBlock.setVisibility(View.INVISIBLE)
                 userProfileDetailsBlock.setVisibility(View.VISIBLE)
                 Toast.makeText(context, "Hello " + isLogged()?.username, Toast.LENGTH_LONG).show()
+                isLogInMode = false
             } else {
                 userLoginBlock.setVisibility(View.VISIBLE)
                 userProfileDetailsBlock.setVisibility(View.INVISIBLE)
+                isLogInMode = true
             }
         })
     }
@@ -173,7 +181,9 @@ class ProfileFragment : Fragment(), UserParsable {
 
     // method is called when activity get a result of user  permission decision
     fun onPermissionsResult(permissionGranted: Boolean) {
-        // create sms dialog and send SMS
-//        createSmsDialog(context, currentArticle, isSendSmsStarted, permissionGranted)
+        if(permissionGranted){
+            chooseImage()
+            //TODO implement image choosing functionality Imageable interface
+        }
     }
 }
