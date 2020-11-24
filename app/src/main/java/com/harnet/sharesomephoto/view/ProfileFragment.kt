@@ -1,7 +1,6 @@
 package com.harnet.sharesomephoto.view
 
 import android.os.Bundle
-import android.util.Log
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
@@ -13,6 +12,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.Navigation
 import com.harnet.sharesomephoto.R
 import com.harnet.sharesomephoto.databinding.ProfileFragmentBinding
 import com.harnet.sharesomephoto.model.User
@@ -130,21 +130,17 @@ class ProfileFragment : Fragment(), UserParsable, Imageable {
 
     private fun observeModel() {
         viewModel.mIsUserExists.observe(viewLifecycleOwner, Observer { isExists ->
-            if (isExists) {
-//                userNameField.setBackgroundColor(Color.rgb(201, 54, 49))
-            } else {
-                //TODO log successfully
-            }
+            // if user exists
         })
 
         viewModel.mIsUserLogged.observe(viewLifecycleOwner, Observer { isLogged ->
             //switching between profile details and login blocks
             if (isLogged && ParseUser.getCurrentUser() != null) {
-                dataBinding.user = isLogged()?.let { isLogged()?.let { it1 -> User(it.username, "", it1.email) } }
+                dataBinding.user = isLoggedGetUser()?.let { isLoggedGetUser()?.let { it1 -> User(it.username, "", it1.email) } }
 
                 userLoginBlock.setVisibility(View.INVISIBLE)
                 userProfileDetailsBlock.setVisibility(View.VISIBLE)
-                Toast.makeText(context, "Hello " + isLogged()?.username, Toast.LENGTH_LONG).show()
+                Toast.makeText(context, "Hello " + isLoggedGetUser()?.username, Toast.LENGTH_LONG).show()
                 isLogInMode = false
             } else {
                 userLoginBlock.setVisibility(View.VISIBLE)
@@ -182,7 +178,10 @@ class ProfileFragment : Fragment(), UserParsable, Imageable {
     // method is called when activity get a result of user  permission decision
     fun onPermissionsResult(permissionGranted: Boolean) {
         if(permissionGranted){
-            chooseImage()
+//            chooseImage()
+        view?.let {
+            Navigation.findNavController(it).navigate(ProfileFragmentDirections.actionProfileFragmentToImageFragment())
+        }
             //TODO implement image choosing functionality Imageable interface
         }
     }

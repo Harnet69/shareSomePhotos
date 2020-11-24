@@ -21,10 +21,19 @@
         android:id="@+id/profileFragment"
         android:name="com.harnet.sharesomephoto.view.ProfileFragment"
         android:label="profile_fragment"
-        tools:layout="@layout/profile_fragment" />
+        tools:layout="@layout/profile_fragment" >
+        <action
+            android:id="@+id/action_profileFragment_to_imageFragment"
+            app:destination="@id/imageFragment" />
+    </fragment>
     <fragment
         android:id="@+id/usersFragment"
         android:name="com.harnet.sharesomephoto.view.UsersFragment"
         android:label="users_fragment"
         tools:layout="@layout/users_fragment" />
+    <fragment
+        android:id="@+id/imageFragment"
+        android:name="com.harnet.sharesomephoto.view.ImageFragment"
+        android:label="image_fragment"
+        tools:layout="@layout/image_fragment" />
 </navigation>

@@ -26,7 +26,6 @@ class ProfileViewModel(application: Application) : BaseViewModel(application) {
             parseUser.setPassword(newUser.password.trim())
             parseUser.email = newUser.email
 
-
             // sign in user
             parseUser.signUpInBackground { e ->
                 if (e == null) {
