@@ -7,6 +7,7 @@ import android.content.pm.PackageManager
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.harnet.sharesomephoto.view.ProfileFragment
+import com.harnet.sharesomephoto.view.UsersFragment
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 
@@ -88,11 +89,11 @@ abstract class PermissionService(private val activity: Activity, val fragment: F
                 )
             }
             //TODO implement it after creating photo sharring screen
-//            is FavouriteFragment -> {
-//                (activeFragment as FavouriteFragment).onPermissionsResult(
-//                    permissionGranted
-//                )
-//            }
+            is UsersFragment -> {
+                (activeFragment as UsersFragment).onPermissionsResult(
+                    permissionGranted
+                )
+            }
         }
     }
 

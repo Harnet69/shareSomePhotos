@@ -70,8 +70,6 @@ class UsersFragment : Fragment() {
         // Add/change user image
         dataBinding.addImageBtn.setOnClickListener {
             (activity as MainActivity).appPermissions.imagePermissionService.checkPermission()
-            openImageChooser(activity as Activity)
-            Log.i("AddImageClicked", "AddImageClicked ")
         }
 
         observeViewModel()
@@ -111,15 +109,10 @@ class UsersFragment : Fragment() {
 
     }
 
-    // method is called when activity get a result of user  permission decision
+    // method is called when activity get a result of user Image permission decision
     fun onPermissionsResult(permissionGranted: Boolean) {
-        if(permissionGranted){
+        if (permissionGranted) {
             openImageChooser(activity as Activity)
-//            chooseImage()
-//        view?.let {
-//            Navigation.findNavController(it).navigate(ProfileFragmentDirections.actionProfileFragmentToImageFragment())
-//        }
-            //TODO implement image choosing functionality Imageable interface
         }
     }
 }

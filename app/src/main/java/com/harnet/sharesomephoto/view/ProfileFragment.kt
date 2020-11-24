@@ -22,6 +22,8 @@ import com.harnet.sharesomephoto.service.Imageable
 import com.harnet.sharesomephoto.util.openImageChooser
 import com.harnet.sharesomephoto.viewModel.ProfileViewModel
 import com.parse.ParseUser
+import kotlinx.android.synthetic.main.login_block.*
+import kotlinx.android.synthetic.main.profile_fragment.*
 
 class ProfileFragment : Fragment(), UserParsable, Imageable {
     private lateinit var viewModel: ProfileViewModel
@@ -116,7 +118,11 @@ class ProfileFragment : Fragment(), UserParsable, Imageable {
 
         // logout button
         logOut.setOnClickListener {
+            userName_editText.text.clear()
+            userPassword_editText.text.clear()
+            userImage_ImageView.setImageResource(R.drawable.ic_user_photo)
             viewModel.logOut()
+
         }
 
         // Add/change user image
@@ -182,11 +188,6 @@ class ProfileFragment : Fragment(), UserParsable, Imageable {
     fun onPermissionsResult(permissionGranted: Boolean) {
         if(permissionGranted){
             openImageChooser(activity as Activity)
-//            chooseImage()
-//        view?.let {
-//            Navigation.findNavController(it).navigate(ProfileFragmentDirections.actionProfileFragmentToImageFragment())
-//        }
-            //TODO implement image choosing functionality Imageable interface
         }
     }
 
