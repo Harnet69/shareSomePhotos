@@ -26,7 +26,7 @@ class ImageFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(this).get(ImageViewModel::class.java)
 
-        viewModel.getImageList().observe(viewLifecycleOwner, Observer<List<String>> { listOfImage ->
+        viewModel.mImagesLiveData.observe(viewLifecycleOwner, Observer<List<String>> { listOfImage ->
             imageWidgetStatus.text = """ Found ${listOfImage.size} Images"""
             //TODO here is the Array with Images Paths
             for (image in listOfImage) {
