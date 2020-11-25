@@ -2,21 +2,16 @@ package com.harnet.sharesomephoto.view
 
 import android.content.Context
 import android.content.Intent
-import android.graphics.Bitmap
 import android.os.Bundle
-import android.provider.MediaStore
 import android.view.MotionEvent
 import android.view.inputmethod.InputMethodManager
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.ui.NavigationUI
 import com.harnet.sharesomephoto.R
 import com.harnet.sharesomephoto.model.AppPermissions
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.profile_fragment.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -58,10 +53,10 @@ class MainActivity : AppCompatActivity() {
         grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        //here is the switcher of different kinds of permissions
+        //switcher of different kinds of permissions
         when (permissions[0]) {
             android.Manifest.permission.READ_EXTERNAL_STORAGE -> {
-                appPermissions.imagePermissionService.onRequestPermissionsResult(
+                appPermissions.imagesService.onRequestPermissionsResult(
                     requestCode,
                     permissions,
                     grantResults
@@ -73,27 +68,12 @@ class MainActivity : AppCompatActivity() {
     // when get image from Image Chooser
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-
-        val selectedImage = data?.data
-        val bitmap: Bitmap
-        try {
-            bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImage)
-
-            //check what fragment is current
-            when (val activeFragment: Fragment? =
-                fragments.childFragmentManager.primaryNavigationFragment) {
-                is ProfileFragment -> {
-                    fragments.userImage_ImageView_Profile.setImageBitmap(bitmap)
-                    //TODO record this image to User account on Parse server
-                }
-                is FeedsFragment -> {
-                    Toast.makeText(this, "Feeds fragment", Toast.LENGTH_LONG).show()
-                    //TODO implement method for an users fragment
-                }
+        //switcher of different kinds of requests codes
+        when (requestCode) {
+            // image gallery access permission
+            resources.getString(R.string.permissionImagesCode).toInt() -> {
+                appPermissions.imagesService.handleWithImageFromLib(fragments, data)
             }
-
-        } catch (e: Exception) {
-            e.printStackTrace()
         }
     }
 }

@@ -38,7 +38,7 @@ class FeedsFragment : Fragment() {
 
         // Add/change user image
         addImage_btn.setOnClickListener {
-            (activity as MainActivity).appPermissions.imagePermissionService.checkPermission()
+            (activity as MainActivity).appPermissions.imagesService.checkPermission()
         }
 
         observeViewModel()

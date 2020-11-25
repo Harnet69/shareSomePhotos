@@ -6,4 +6,6 @@
     <string name="orSignUp">or, Sign Up</string>
     <string name="logIn">Log in</string>
     <string name="orLogIn">or, Log in</string>
+
+    <string name="permissionImagesCode">123</string>
 </resources>

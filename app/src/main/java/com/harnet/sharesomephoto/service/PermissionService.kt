@@ -1,4 +1,4 @@
-package com.harnet.sharesomephoto.service.permissions
+package com.harnet.sharesomephoto.service
 
 import android.app.Activity
 import android.app.AlertDialog
@@ -8,11 +8,10 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.harnet.sharesomephoto.view.FeedsFragment
 import com.harnet.sharesomephoto.view.ProfileFragment
-import com.harnet.sharesomephoto.view.UsersFragment
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 
-abstract class PermissionService(private val activity: Activity, val fragment: Fragment) {
+abstract class PermissionService(val activity: Activity, val fragment: Fragment) {
     protected open val permissionCode: Int = 0
     protected open val permissionType = ""
     protected open val rationaleTitle = ""
