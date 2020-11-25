@@ -3,12 +3,14 @@ package com.harnet.sharesomephoto.model
 import android.graphics.Bitmap
 import android.util.Log
 import com.parse.LogInCallback
+import com.parse.ParseFile
 import com.parse.ParseUser
+import java.io.ByteArrayOutputStream
 
 interface UserParsable {
 
     //add new user
-    fun addUser(user: User){
+    fun addUser(user: User) {
         val parseUser = ParseUser()
 
         //create a new user
@@ -17,11 +19,11 @@ interface UserParsable {
         parseUser.email = user.email
 
         // sign in user automatically, till login functionality will be implemented
-        parseUser.signUpInBackground {e ->
-            if(e == null){
+        parseUser.signUpInBackground { e ->
+            if (e == null) {
                 Log.i("tweet", "addUser: add and sign up successfully")
                 return@signUpInBackground
-            }else{
+            } else {
                 Log.i("tweet", "addUser: smth wrong with sign in" + e.printStackTrace())
                 return@signUpInBackground
             }
@@ -29,7 +31,7 @@ interface UserParsable {
     }
 
     //log in
-    fun logIn(userName: String, userPassword: String){
+    fun logIn(userName: String, userPassword: String) {
         ParseUser.logInInBackground(userName, userPassword, LogInCallback { user, e ->
 //            if (user != null) {
 //            } else {
@@ -40,26 +42,17 @@ interface UserParsable {
 
     //check if the user logged in
     fun isLoggedGetUser(): ParseUser? {
-        if(ParseUser.getCurrentUser() != null){
+        if (ParseUser.getCurrentUser() != null) {
             Log.i("tweet", "isLogged: you logged as: ${ParseUser.getCurrentUser().username}")
-        }else{
+        } else {
             Log.i("tweet", "isLogged: ${ParseUser.getCurrentUser()}")
         }
         return ParseUser.getCurrentUser()
     }
 
     //log out
-    fun logOut(){
+    fun logOut() {
         Log.i("tweet", "logOut: log out user: ${ParseUser.getCurrentUser().username}")
         return ParseUser.logOut()
-    }
-
-    // send chosen image to Parse server
-    fun sendImageToParseServer(chosenImage: Bitmap, isProfileImage: Boolean){
-        if(isProfileImage){
-            Log.i("sendImageToParseServer", "sendImageToParseServer Profile photo: $chosenImage")
-        }else{
-            Log.i("sendImageToParseServer", "sendImageToParseServer Feed photo: $chosenImage")
-        }
     }
 }
