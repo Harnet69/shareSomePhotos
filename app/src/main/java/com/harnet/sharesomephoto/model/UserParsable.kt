@@ -1,5 +1,6 @@
 package com.harnet.sharesomephoto.model
 
+import android.graphics.Bitmap
 import android.util.Log
 import com.parse.LogInCallback
 import com.parse.ParseUser
@@ -51,5 +52,14 @@ interface UserParsable {
     fun logOut(){
         Log.i("tweet", "logOut: log out user: ${ParseUser.getCurrentUser().username}")
         return ParseUser.logOut()
+    }
+
+    // send chosen image to Parse server
+    fun sendImageToParseServer(chosenImage: Bitmap, isProfileImage: Boolean){
+        if(isProfileImage){
+            Log.i("sendImageToParseServer", "sendImageToParseServer Profile photo: $chosenImage")
+        }else{
+            Log.i("sendImageToParseServer", "sendImageToParseServer Feed photo: $chosenImage")
+        }
     }
 }

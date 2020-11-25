@@ -26,6 +26,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         appPermissions = AppPermissions(this, fragments)
+
         //for back arrow
         navController = Navigation.findNavController(this, R.id.fragments)
         NavigationUI.setupActionBarWithNavController(this, navController)
@@ -65,12 +66,12 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    // when get image from Image Chooser
+    // when get image from image library by Image Chooser
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         //switcher of different kinds of requests codes
         when (requestCode) {
-            // image gallery access permission
+            // image gallery access
             resources.getString(R.string.permissionImagesCode).toInt() -> {
                 appPermissions.imagesService.handleWithImageFromLib(fragments, data)
             }

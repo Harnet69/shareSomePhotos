@@ -7,13 +7,16 @@ import android.graphics.Bitmap
 import android.provider.MediaStore
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.harnet.sharesomephoto.R
+import com.harnet.sharesomephoto.model.UserParsable
 import com.harnet.sharesomephoto.view.FeedsFragment
 import com.harnet.sharesomephoto.view.ProfileFragment
 import kotlinx.android.synthetic.main.profile_fragment.*
 
 class ImagesService(activity: Activity, fragment: Fragment) :
-    PermissionService(activity, fragment) {
-    override val permissionCode: Int = 123
+    PermissionService(activity, fragment), UserParsable {
+    override val permissionCode: Int =
+        activity.resources.getString(R.string.permissionImagesCode).toInt()
     override val permissionType = Manifest.permission.READ_EXTERNAL_STORAGE
     override val rationaleTitle = "Access to image library"
     override val rationaleMessage =
@@ -41,10 +44,16 @@ class ImagesService(activity: Activity, fragment: Fragment) :
             is ProfileFragment -> {
                 navFragment.userImage_ImageView_Profile.setImageBitmap(bitmap)
                 //TODO record this image to User account on Parse server
+                bitmap?.let {
+                    sendImageToParseServer(bitmap, true)
+                }
             }
             is FeedsFragment -> {
                 Toast.makeText(activeFragment.context, "Feeds fragment", Toast.LENGTH_LONG).show()
                 //TODO implement method for an users fragment
+                bitmap?.let {
+                    sendImageToParseServer(bitmap, false)
+                }
             }
         }
     }
