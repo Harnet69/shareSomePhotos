@@ -17,7 +17,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <EditText
-            android:id="@+id/userName_editText"
+            android:id="@+id/userName_LoginBlock"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -25,7 +25,7 @@
             android:inputType="textPersonName" />
 
         <EditText
-            android:id="@+id/userPassword_editText"
+            android:id="@+id/userPassword_LoginBlock"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -33,7 +33,7 @@
             android:inputType="textPassword" />
 
         <EditText
-            android:id="@+id/userEmail_editText"
+            android:id="@+id/userEmail_LoginBlock"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -48,17 +48,17 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/login_signUp_btn"
+                android:id="@+id/login_signUp_btn_LoginBlock"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="10dp"
                 android:text="Log in"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/logIn_signUp_TextView"
+                app:layout_constraintEnd_toStartOf="@+id/logIn_signUp_TextView_LoginBlock"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/logIn_signUp_TextView"
+                android:id="@+id/logIn_signUp_TextView_LoginBlock"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_marginEnd="10dp"

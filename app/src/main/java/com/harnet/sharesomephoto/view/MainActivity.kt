@@ -85,7 +85,7 @@ class MainActivity : AppCompatActivity() {
 
             //TODO implement when instead if
             if(profileFragment != null){
-                fragments.userImage_ImageView.setImageBitmap(bitmap)
+                fragments.userImage_ImageView_Profile.setImageBitmap(bitmap)
                 //TODO record this image to User account on Parse server
             }
             if(usersFragment != null){

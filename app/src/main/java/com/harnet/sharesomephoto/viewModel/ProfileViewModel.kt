@@ -31,7 +31,7 @@ class ProfileViewModel(application: Application) : BaseViewModel(application) {
                 if (e == null) {
                     Toast.makeText(getApplication(), "Signed Up Successfully", Toast.LENGTH_SHORT)
                         .show()
-                    isLogged()
+                    getCurrentUserIfLogged()
                 } else {
                     e.printStackTrace()
                     Toast.makeText(getApplication(), e.message, Toast.LENGTH_SHORT).show()
@@ -69,7 +69,7 @@ class ProfileViewModel(application: Application) : BaseViewModel(application) {
     }
 
     //check if the user logged in
-    fun isLogged(): ParseUser? {
+    fun getCurrentUserIfLogged(): ParseUser? {
         if (ParseUser.getCurrentUser() != null) {
             mIsUserLogged.setValue(true)
         } else {

@@ -15,7 +15,7 @@
         android:orientation="horizontal">
 
         <ImageView
-            android:id="@+id/userImage_ImageView"
+            android:id="@+id/userImage_ImageView_Profile"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_margin="5dp"
