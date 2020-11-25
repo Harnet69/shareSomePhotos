@@ -1,15 +1,12 @@
 package com.harnet.sharesomephoto.view
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import android.util.Log
 import android.view.*
-import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
-import com.harnet.sharesomephoto.viewModel.FeedsViewModel
 import com.harnet.sharesomephoto.R
-import com.harnet.sharesomephoto.databinding.ProfileFragmentBinding
+import com.harnet.sharesomephoto.viewModel.FeedsViewModel
 import com.parse.ParseUser
 
 class FeedsFragment : Fragment() {
@@ -26,13 +23,15 @@ class FeedsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        viewModel = ViewModelProvider(this).get(FeedsViewModel::class.java)
+
         // redirect to Profile if a user not logged
         if(ParseUser.getCurrentUser() == null){
             goToProfile()
         }
+
         // switch on a menu
         setHasOptionsMenu(true)
-        viewModel = ViewModelProvider(this).get(FeedsViewModel::class.java)
 
         observeViewModel()
     }
@@ -60,6 +59,7 @@ class FeedsFragment : Fragment() {
 
     }
 
+    // redirect to the Profile page
     private fun goToProfile(){
         view?.let {
             Navigation.findNavController(it)
@@ -67,6 +67,7 @@ class FeedsFragment : Fragment() {
         }
     }
 
+    // redirect to the Users list
     private fun goToUsers(){
         view?.let {
             Navigation.findNavController(it)

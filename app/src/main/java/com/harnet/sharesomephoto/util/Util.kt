@@ -4,10 +4,8 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.graphics.drawable.Drawable
-import android.util.Log
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat.startActivityForResult
 import androidx.databinding.BindingAdapter
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
@@ -63,7 +61,6 @@ fun ImageView.loadImage(uri: String?, progressDrawable: CircularProgressDrawable
             ): Boolean {
                 return false
             }
-
         })
         .into(this)// this - extended ImageView class
 }
@@ -73,7 +70,7 @@ fun loadBindingImage(view: ImageView, url: String?) {
     view.loadImage(url, getProgressDrawable(view.context))
 }
 
-// Fragment checking for image loading
+// Fragment checking for image loading in the main activity
 @Suppress("UNCHECKED_CAST")
 fun <F : Fragment> AppCompatActivity.getFragment(fragmentClass: Class<F>): F? {
     val navHostFragment = this.supportFragmentManager.fragments.first() as NavHostFragment

@@ -16,7 +16,6 @@ import com.harnet.sharesomephoto.R
 import com.harnet.sharesomephoto.databinding.ProfileFragmentBinding
 import com.harnet.sharesomephoto.model.User
 import com.harnet.sharesomephoto.model.UserParsable
-import com.harnet.sharesomephoto.service.Imageable
 import com.harnet.sharesomephoto.util.openImageChooser
 import com.harnet.sharesomephoto.viewModel.ProfileViewModel
 import com.parse.ParseUser
@@ -24,7 +23,7 @@ import kotlinx.android.synthetic.main.login_block.*
 import kotlinx.android.synthetic.main.profile_details_block.*
 import kotlinx.android.synthetic.main.profile_fragment.*
 
-class ProfileFragment : Fragment(), UserParsable, Imageable {
+class ProfileFragment : Fragment(), UserParsable{
     private lateinit var viewModel: ProfileViewModel
     private lateinit var dataBinding: ProfileFragmentBinding
 
@@ -52,19 +51,17 @@ class ProfileFragment : Fragment(), UserParsable, Imageable {
 
         // if user have been logged already !!! Should be in a separate block
         if (ParseUser.getCurrentUser() == null) {
-            login_block.setVisibility(View.VISIBLE)
-            profile_details_block.setVisibility(View.INVISIBLE)
+            login_block.visibility = View.VISIBLE
+            profile_details_block.visibility = View.INVISIBLE
 
         } else {
-            login_block.setVisibility(View.INVISIBLE)
-            profile_details_block.setVisibility(View.VISIBLE)
-            userName_DetailsBlock.text = "Name: " + currentUser?.username
-            userEmail_DetailsBlock.text = "E-mail: " + currentUser?.email
+            login_block.visibility = View.INVISIBLE
+            profile_details_block.visibility = View.VISIBLE
         }
 
         // LogIn signUp switcher
         logIn_signUp_TextView_LoginBlock.setOnClickListener {
-            //TODO here is all functionality of switching and Text btns
+            //functionality of switching and Text btns
             if (isLogInMode) {
                 login_signUp_btn_LoginBlock.text = "Sign Up"
                 logIn_signUp_TextView_LoginBlock.text = "or, Log in"
@@ -120,8 +117,8 @@ class ProfileFragment : Fragment(), UserParsable, Imageable {
             if (isLogged && ParseUser.getCurrentUser() != null) {
                 dataBinding.user = isLoggedGetUser()?.let { isLoggedGetUser()?.let { it1 -> User(it.username, "", it1.email) } }
 
-                login_block.setVisibility(View.INVISIBLE)
-                profile_details_block.setVisibility(View.VISIBLE)
+                login_block.visibility = View.INVISIBLE
+                profile_details_block.visibility = View.VISIBLE
                 Toast.makeText(context, "Hello " + isLoggedGetUser()?.username, Toast.LENGTH_LONG).show()
                 isLogInMode = false
             } else {
