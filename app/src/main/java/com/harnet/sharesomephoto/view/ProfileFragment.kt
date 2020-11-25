@@ -23,7 +23,7 @@ import kotlinx.android.synthetic.main.login_block.*
 import kotlinx.android.synthetic.main.profile_details_block.*
 import kotlinx.android.synthetic.main.profile_fragment.*
 
-class ProfileFragment : Fragment(), UserParsable{
+class ProfileFragment : Fragment(), UserParsable {
     private lateinit var viewModel: ProfileViewModel
     private lateinit var dataBinding: ProfileFragmentBinding
 
@@ -63,13 +63,13 @@ class ProfileFragment : Fragment(), UserParsable{
         logIn_signUp_TextView_LoginBlock.setOnClickListener {
             //functionality of switching and Text btns
             if (isLogInMode) {
-                login_signUp_btn_LoginBlock.text = "Sign Up"
-                logIn_signUp_TextView_LoginBlock.text = "or, Log in"
+                login_signUp_btn_LoginBlock.text = getString(R.string.signUp)
+                logIn_signUp_TextView_LoginBlock.text = getString(R.string.orLogIn)
                 userEmail_LoginBlock.visibility = View.VISIBLE
                 isLogInMode = false
             } else {
-                login_signUp_btn_LoginBlock.text = "Log in"
-                logIn_signUp_TextView_LoginBlock.text = "or, Sign Up"
+                login_signUp_btn_LoginBlock.text = getString(R.string.logIn)
+                logIn_signUp_TextView_LoginBlock.text = getString(R.string.orSignUp)
                 userEmail_LoginBlock.visibility = View.GONE
                 isLogInMode = true
             }
@@ -97,9 +97,9 @@ class ProfileFragment : Fragment(), UserParsable{
 
         // Add/change user image
         userImage_ImageView_Profile.setOnClickListener {
-            if(! isLogInMode){
+            if (!isLogInMode) {
                 (activity as MainActivity).appPermissions.imagePermissionService.checkPermission()
-            }else{
+            } else {
                 Toast.makeText(context, "Log in at first", Toast.LENGTH_SHORT).show()
             }
         }
@@ -115,11 +115,20 @@ class ProfileFragment : Fragment(), UserParsable{
         viewModel.mIsUserLogged.observe(viewLifecycleOwner, Observer { isLogged ->
             //switching between profile details and login blocks
             if (isLogged && ParseUser.getCurrentUser() != null) {
-                dataBinding.user = isLoggedGetUser()?.let { isLoggedGetUser()?.let { it1 -> User(it.username, "", it1.email) } }
+                dataBinding.user = isLoggedGetUser()?.let {
+                    isLoggedGetUser()?.let { it1 ->
+                        User(
+                            it.username,
+                            "",
+                            it1.email
+                        )
+                    }
+                }
 
                 login_block.visibility = View.INVISIBLE
                 profile_details_block.visibility = View.VISIBLE
-                Toast.makeText(context, "Hello " + isLoggedGetUser()?.username, Toast.LENGTH_LONG).show()
+                Toast.makeText(context, "Hello " + isLoggedGetUser()?.username, Toast.LENGTH_LONG)
+                    .show()
                 isLogInMode = false
             } else {
                 login_block.setVisibility(View.VISIBLE)
@@ -132,7 +141,10 @@ class ProfileFragment : Fragment(), UserParsable{
     // handle logIn signUp functionality
     private fun logInSignUp() {
         if (isLogInMode) {
-            viewModel.logIn(userName_LoginBlock.text.toString(), userPassword_LoginBlock.text.toString())
+            viewModel.logIn(
+                userName_LoginBlock.text.toString(),
+                userPassword_LoginBlock.text.toString()
+            )
         } else {
             viewModel.signUp(
                 User(
@@ -156,10 +168,9 @@ class ProfileFragment : Fragment(), UserParsable{
 
     // method is called when activity get a result of user  permission decision
     fun onPermissionsResult(permissionGranted: Boolean) {
-        if(permissionGranted){
+        if (permissionGranted) {
             openImageChooser(activity as Activity)
         }
     }
-
 
 }

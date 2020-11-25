@@ -50,8 +50,7 @@ class UsersViewModel(application: Application) : BaseViewModel(application) {
                     Toast.makeText(getApplication(), "No users here yet", Toast.LENGTH_LONG).show()
                 }
             }else{
-                // switch off waiting spinner
-                //TODO inform user is smth wrong
+                // switch off waiting spinner and inform user is smth wrong
                 mIsLoading.postValue(false)
                 // switch off error message
                 mIsArticleLoadError.postValue(true)

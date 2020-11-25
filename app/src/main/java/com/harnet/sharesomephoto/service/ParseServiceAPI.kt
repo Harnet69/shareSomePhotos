@@ -1,13 +1,9 @@
 package com.harnet.sharesomephoto.service
 
 import android.app.Application
-import android.util.Log
 import com.harnet.sharesomephoto.R
 import com.parse.Parse
 import com.parse.ParseACL
-import com.parse.ParseObject
-import com.parse.ParseUser
-import com.parse.SaveCallback
 
 class ParseServiceAPI: Application() {
 

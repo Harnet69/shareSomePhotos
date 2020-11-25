@@ -88,7 +88,6 @@ abstract class PermissionService(private val activity: Activity, val fragment: F
                     permissionGranted
                 )
             }
-            //TODO implement it after creating photo sharring screen
             is UsersFragment -> {
                 (activeFragment as UsersFragment).onPermissionsResult(
                     permissionGranted

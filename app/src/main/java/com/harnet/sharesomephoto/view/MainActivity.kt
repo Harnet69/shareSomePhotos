@@ -9,12 +9,12 @@ import android.view.MotionEvent
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.ui.NavigationUI
 import com.harnet.sharesomephoto.R
 import com.harnet.sharesomephoto.model.AppPermissions
-import com.harnet.sharesomephoto.util.getFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.profile_fragment.*
 
@@ -59,7 +59,7 @@ class MainActivity : AppCompatActivity() {
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         //here is the switcher of different kinds of permissions
-        when(permissions[0]){
+        when (permissions[0]) {
             android.Manifest.permission.READ_EXTERNAL_STORAGE -> {
                 appPermissions.imagePermissionService.onRequestPermissionsResult(
                     requestCode,
@@ -79,20 +79,20 @@ class MainActivity : AppCompatActivity() {
         try {
             bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImage)
 
-            // find current fragment
-            val profileFragment = this.getFragment(ProfileFragment::class.java)
-            val usersFragment = this.getFragment(UsersFragment::class.java)
+            //check what fragment is current
+            when (val activeFragment: Fragment? =
+                fragments.childFragmentManager.primaryNavigationFragment) {
+                is ProfileFragment -> {
+                    fragments.userImage_ImageView_Profile.setImageBitmap(bitmap)
+                    //TODO record this image to User account on Parse server
+                }
+                is UsersFragment -> {
+                    Toast.makeText(this, "Users fragment", Toast.LENGTH_LONG).show()
+                    //TODO implement method for an users fragment
+                }
+            }
 
-            //TODO implement when instead if
-            if(profileFragment != null){
-                fragments.userImage_ImageView_Profile.setImageBitmap(bitmap)
-                //TODO record this image to User account on Parse server
-            }
-            if(usersFragment != null){
-                Toast.makeText(this, "Users fragment", Toast.LENGTH_LONG).show()
-                //TODO implement method for an users fragment
-            }
-        }catch (e: Exception){
+        } catch (e: Exception) {
             e.printStackTrace()
         }
     }

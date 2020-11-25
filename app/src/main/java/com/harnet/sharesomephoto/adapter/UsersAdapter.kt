@@ -46,7 +46,7 @@ class UsersAdapter(private var usersList: ArrayList<User>): RecyclerView.Adapter
         holder.view.user = usersList[position]
     }
 
-    // TODO fix blinking RecyclerView
+    // Fix blinking RecyclerView
 //    override fun getItemId(position: Int): Long {
 //        return usersList.get(position).id.toLong()
 //    }

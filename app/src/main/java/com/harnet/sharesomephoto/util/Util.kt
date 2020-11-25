@@ -69,17 +69,3 @@ fun ImageView.loadImage(uri: String?, progressDrawable: CircularProgressDrawable
 fun loadBindingImage(view: ImageView, url: String?) {
     view.loadImage(url, getProgressDrawable(view.context))
 }
-
-// Fragment checking for image loading in the main activity
-@Suppress("UNCHECKED_CAST")
-fun <F : Fragment> AppCompatActivity.getFragment(fragmentClass: Class<F>): F? {
-    val navHostFragment = this.supportFragmentManager.fragments.first() as NavHostFragment
-
-    navHostFragment.childFragmentManager.fragments.forEach {
-        if (fragmentClass.isAssignableFrom(it.javaClass)) {
-            return it as F
-        }
-    }
-
-    return null
-}
