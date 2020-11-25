@@ -1,13 +1,16 @@
 package com.harnet.sharesomephoto.view
 
+import android.app.Activity
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import com.harnet.sharesomephoto.R
+import com.harnet.sharesomephoto.util.openImageChooser
 import com.harnet.sharesomephoto.viewModel.FeedsViewModel
 import com.parse.ParseUser
+import kotlinx.android.synthetic.main.feeds_fragment.*
 
 class FeedsFragment : Fragment() {
 
@@ -32,6 +35,11 @@ class FeedsFragment : Fragment() {
 
         // switch on a menu
         setHasOptionsMenu(true)
+
+        // Add/change user image
+        addImage_btn.setOnClickListener {
+            (activity as MainActivity).appPermissions.imagePermissionService.checkPermission()
+        }
 
         observeViewModel()
     }
@@ -72,6 +80,13 @@ class FeedsFragment : Fragment() {
         view?.let {
             Navigation.findNavController(it)
                 .navigate(FeedsFragmentDirections.actionFeedsFragmentToUsersFragment())
+        }
+    }
+
+    // method is called when activity get a result of user Image permission decision
+    fun onPermissionsResult(permissionGranted: Boolean) {
+        if (permissionGranted) {
+            openImageChooser(activity as Activity)
         }
     }
 }

@@ -86,8 +86,8 @@ class MainActivity : AppCompatActivity() {
                     fragments.userImage_ImageView_Profile.setImageBitmap(bitmap)
                     //TODO record this image to User account on Parse server
                 }
-                is UsersFragment -> {
-                    Toast.makeText(this, "Users fragment", Toast.LENGTH_LONG).show()
+                is FeedsFragment -> {
+                    Toast.makeText(this, "Feeds fragment", Toast.LENGTH_LONG).show()
                     //TODO implement method for an users fragment
                 }
             }
