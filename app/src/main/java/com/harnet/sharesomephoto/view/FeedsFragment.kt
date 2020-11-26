@@ -2,6 +2,7 @@ package com.harnet.sharesomephoto.view
 
 import android.app.Activity
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -27,6 +28,15 @@ class FeedsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel = ViewModelProvider(this).get(FeedsViewModel::class.java)
+
+        viewModel.refresh()
+
+        val userImages = viewModel.mImages.value
+        if( userImages != null){
+            for(image in userImages){
+                Log.i("Availableimages", "${image.url}  :  ${image.userName}")
+            }
+        }
 
         // redirect to Profile if a user not logged
         if(ParseUser.getCurrentUser() == null){

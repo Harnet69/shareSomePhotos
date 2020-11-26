@@ -62,27 +62,27 @@ interface ImageParsable {
 
     //get profile image of user
     fun getProfileImgByUser(userName: String, userImageView: ImageView) {
-        val query = ParseQuery<ParseObject>("Image")
-        query.whereEqualTo("username", userName)
-        query.whereEqualTo("isProfileImg", true)
+            val query = ParseQuery<ParseObject>("Image")
+            query.whereEqualTo("username", userName)
+            query.whereEqualTo("isProfileImg", true)
 
-        query.findInBackground(FindCallback { objects, parseObjectError ->
-            if (parseObjectError == null) {
-                if (objects.isNotEmpty()) {
-                    for (image in objects) {
-                        val parseFile = image.getParseFile("image")
-                        userImageView.loadImage(
-                            parseFile.url,
-                            CircularProgressDrawable(userImageView.context)
-                        )
+            query.findInBackground(FindCallback { objects, parseObjectError ->
+                if (parseObjectError == null) {
+                    if (objects.isNotEmpty()) {
+                        for (image in objects) {
+                            val parseFile = image.getParseFile("image")
+                            userImageView.loadImage(
+                                parseFile.url,
+                                CircularProgressDrawable(userImageView.context)
+                            )
+                        }
+                    } else {
+                        Log.i("userImages", "No users with images")
                     }
                 } else {
-                    Log.i("userImages", "No users with images")
+                    parseObjectError.printStackTrace()
                 }
-            } else {
-                parseObjectError.printStackTrace()
-            }
-        })
+            })
     }
 
     fun refreshImagesGallery(context: Context?) {
@@ -102,21 +102,21 @@ interface ImageParsable {
                     for (image in objects) {
                         val parseFile = image.getParseFile("image")
                         profileImageView.loadImage(parseFile.url, CircularProgressDrawable(profileImageView.context))
-                        parseFile.getDataInBackground { data, parseFileError ->
-                            if (data != null && parseFileError == null) {
-                                val bitmap =
-                                    BitmapFactory.decodeByteArray(data, 0, data.size)
-                                // set image to Profile ImageView
-                                profileImageView.setImageBitmap(bitmap)
-                            } else {
-                                Toast.makeText(
-                                    profileImageView.context,
-                                    parseFileError.message,
-                                    Toast.LENGTH_SHORT
-                                )
-                                    .show()
-                            }
-                        }
+//                        parseFile.getDataInBackground { data, parseFileError ->
+//                            if (data != null && parseFileError == null) {
+//                                val bitmap =
+//                                    BitmapFactory.decodeByteArray(data, 0, data.size)
+//                                // set image to Profile ImageView
+//                                profileImageView.setImageBitmap(bitmap)
+//                            } else {
+//                                Toast.makeText(
+//                                    profileImageView.context,
+//                                    parseFileError.message,
+//                                    Toast.LENGTH_SHORT
+//                                )
+//                                    .show()
+//                            }
+//                        }
                     }
                 } else {
                     Toast.makeText(
