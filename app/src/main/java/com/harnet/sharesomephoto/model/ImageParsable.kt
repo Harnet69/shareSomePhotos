@@ -41,8 +41,10 @@ interface ImageParsable {
 
         imageParseObj.saveInBackground(SaveCallback { e ->
             if (e == null) {
-                Log.i("ImageHandling", "sendImageToParseServer: $isProfileImage")
                 if (isProfileImage) {
+                    //TODO check if user have had a Profile image already
+//                    makeImgNotProfiles()
+
                     profileImageView?.let {
                         setProfileImage(profileImageView)
                     }
@@ -77,7 +79,6 @@ interface ImageParsable {
                             if (data != null && parseFileError == null) {
                                 val bitmap = BitmapFactory.decodeByteArray(data, 0, data.size)
                                 // set image to Profile ImageView
-                                Log.i("ImageHandling", " Bitmap: $bitmap")
                                 profileImageView.setImageBitmap(bitmap)
                             } else {
                                 Toast.makeText(
@@ -99,4 +100,22 @@ interface ImageParsable {
             }
         })
     }
-}
+
+    fun makeImgNotProfiles() {
+        val query = ParseQuery<ParseObject>("Image")
+        query.whereEqualTo("username", ParseUser.getCurrentUser().username)
+        query.whereEqualTo("isProfileImg", true)
+        query.findInBackground(FindCallback { objects, parseQueryError ->
+            if (parseQueryError == null) {
+                if (objects.isNotEmpty()) {
+                    for (image in objects) {
+                        image.put("isProfileImg", false)
+                        image.saveInBackground()
+                    }
+                }
+            } else {
+                parseQueryError.printStackTrace()
+            }
+        })
+        }
+    }

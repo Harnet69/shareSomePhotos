@@ -46,6 +46,9 @@ class ImagesService(activity: Activity, fragment: Fragment) :
 //                navFragment.userImage_ImageView_Profile.setImageBitmap(bitmap)
                 //TODO record this image to User account on Parse server
                 bitmap?.let {
+                    // mark previous images af not Profile's
+                    makeImgNotProfiles()
+
                     sendImageToParseServer(activeFragment.context, bitmap, true, navFragment.userImage_ImageView_Profile)
                 }
             }
