@@ -58,6 +58,38 @@ interface ImageParsable {
         })
     }
 
+    //get profile image of user
+    fun getProfileImgByUser(userName: String, userImageView: ImageView) {
+        val query = ParseQuery<ParseObject>("Image")
+        query.whereEqualTo("username", userName)
+        query.whereEqualTo("isProfileImg", true)
+
+        query.findInBackground(FindCallback { objects, parseObjectError ->
+            if (parseObjectError == null) {
+                if (objects.isNotEmpty()) {
+                    for (image in objects) {
+                        val parseFile = image.getParseFile("image")
+                        parseFile.getDataInBackground { data, parseFileError ->
+                            //TODO data null!!! Probably something wrong with access to another users images
+                        Log.i("userImages", "data $data")
+                            if (data != null && parseFileError == null) {
+                                val bitmap =
+                                    BitmapFactory.decodeByteArray(data, 0, data.size)
+                                Log.i("userImages", "$bitmap $userImageView")
+                                userImageView.setImageBitmap(bitmap)
+                            }else{
+                                parseFileError.printStackTrace()
+                            }
+                        }
+                    }
+                } else {
+                    Log.i("userImages", "No users with images")
+                }
+            } else {
+                parseObjectError.printStackTrace()
+            }
+        })
+    }
 
     fun refreshImagesGallery(context: Context?) {
         //TODO refresh gallery when it will be implemented
@@ -69,7 +101,7 @@ interface ImageParsable {
         val query = ParseQuery<ParseObject>("Image")
         query.whereEqualTo("username", ParseUser.getCurrentUser().username)
         query.whereEqualTo("isProfileImg", true)
-        Log.i("ImageHandling", "setProfileImage $query")
+
         query.findInBackground(FindCallback { objects, parseQueryError ->
             if (parseQueryError == null) {
                 if (objects.isNotEmpty()) {
@@ -77,7 +109,8 @@ interface ImageParsable {
                         val parseFile = image.getParseFile("image")
                         parseFile.getDataInBackground { data, parseFileError ->
                             if (data != null && parseFileError == null) {
-                                val bitmap = BitmapFactory.decodeByteArray(data, 0, data.size)
+                                val bitmap =
+                                    BitmapFactory.decodeByteArray(data, 0, data.size)
                                 // set image to Profile ImageView
                                 profileImageView.setImageBitmap(bitmap)
                             } else {
@@ -101,6 +134,7 @@ interface ImageParsable {
         })
     }
 
+    //reset isProfilePictures flag from all pictures
     fun makeImgNotProfiles() {
         val query = ParseQuery<ParseObject>("Image")
         query.whereEqualTo("username", ParseUser.getCurrentUser().username)
@@ -117,5 +151,5 @@ interface ImageParsable {
                 parseQueryError.printStackTrace()
             }
         })
-        }
     }
+}

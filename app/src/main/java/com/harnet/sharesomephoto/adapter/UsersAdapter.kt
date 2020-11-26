@@ -6,9 +6,10 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.harnet.sharesomephoto.R
 import com.harnet.sharesomephoto.databinding.ItemUserBinding
+import com.harnet.sharesomephoto.model.ImageParsable
 import com.harnet.sharesomephoto.model.User
 
-class UsersAdapter(private var usersList: ArrayList<User>): RecyclerView.Adapter<UsersAdapter.UsersViewHolder>() {
+class UsersAdapter(private var usersList: ArrayList<User>): RecyclerView.Adapter<UsersAdapter.UsersViewHolder>(), ImageParsable {
 
     //for updating information from a backend
     fun updateUsersList(newUsersList: List<User>) {
@@ -44,6 +45,8 @@ class UsersAdapter(private var usersList: ArrayList<User>): RecyclerView.Adapter
     override fun onBindViewHolder(holder: UsersViewHolder, position: Int) {
         // bind data to xml variable view
         holder.view.user = usersList[position]
+        //TODO change User model to keep user Image as well
+        getProfileImgByUser(usersList[position].name, holder.view.userImageImageViewProfile)
     }
 
     // Fix blinking RecyclerView

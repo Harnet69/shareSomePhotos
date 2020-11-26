@@ -28,7 +28,6 @@ class UsersViewModel(application: Application) : BaseViewModel(application) {
     }
 
     private fun getUsersFromParseServer(){
-
         val query: ParseQuery<ParseUser> = ParseUser.getQuery()
         // exclude user of this device
         query.whereNotEqualTo("username", ParseUser.getCurrentUser().username)
