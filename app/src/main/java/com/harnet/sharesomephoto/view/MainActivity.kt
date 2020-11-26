@@ -55,13 +55,15 @@ class MainActivity : AppCompatActivity() {
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         //switcher of different kinds of permissions
-        when (permissions[0]) {
-            android.Manifest.permission.READ_EXTERNAL_STORAGE -> {
-                appPermissions.imagesService.onRequestPermissionsResult(
-                    requestCode,
-                    permissions,
-                    grantResults
-                )
+        if(permissions.isNotEmpty()){
+            when (permissions[0]) {
+                android.Manifest.permission.READ_EXTERNAL_STORAGE -> {
+                    appPermissions.imagesService.onRequestPermissionsResult(
+                        requestCode,
+                        permissions,
+                        grantResults
+                    )
+                }
             }
         }
     }

@@ -6,6 +6,8 @@ import android.graphics.BitmapFactory
 import android.util.Log
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.swiperefreshlayout.widget.CircularProgressDrawable
+import com.harnet.sharesomephoto.util.loadImage
 import com.parse.*
 import java.io.ByteArrayOutputStream
 
@@ -69,18 +71,10 @@ interface ImageParsable {
                 if (objects.isNotEmpty()) {
                     for (image in objects) {
                         val parseFile = image.getParseFile("image")
-                        parseFile.getDataInBackground { data, parseFileError ->
-                            //TODO data null!!! Probably something wrong with access to another users images
-                        Log.i("userImages", "data $data")
-                            if (data != null && parseFileError == null) {
-                                val bitmap =
-                                    BitmapFactory.decodeByteArray(data, 0, data.size)
-                                Log.i("userImages", "$bitmap $userImageView")
-                                userImageView.setImageBitmap(bitmap)
-                            }else{
-                                parseFileError.printStackTrace()
-                            }
-                        }
+                        userImageView.loadImage(
+                            parseFile.url,
+                            CircularProgressDrawable(userImageView.context)
+                        )
                     }
                 } else {
                     Log.i("userImages", "No users with images")
@@ -107,6 +101,7 @@ interface ImageParsable {
                 if (objects.isNotEmpty()) {
                     for (image in objects) {
                         val parseFile = image.getParseFile("image")
+                        profileImageView.loadImage(parseFile.url, CircularProgressDrawable(profileImageView.context))
                         parseFile.getDataInBackground { data, parseFileError ->
                             if (data != null && parseFileError == null) {
                                 val bitmap =
