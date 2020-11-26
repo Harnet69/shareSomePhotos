@@ -2,6 +2,7 @@ package com.harnet.sharesomephoto.view
 
 import android.app.Activity
 import android.os.Bundle
+import android.util.Log
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
@@ -14,6 +15,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.harnet.sharesomephoto.R
 import com.harnet.sharesomephoto.databinding.ProfileFragmentBinding
+import com.harnet.sharesomephoto.model.ImageParsable
 import com.harnet.sharesomephoto.model.User
 import com.harnet.sharesomephoto.model.UserParsable
 import com.harnet.sharesomephoto.util.openImageChooser
@@ -23,7 +25,7 @@ import kotlinx.android.synthetic.main.login_block.*
 import kotlinx.android.synthetic.main.profile_details_block.*
 import kotlinx.android.synthetic.main.profile_fragment.*
 
-class ProfileFragment : Fragment(), UserParsable {
+class ProfileFragment : Fragment(), UserParsable, ImageParsable {
     private lateinit var viewModel: ProfileViewModel
     private lateinit var dataBinding: ProfileFragmentBinding
 
@@ -49,14 +51,20 @@ class ProfileFragment : Fragment(), UserParsable {
         //set focus to user name edit field
         userName_LoginBlock.requestFocus()
 
+
         // if user have been logged already !!! Should be in a separate block
         if (ParseUser.getCurrentUser() == null) {
             login_block.visibility = View.VISIBLE
             profile_details_block.visibility = View.INVISIBLE
 
         } else {
+            // set Profile's user image
+            setProfileImage(userImage_ImageView_Profile)
+            Log.i("ImageHandling", "When Profile loaded: ")
+
             login_block.visibility = View.INVISIBLE
             profile_details_block.visibility = View.VISIBLE
+
         }
 
         // LogIn signUp switcher
@@ -127,6 +135,10 @@ class ProfileFragment : Fragment(), UserParsable {
 
                 login_block.visibility = View.INVISIBLE
                 profile_details_block.visibility = View.VISIBLE
+
+                // set Profile's user image
+                setProfileImage(userImage_ImageView_Profile)
+
                 Toast.makeText(context, "Hello " + isLoggedGetUser()?.username, Toast.LENGTH_LONG)
                     .show()
                 isLogInMode = false

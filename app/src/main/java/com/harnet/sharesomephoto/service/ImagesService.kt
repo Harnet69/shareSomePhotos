@@ -43,17 +43,17 @@ class ImagesService(activity: Activity, fragment: Fragment) :
         when (val activeFragment: Fragment? =
             navFragment.childFragmentManager.primaryNavigationFragment) {
             is ProfileFragment -> {
-                navFragment.userImage_ImageView_Profile.setImageBitmap(bitmap)
+//                navFragment.userImage_ImageView_Profile.setImageBitmap(bitmap)
                 //TODO record this image to User account on Parse server
                 bitmap?.let {
-                    sendImageToParseServer(activeFragment.context, bitmap, true)
+                    sendImageToParseServer(activeFragment.context, bitmap, true, navFragment.userImage_ImageView_Profile)
                 }
             }
             is FeedsFragment -> {
                 Toast.makeText(activeFragment.context, "Feeds fragment", Toast.LENGTH_LONG).show()
                 //TODO implement method for an users fragment
                 bitmap?.let {
-                    sendImageToParseServer(activeFragment.context, bitmap, false)
+                    sendImageToParseServer(activeFragment.context, bitmap, false, null)
                 }
             }
         }
