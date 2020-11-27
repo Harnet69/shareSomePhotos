@@ -44,6 +44,8 @@ class FeedsViewModel(application: Application) : BaseViewModel(application) {
                         usersImages.add(Image(parseFile.url, image.get("username").toString()))
                     }
                 } else {
+                    mIsLoading.postValue(false)
+                    mIsImageLoadError.postValue(false)
                     Toast.makeText(getApplication(), "No images yet", Toast.LENGTH_SHORT).show()
                 }
             } else {

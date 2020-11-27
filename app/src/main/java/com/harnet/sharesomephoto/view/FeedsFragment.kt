@@ -15,6 +15,7 @@ import com.harnet.sharesomephoto.R
 import com.harnet.sharesomephoto.util.getProgressDrawable
 import com.harnet.sharesomephoto.util.loadImage
 import com.harnet.sharesomephoto.util.openImageChooser
+import com.harnet.sharesomephoto.util.setActivityTitle
 import com.harnet.sharesomephoto.viewModel.FeedsViewModel
 import com.parse.ParseUser
 import kotlinx.android.synthetic.main.feeds_fragment.*
@@ -33,7 +34,7 @@ class FeedsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        this.setActivityTitle("Users feed")
         viewModel = ViewModelProvider(this).get(FeedsViewModel::class.java)
         viewModel.refresh()
 

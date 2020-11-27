@@ -1,5 +1,6 @@
 package com.harnet.sharesomephoto.view
 
+import android.app.ActionBar
 import android.app.Activity
 import android.os.Bundle
 import android.util.Log
@@ -19,6 +20,7 @@ import com.harnet.sharesomephoto.model.ImageParsable
 import com.harnet.sharesomephoto.model.User
 import com.harnet.sharesomephoto.model.UserParsable
 import com.harnet.sharesomephoto.util.openImageChooser
+import com.harnet.sharesomephoto.util.setActivityTitle
 import com.harnet.sharesomephoto.viewModel.ProfileViewModel
 import com.parse.ParseUser
 import kotlinx.android.synthetic.main.login_block.*
@@ -43,7 +45,7 @@ class ProfileFragment : Fragment(), UserParsable, ImageParsable {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        this.setActivityTitle("Your profile")
         viewModel = ViewModelProvider(this).get(ProfileViewModel::class.java)
 
         currentUser = viewModel.getCurrentUserIfLogged()

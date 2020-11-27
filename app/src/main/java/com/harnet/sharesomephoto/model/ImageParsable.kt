@@ -56,7 +56,7 @@ interface ImageParsable {
                 }
                 Toast.makeText(context, "Image has been shared", Toast.LENGTH_SHORT).show()
             } else {
-                Toast.makeText(context, "Smth went wrong with sharing", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Smth went wrong with sharing ${e.message}", Toast.LENGTH_SHORT).show()
             }
         })
     }

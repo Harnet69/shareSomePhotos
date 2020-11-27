@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.widget.ImageView
+import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.BindingAdapter
 import androidx.fragment.app.Fragment
@@ -68,4 +69,14 @@ fun ImageView.loadImage(uri: String?, progressDrawable: CircularProgressDrawable
 @BindingAdapter("android:bindImageUrl")
 fun loadBindingImage(view: ImageView, url: String?) {
     view.loadImage(url, getProgressDrawable(view.context))
+}
+
+//extension for a user title changing
+fun Fragment.setActivityTitle(@StringRes id: Int)
+{
+    (activity as AppCompatActivity?)!!.supportActionBar?.title = getString(id)
+}
+fun Fragment.setActivityTitle(title: String)
+{
+    (activity as AppCompatActivity?)!!.supportActionBar?.title = title
 }

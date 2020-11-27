@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.harnet.sharesomephoto.R
 import com.harnet.sharesomephoto.adapter.UsersAdapter
 import com.harnet.sharesomephoto.databinding.UsersFragmentBinding
+import com.harnet.sharesomephoto.util.setActivityTitle
 import com.harnet.sharesomephoto.viewModel.UsersViewModel
 import kotlinx.android.synthetic.main.users_fragment.*
 
@@ -33,7 +34,7 @@ class UsersFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        this.setActivityTitle("List of users")
         usersAdapter = UsersAdapter(arrayListOf())
         viewModel = ViewModelProvider(this).get(UsersViewModel::class.java)
 
