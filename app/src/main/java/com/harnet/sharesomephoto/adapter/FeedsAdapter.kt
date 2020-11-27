@@ -1,5 +1,6 @@
 package com.harnet.sharesomephoto.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
@@ -8,6 +9,8 @@ import com.harnet.sharesomephoto.R
 import com.harnet.sharesomephoto.databinding.ItemImageBinding
 import com.harnet.sharesomephoto.model.Image
 import com.harnet.sharesomephoto.model.ImageParsable
+import com.harnet.sharesomephoto.util.getProgressDrawable
+import com.harnet.sharesomephoto.util.loadImage
 
 class FeedsAdapter(private var imagesList: ArrayList<Image>) :
     RecyclerView.Adapter<FeedsAdapter.ImagesViewHolder>(), ImageParsable {
@@ -46,6 +49,8 @@ class FeedsAdapter(private var imagesList: ArrayList<Image>) :
     override fun onBindViewHolder(holder: FeedsAdapter.ImagesViewHolder, position: Int) {
         // bind data to xml variable view
         holder.view.image = imagesList[position]
+//        Log.i("FeedsImages", imagesList[position].url)
+//        holder.view.imageItemImage.loadImage(imagesList[position].url, getProgressDrawable(holder.view.imageItemImage.context))
         //TODO change User model to keep user Image as well
 //        getProfileImgByUser(imagesList[position].name, holder.view.userImageImageViewProfile)
     }
