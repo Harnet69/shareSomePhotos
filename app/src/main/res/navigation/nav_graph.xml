@@ -32,11 +32,14 @@
         tools:layout="@layout/users_fragment" />
     <fragment
         android:id="@+id/imageFragment"
-        android:name="com.harnet.sharesomephoto.ImageFragment"
+        android:name="com.harnet.sharesomephoto.view.ImageFragment"
         android:label="image_fragment"
         tools:layout="@layout/image_fragment" >
         <argument
             android:name="image_url"
+            app:argType="string" />
+        <argument
+            android:name="username"
             app:argType="string" />
     </fragment>
 </navigation>

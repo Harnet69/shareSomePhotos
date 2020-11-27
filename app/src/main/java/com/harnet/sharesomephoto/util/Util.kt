@@ -86,8 +86,8 @@ fun Fragment.setActivityTitle(title: String) {
 }
 
 // go to Image page from feeds
-@BindingAdapter("android:goToImagePage")
-fun goToImagePage(view: ImageView, imageUrl: String?) {
+@BindingAdapter("android:goToImagePage", "android:username")
+fun goToImagePage(view: ImageView, imageUrl: String?, username: String) {
     // prevent a crash when two items were clicked in the same time
     fun View.setOnSingleClickListener(l: (View) -> Unit) {
         setOnClickListener(OnSingleClickListenerService(l))
@@ -96,7 +96,7 @@ fun goToImagePage(view: ImageView, imageUrl: String?) {
     view.setOnSingleClickListener {imageView ->
         // navigate to appropriate detail fragment
         imageUrl?.let {
-            val action = FeedsFragmentDirections.actionFeedsFragmentToImageFragment(imageUrl)
+            val action = FeedsFragmentDirections.actionFeedsFragmentToImageFragment(imageUrl, username)
             // send image url to Image fragment
             Navigation.findNavController(imageView).navigate(action)
         }

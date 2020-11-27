@@ -1,4 +1,4 @@
-package com.harnet.sharesomephoto
+package com.harnet.sharesomephoto.viewModel
 
 import androidx.lifecycle.ViewModel
 
