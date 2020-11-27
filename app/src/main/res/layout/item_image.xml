@@ -29,6 +29,7 @@
             android:layout_height="match_parent"
             android:layout_margin="5dp"
             android:bindImageUrl="@{image.url}"
+            android:goToImagePage="@{image.url}"
             android:scaleType="fitCenter" />
 
     </LinearLayout>
