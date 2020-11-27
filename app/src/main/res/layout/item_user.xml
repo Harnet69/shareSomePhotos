@@ -23,7 +23,7 @@
             app:srcCompat="@drawable/profile_ico" />
 
         <TextView
-            android:id="@+id/user_name"
+            android:id="@+id/user_name_ItemImage"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="2"

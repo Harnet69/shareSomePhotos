@@ -27,7 +27,8 @@ class UsersViewModel(application: Application) : BaseViewModel(application) {
         mIsLoading.postValue(false)
     }
 
-    private fun getUsersFromParseServer(){
+    //get users from server
+    private fun getUsersFromParseServer() {
         val query: ParseQuery<ParseUser> = ParseUser.getQuery()
         // exclude user of this device
         query.whereNotEqualTo("username", ParseUser.getCurrentUser().username)
@@ -36,19 +37,19 @@ class UsersViewModel(application: Application) : BaseViewModel(application) {
         query.findInBackground(FindCallback { objects, e ->
             val usersFromParse = mutableListOf<User>()
 
-            if(e == null){
-                if(objects.isNotEmpty()){
-                    for(user in objects){
+            if (e == null) {
+                if (objects.isNotEmpty()) {
+                    for (user in objects) {
                         usersFromParse.add(User(user.username, "", ""))
                     }
 
                     retrieveUsers(usersFromParse)
-                }else{
+                } else {
                     mIsLoading.postValue(false)
                     mIsArticleLoadError.postValue(false)
                     Toast.makeText(getApplication(), "No users here yet", Toast.LENGTH_LONG).show()
                 }
-            }else{
+            } else {
                 // switch off waiting spinner and inform user is smth wrong
                 mIsLoading.postValue(false)
                 // switch off error message

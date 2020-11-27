@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="image"
+            type="com.harnet.sharesomephoto.model.Image" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/user_name_ItemImage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:text="@{image.userName}"
+            android:textSize="20sp"
+            android:paddingStart="5dp"/>
+
+        <TextView
+            android:id="@+id/image_url_ItemImage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:text="@{image.url}"
+            android:textSize="20sp"
+            android:paddingStart="5dp"/>
+
+        <ImageView
+            android:id="@+id/image_ItemImage"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_margin="5dp"
+            android:bindImageUrl="@{image.url}" />
+
+    </LinearLayout>
+</layout>

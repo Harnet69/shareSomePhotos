@@ -7,11 +7,18 @@ import android.view.*
 import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.appcompat.widget.LinearLayoutCompat
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.harnet.sharesomephoto.R
+import com.harnet.sharesomephoto.adapter.FeedsAdapter
+import com.harnet.sharesomephoto.adapter.UsersAdapter
+import com.harnet.sharesomephoto.databinding.FeedsFragmentBinding
+import com.harnet.sharesomephoto.databinding.UsersFragmentBinding
 import com.harnet.sharesomephoto.util.getProgressDrawable
 import com.harnet.sharesomephoto.util.loadImage
 import com.harnet.sharesomephoto.util.openImageChooser
@@ -19,24 +26,45 @@ import com.harnet.sharesomephoto.util.setActivityTitle
 import com.harnet.sharesomephoto.viewModel.FeedsViewModel
 import com.parse.ParseUser
 import kotlinx.android.synthetic.main.feeds_fragment.*
-
+import kotlinx.android.synthetic.main.users_fragment.*
 
 class FeedsFragment : Fragment() {
-
+    private lateinit var feedsAdapter: FeedsAdapter
+    private lateinit var dataBinding: FeedsFragmentBinding
     private lateinit var viewModel: FeedsViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.feeds_fragment, container, false)
+    ): View {
+        dataBinding = DataBindingUtil.inflate(inflater, R.layout.feeds_fragment, container, false)
+
+        return dataBinding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         this.setActivityTitle("Users feed")
+        feedsAdapter = FeedsAdapter(arrayListOf())
         viewModel = ViewModelProvider(this).get(FeedsViewModel::class.java)
+
         viewModel.refresh()
+
+        feeds_list_FeedsFragment.apply {
+            layoutManager = LinearLayoutManager(context)
+            //Fix blinking RecyclerView
+//            feedsAdapter.setHasStableIds(true)
+            //
+            adapter = feedsAdapter
+        }
+
+        // add separation line between items
+        feeds_list_FeedsFragment.addItemDecoration(
+            DividerItemDecoration(
+                feeds_list_FeedsFragment.context,
+                DividerItemDecoration.VERTICAL
+            )
+        )
 
         // redirect to Profile if a user not logged
         if(ParseUser.getCurrentUser() == null){
@@ -53,7 +81,6 @@ class FeedsFragment : Fragment() {
 
         // Swiper refresh listener(screen refreshing process)
         refreshLayout_feedsFragment.setOnRefreshListener {
-            removeAllChilds(list_of_feeds_FeedsFragment)
             listError_TextView_feedsFragment.visibility = View.GONE
             loadingView_ProgressBar_feedsFragment.visibility = View.VISIBLE
             viewModel.refresh()
@@ -87,8 +114,8 @@ class FeedsFragment : Fragment() {
         // update the layout using values of mutable variables from a ViewModel
         viewModel.mImages.observe(viewLifecycleOwner, Observer { images ->
             images?.let {
-                list_of_feeds_FeedsFragment.visibility = View.VISIBLE
-//                usersAdapter.updateUsersList(images)
+                feeds_list_FeedsFragment.visibility = View.VISIBLE
+                feedsAdapter.updateFeedsList(images)
             }
         })
 
@@ -104,24 +131,13 @@ class FeedsFragment : Fragment() {
         viewModel.mIsLoading.observe(viewLifecycleOwner, Observer { isLoading ->
             //check isLoading not null
             isLoading?.let {
-                //TODO show all photos from here
-                // for test purposes
-                // CHANGE TO NORMAL RECYCLER VIEW
-                val userImages = viewModel.mImages.value
-                if (userImages != null) {
-                    removeAllChilds(list_of_feeds_FeedsFragment)
-                    for (image in userImages) {
-                        list_of_feeds_FeedsFragment.addView(createImageView(image.url))
-                    }
-                }
-
                 // if data still loading - show spinner, else - remove it
                 loadingView_ProgressBar_feedsFragment.visibility =
                     if (it) View.VISIBLE else View.GONE
                 if (it) {
                     //hide all views when progress bar is visible
                     listError_TextView_feedsFragment.visibility = View.GONE
-                    list_of_feeds_FeedsFragment.visibility = View.GONE
+                    feeds_list_FeedsFragment.visibility = View.GONE
                 }
             }
         })
@@ -161,9 +177,5 @@ class FeedsFragment : Fragment() {
         imageView.loadImage(imageUrl, getProgressDrawable(imageView.context))
 
         return imageView
-    }
-
-    fun removeAllChilds(parent_element: LinearLayout){
-        parent_element.removeAllViews()
     }
 }

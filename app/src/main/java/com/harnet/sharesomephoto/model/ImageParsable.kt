@@ -2,11 +2,9 @@ package com.harnet.sharesomephoto.model
 
 import android.content.Context
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.util.Log
 import android.widget.ImageView
 import android.widget.Toast
-import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.harnet.sharesomephoto.util.getProgressDrawable
 import com.harnet.sharesomephoto.util.loadImage
 import com.parse.*

@@ -1,14 +1,12 @@
 package com.harnet.sharesomephoto.viewModel
 
 import android.app.Application
-import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import com.harnet.sharesomephoto.model.Image
 import com.parse.FindCallback
 import com.parse.ParseObject
 import com.parse.ParseQuery
-import com.parse.ParseUser
 
 class FeedsViewModel(application: Application) : BaseViewModel(application) {
     val mImages = MutableLiveData<List<Image>>()
@@ -29,7 +27,7 @@ class FeedsViewModel(application: Application) : BaseViewModel(application) {
         mIsLoading.postValue(false)
     }
 
-
+    // get images from server
     private fun getImagesFromParseServer() {
         val usersImages = mutableListOf<Image>()
 
@@ -42,6 +40,7 @@ class FeedsViewModel(application: Application) : BaseViewModel(application) {
                     for (image in objects) {
                         val parseFile = image.getParseFile("image")
                         usersImages.add(Image(parseFile.url, image.get("username").toString()))
+                        retrieveImages(usersImages)
                     }
                 } else {
                     mIsLoading.postValue(false)
@@ -55,13 +54,6 @@ class FeedsViewModel(application: Application) : BaseViewModel(application) {
                 mIsImageLoadError.postValue(true)
                 Toast.makeText(getApplication(), parseObjectError.message, Toast.LENGTH_SHORT)
                     .show()
-            }
-
-            //if images exists
-            if (usersImages.isNotEmpty()) {
-                mImages.setValue(usersImages)
-                mIsImageLoadError.setValue(false)
-                mIsLoading.setValue(false)
             }
         })
     }
