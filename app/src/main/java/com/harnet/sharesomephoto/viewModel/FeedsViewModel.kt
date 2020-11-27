@@ -33,6 +33,7 @@ class FeedsViewModel(application: Application) : BaseViewModel(application) {
 
         val query = ParseQuery<ParseObject>("Image")
         query.whereEqualTo("isProfileImg", false)
+        query.orderByDescending("createdAt")
 
         query.findInBackground(FindCallback { objects, parseObjectError ->
             if (parseObjectError == null) {
