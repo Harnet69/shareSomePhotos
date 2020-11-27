@@ -4,16 +4,21 @@ import android.app.Activity
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import android.widget.ImageView
+import android.widget.LinearLayout
+import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import com.harnet.sharesomephoto.R
+import com.harnet.sharesomephoto.util.getProgressDrawable
+import com.harnet.sharesomephoto.util.loadImage
 import com.harnet.sharesomephoto.util.openImageChooser
 import com.harnet.sharesomephoto.viewModel.FeedsViewModel
 import com.parse.ParseUser
 import kotlinx.android.synthetic.main.feeds_fragment.*
-import kotlinx.android.synthetic.main.users_fragment.*
+
 
 class FeedsFragment : Fragment() {
 
@@ -30,16 +35,7 @@ class FeedsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel = ViewModelProvider(this).get(FeedsViewModel::class.java)
-        Log.i("Availableimages", "onViewCreated: ")
         viewModel.refresh()
-
-
-//        val userImages = viewModel.mImages.value
-//        if( userImages != null){
-//            for(image in userImages){
-//                Log.i("Availableimages", "${image.url}  :  ${image.userName}")
-//            }
-//        }
 
         // redirect to Profile if a user not logged
         if(ParseUser.getCurrentUser() == null){
@@ -56,7 +52,7 @@ class FeedsFragment : Fragment() {
 
         // Swiper refresh listener(screen refreshing process)
         refreshLayout_feedsFragment.setOnRefreshListener {
-//            feeds_list_feedsFragment.visibility = View.GONE
+            removeAllChilds(list_of_feeds_FeedsFragment)
             listError_TextView_feedsFragment.visibility = View.GONE
             loadingView_ProgressBar_feedsFragment.visibility = View.VISIBLE
             viewModel.refresh()
@@ -90,7 +86,7 @@ class FeedsFragment : Fragment() {
         // update the layout using values of mutable variables from a ViewModel
         viewModel.mImages.observe(viewLifecycleOwner, Observer { images ->
             images?.let {
-//                users_list_usersFragment.visibility = View.VISIBLE
+                list_of_feeds_FeedsFragment.visibility = View.VISIBLE
 //                usersAdapter.updateUsersList(images)
             }
         })
@@ -109,10 +105,12 @@ class FeedsFragment : Fragment() {
             isLoading?.let {
                 //TODO show all photos from here
                 // for test purposes
+                // CHANGE TO NORMAL RECYCLER VIEW
                 val userImages = viewModel.mImages.value
-                if( userImages != null){
-                    for(image in userImages){
-                        Log.i("Availableimages", "${image.url}  :  ${image.userName}")
+                if (userImages != null) {
+                    removeAllChilds(list_of_feeds_FeedsFragment)
+                    for (image in userImages) {
+                        list_of_feeds_FeedsFragment.addView(createImageView(image.url))
                     }
                 }
 
@@ -122,7 +120,7 @@ class FeedsFragment : Fragment() {
                 if (it) {
                     //hide all views when progress bar is visible
                     listError_TextView_feedsFragment.visibility = View.GONE
-//                    users_list_usersFragment.visibility = View.GONE
+                    list_of_feeds_FeedsFragment.visibility = View.GONE
                 }
             }
         })
@@ -149,5 +147,22 @@ class FeedsFragment : Fragment() {
         if (permissionGranted) {
             openImageChooser(activity as Activity)
         }
+    }
+
+    // create imageView
+    fun createImageView(imageUrl: String): ImageView {
+        val imageView = ImageView(context)
+        imageView.layoutParams = LinearLayout.LayoutParams(
+            LinearLayoutCompat.LayoutParams.MATCH_PARENT,
+            LinearLayout.LayoutParams.WRAP_CONTENT,
+            1.0f
+        ) // value is in pixels
+        imageView.loadImage(imageUrl, getProgressDrawable(imageView.context))
+
+        return imageView
+    }
+
+    fun removeAllChilds(parent_element: LinearLayout){
+        parent_element.removeAllViews()
     }
 }

@@ -7,6 +7,7 @@ import android.util.Log
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
+import com.harnet.sharesomephoto.util.getProgressDrawable
 import com.harnet.sharesomephoto.util.loadImage
 import com.parse.*
 import java.io.ByteArrayOutputStream
@@ -73,7 +74,7 @@ interface ImageParsable {
                             val parseFile = image.getParseFile("image")
                             userImageView.loadImage(
                                 parseFile.url,
-                                CircularProgressDrawable(userImageView.context)
+                                getProgressDrawable(userImageView.context)
                             )
                         }
                     } else {
@@ -101,7 +102,7 @@ interface ImageParsable {
                 if (objects.isNotEmpty()) {
                     for (image in objects) {
                         val parseFile = image.getParseFile("image")
-                        profileImageView.loadImage(parseFile.url, CircularProgressDrawable(profileImageView.context))
+                        profileImageView.loadImage(parseFile.url, getProgressDrawable(profileImageView.context))
 //                        parseFile.getDataInBackground { data, parseFileError ->
 //                            if (data != null && parseFileError == null) {
 //                                val bitmap =
