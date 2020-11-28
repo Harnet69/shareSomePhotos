@@ -99,6 +99,7 @@ class ProfileFragment : Fragment(), UserParsable, ImageParsable {
 
         // logout button
         logOut_btn_DetailsBlock.setOnClickListener {
+            isLogInMode = true
             userName_LoginBlock.text.clear()
             userPassword_LoginBlock.text.clear()
             userEmail_LoginBlock.text.clear()
