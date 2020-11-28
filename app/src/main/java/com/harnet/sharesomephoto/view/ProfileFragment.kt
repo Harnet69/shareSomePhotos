@@ -54,9 +54,6 @@ class ProfileFragment : Fragment(), UserParsable, ImageParsable {
         //set focus to user name edit field
         userName_LoginBlock.requestFocus()
 
-        //TODO TEST!!!
-//        viewModel.getProfileImgUrl()
-
         // if user have been logged already !!! Should be in a separate block
         if (ParseUser.getCurrentUser() == null) {
             login_block.visibility = View.VISIBLE
@@ -109,16 +106,16 @@ class ProfileFragment : Fragment(), UserParsable, ImageParsable {
 
         }
 
-        // Add/change user image
-        userImage_ImageView_Profile.setOnClickListener {
-            if (!isLogInMode) {
-//                (activity as MainActivity).appPermissions.imagesService.checkPermission()
-//                viewModel.addProfileImageUrl("www.image.com")
-            } else {
-                Toast.makeText(context, "Log in at first", Toast.LENGTH_SHORT).show()
-            }
-        }
+//        userImage_ImageView_Profile.setOnClickListener {
+//            if (!isLogInMode) {
+////                (activity as MainActivity).appPermissions.imagesService.checkPermission()
+////                viewModel.addProfileImageUrl("www.image.com")
+//            } else {
+//                Toast.makeText(context, "Log in at first", Toast.LENGTH_SHORT).show()
+//            }
+//        }
 
+        // Add/change user image
         userImage_ImageView_Profile.setOnLongClickListener {
             if (!isLogInMode) {
                 if (this.context?.checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
@@ -147,7 +144,8 @@ class ProfileFragment : Fragment(), UserParsable, ImageParsable {
                         User(
                             it.username,
                             "",
-                            it1.email
+                            it1.email,
+                            it.get("profileImg").toString()
                         )
                     }
                 }
@@ -181,7 +179,8 @@ class ProfileFragment : Fragment(), UserParsable, ImageParsable {
                 User(
                     userName_LoginBlock.text.toString(),
                     userPassword_LoginBlock.text.toString(),
-                    userEmail_LoginBlock.text.toString()
+                    userEmail_LoginBlock.text.toString(),
+                    null
                 )
             )
         }

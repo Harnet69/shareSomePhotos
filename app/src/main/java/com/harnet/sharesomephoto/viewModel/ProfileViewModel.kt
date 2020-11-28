@@ -46,7 +46,7 @@ class ProfileViewModel(application: Application) : BaseViewModel(application) {
 
     //log in
     fun logIn(userName: String, userPassword: String) {
-        if (checkUserInputForWhiteSpaces(User(userName, userPassword, ""))) {
+        if (checkUserInputForWhiteSpaces(User(userName, userPassword, "", null))) {
             ParseUser.logInInBackground(userName, userPassword, LogInCallback { user, e ->
                 if (user != null) {
                     mIsUserLogged.setValue(true)

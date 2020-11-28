@@ -12,6 +12,7 @@ import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.BindingAdapter
 import androidx.fragment.app.Fragment
+import androidx.navigation.NavDirections
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.NavHostFragment
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
@@ -25,6 +26,8 @@ import com.harnet.sharesomephoto.R
 import com.harnet.sharesomephoto.service.OnSingleClickListenerService
 import com.harnet.sharesomephoto.view.FeedsFragmentDirections
 import com.harnet.sharesomephoto.view.MainActivity
+import com.harnet.sharesomephoto.view.ProfileFragmentDirections
+import com.parse.ParseUser
 import kotlinx.android.synthetic.main.profile_fragment.*
 
 fun openImageChooser(activity: Activity) {
@@ -90,18 +93,25 @@ fun Fragment.setActivityTitle(title: String) {
 
 // go to Image page from feeds
 @BindingAdapter("android:goToImagePage", "android:username")
-fun goToImagePage(view: ImageView, imageUrl: String?, username: String) {
+fun goToImagePage(view: ImageView, imageUrl: String?, username: String?) {
     // prevent a crash when two items were clicked in the same time
     fun View.setOnSingleClickListener(l: (View) -> Unit) {
         setOnClickListener(OnSingleClickListenerService(l))
     }
 
-    view.setOnSingleClickListener {imageView ->
+    view.setOnSingleClickListener { imageView ->
         // navigate to appropriate detail fragment
         imageUrl?.let {
-            val action = FeedsFragmentDirections.actionFeedsFragmentToImageFragment(imageUrl, username)
-            // send image url to Image fragment
-            Navigation.findNavController(imageView).navigate(action)
+            username?.let {
+                if (username == ParseUser.getCurrentUser().username && ParseUser.getCurrentUser().get("profileImg").toString() == imageUrl) {
+                    val action = ProfileFragmentDirections.actionProfileFragmentToImageFragment( imageUrl, username)
+                    Navigation.findNavController(imageView).navigate(action)
+                } else {
+                    val action2  = FeedsFragmentDirections.actionFeedsFragmentToImageFragment(imageUrl, username)
+                    Navigation.findNavController(imageView).navigate(action2)
+                }
+            }
+            //TODO here will be potential problem with another directions, from an another user's library image
         }
     }
 }
