@@ -61,8 +61,8 @@ class ProfileFragment : Fragment(), UserParsable, ImageParsable {
 
         } else {
             // set Profile's user image
-            setProfileImage(userImage_ImageView_Profile)
-            Log.i("ImageHandling", "When Profile loaded: ")
+//            setProfileImage(userImage_ImageView_Profile)
+//            Log.i("ImageHandling", "When Profile loaded: ")
 
             login_block.visibility = View.INVISIBLE
             profile_details_block.visibility = View.VISIBLE
@@ -154,7 +154,7 @@ class ProfileFragment : Fragment(), UserParsable, ImageParsable {
                 profile_details_block.visibility = View.VISIBLE
 
                 // set Profile's user image
-                setProfileImage(userImage_ImageView_Profile)
+//                setProfileImage(userImage_ImageView_Profile)
 
                 Toast.makeText(context, "Hello " + isLoggedGetUser()?.username, Toast.LENGTH_LONG)
                     .show()

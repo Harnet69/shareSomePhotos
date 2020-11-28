@@ -44,7 +44,6 @@ interface ImageParsable {
             if (e == null) {
                 if (isProfileImage) {
                     //TODO check if user have had a Profile image already
-//                    makeImgNotProfiles()
 
                     profileImageView?.let {
                         setProfileImage(profileImageView)
