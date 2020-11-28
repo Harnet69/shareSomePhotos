@@ -27,7 +27,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
-                android:id="@+id/userName_DetailsBlock"
+                android:id="@+id/userName_UserDescr"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
@@ -36,7 +36,7 @@
                 android:text="@{user.name}"/>
 
             <TextView
-                android:id="@+id/userEmail_DetailsBlock"
+                android:id="@+id/userEmail_UserDescr"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
