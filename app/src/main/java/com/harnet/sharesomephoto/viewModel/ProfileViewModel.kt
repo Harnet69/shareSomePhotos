@@ -6,7 +6,10 @@ import android.util.Patterns
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import com.harnet.sharesomephoto.model.User
+import com.parse.GetCallback
+import com.parse.GetDataCallback
 import com.parse.LogInCallback
+import com.parse.ParseQuery
 import com.parse.ParseUser
 
 
@@ -39,6 +42,22 @@ class ProfileViewModel(application: Application) : BaseViewModel(application) {
                 }
             }
         }
+    }
+
+    // addProfileImage
+    fun addProfileImage(imgUrl: String){
+        val parserUser = ParseUser.getCurrentUser()
+        val query: ParseQuery<ParseUser> = ParseUser.getQuery()
+        query.getInBackground(parserUser.objectId, GetCallback { `object`, e ->
+            if(e == null){
+                parserUser.put("profileImg", imgUrl)
+                parserUser.saveInBackground()
+                Toast.makeText(getApplication(), "Image was changed $imgUrl", Toast.LENGTH_SHORT).show()
+            }else{
+                Toast.makeText(getApplication(), e.message, Toast.LENGTH_SHORT).show()
+            }
+        })
+
     }
 
     //log in

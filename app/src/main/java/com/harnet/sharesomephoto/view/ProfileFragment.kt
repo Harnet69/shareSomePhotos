@@ -109,13 +109,14 @@ class ProfileFragment : Fragment(), UserParsable, ImageParsable {
         }
 
         // Add/change user image
-//        userImage_ImageView_Profile.setOnClickListener {
-//            if (!isLogInMode) {
+        userImage_ImageView_Profile.setOnClickListener {
+            if (!isLogInMode) {
 //                (activity as MainActivity).appPermissions.imagesService.checkPermission()
-//            } else {
-//                Toast.makeText(context, "Log in at first", Toast.LENGTH_SHORT).show()
-//            }
-//        }
+                viewModel.addProfileImage("www.image.com")
+            } else {
+                Toast.makeText(context, "Log in at first", Toast.LENGTH_SHORT).show()
+            }
+        }
 
         userImage_ImageView_Profile.setOnLongClickListener {
             if (!isLogInMode) {
