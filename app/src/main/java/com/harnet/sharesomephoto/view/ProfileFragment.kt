@@ -1,7 +1,6 @@
 package com.harnet.sharesomephoto.view
 
 import android.Manifest
-import android.app.ActionBar
 import android.app.Activity
 import android.content.pm.PackageManager
 import android.os.Bundle
@@ -55,6 +54,8 @@ class ProfileFragment : Fragment(), UserParsable, ImageParsable {
         //set focus to user name edit field
         userName_LoginBlock.requestFocus()
 
+        //TODO TEST!!!
+//        viewModel.getProfileImgUrl()
 
         // if user have been logged already !!! Should be in a separate block
         if (ParseUser.getCurrentUser() == null) {
@@ -112,7 +113,7 @@ class ProfileFragment : Fragment(), UserParsable, ImageParsable {
         userImage_ImageView_Profile.setOnClickListener {
             if (!isLogInMode) {
 //                (activity as MainActivity).appPermissions.imagesService.checkPermission()
-                viewModel.addProfileImage("www.image.com")
+//                viewModel.addProfileImageUrl("www.image.com")
             } else {
                 Toast.makeText(context, "Log in at first", Toast.LENGTH_SHORT).show()
             }

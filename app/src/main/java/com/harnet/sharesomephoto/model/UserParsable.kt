@@ -1,9 +1,13 @@
 package com.harnet.sharesomephoto.model
 
+import android.content.Context
 import android.graphics.Bitmap
 import android.util.Log
+import android.widget.Toast
+import com.parse.GetCallback
 import com.parse.LogInCallback
 import com.parse.ParseFile
+import com.parse.ParseQuery
 import com.parse.ParseUser
 import java.io.ByteArrayOutputStream
 

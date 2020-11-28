@@ -44,22 +44,6 @@ class ProfileViewModel(application: Application) : BaseViewModel(application) {
         }
     }
 
-    // addProfileImage
-    fun addProfileImage(imgUrl: String){
-        val parserUser = ParseUser.getCurrentUser()
-        val query: ParseQuery<ParseUser> = ParseUser.getQuery()
-        query.getInBackground(parserUser.objectId, GetCallback { `object`, e ->
-            if(e == null){
-                parserUser.put("profileImg", imgUrl)
-                parserUser.saveInBackground()
-                Toast.makeText(getApplication(), "Image was changed $imgUrl", Toast.LENGTH_SHORT).show()
-            }else{
-                Toast.makeText(getApplication(), e.message, Toast.LENGTH_SHORT).show()
-            }
-        })
-
-    }
-
     //log in
     fun logIn(userName: String, userPassword: String) {
         if (checkUserInputForWhiteSpaces(User(userName, userPassword, ""))) {
@@ -144,5 +128,35 @@ class ProfileViewModel(application: Application) : BaseViewModel(application) {
 
     private fun isValidEmail(target: CharSequence): Boolean {
         return !TextUtils.isEmpty(target) && Patterns.EMAIL_ADDRESS.matcher(target).matches()
+    }
+
+
+    // addProfileImage
+    fun addProfileImageUrl(imgUrl: String){
+        val parserUser = ParseUser.getCurrentUser()
+        val query: ParseQuery<ParseUser> = ParseUser.getQuery()
+        query.getInBackground(parserUser.objectId, GetCallback { `object`, e ->
+            if(e == null){
+                parserUser.put("profileImg", imgUrl)
+                parserUser.saveInBackground()
+                Toast.makeText(getApplication(), "Image was changed $imgUrl", Toast.LENGTH_SHORT).show()
+            }else{
+                Toast.makeText(getApplication(), e.message, Toast.LENGTH_SHORT).show()
+            }
+        })
+
+    }
+
+    fun getProfileImgUrl(){
+        val parserUser = ParseUser.getCurrentUser()
+        val query: ParseQuery<ParseUser> = ParseUser.getQuery()
+        query.getInBackground(parserUser.objectId, GetCallback { `object`, e ->
+            if(e == null){
+                Toast.makeText(getApplication(), `object`.get("profileImg").toString(), Toast.LENGTH_SHORT).show()
+
+            }else{
+                Toast.makeText(getApplication(), e.message, Toast.LENGTH_SHORT).show()
+            }
+        })
     }
 }

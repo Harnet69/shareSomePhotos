@@ -100,6 +100,9 @@ interface ImageParsable {
                 if (objects.isNotEmpty()) {
                     for (image in objects) {
                         val parseFile = image.getParseFile("image")
+                        //set image to user field on Parse Server
+                        setProfileImageUrl(profileImageView.context, parseFile.url)
+
                         profileImageView.loadImage(parseFile.url, getProgressDrawable(profileImageView.context))
                     }
                 } else {
@@ -109,6 +112,11 @@ interface ImageParsable {
                         Toast.LENGTH_SHORT
                     ).show()
                 }
+            }else{
+                Toast.makeText(
+                    profileImageView.context,parseQueryError.message,
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         })
     }
@@ -128,6 +136,34 @@ interface ImageParsable {
                 }
             } else {
                 parseQueryError.printStackTrace()
+            }
+        })
+    }
+
+    fun setProfileImgNew(profileImageView: ImageView){
+        val parserUser = ParseUser.getCurrentUser()
+        val query: ParseQuery<ParseUser> = ParseUser.getQuery()
+        query.getInBackground(parserUser.objectId, GetCallback { `object`, e ->
+            if(e == null){
+                profileImageView.loadImage(`object`.get("profileImg").toString(), getProgressDrawable(profileImageView.context))
+                Toast.makeText(profileImageView.context, `object`.get("profileImg").toString(), Toast.LENGTH_SHORT).show()
+
+            }else{
+                Toast.makeText(profileImageView.context, e.message, Toast.LENGTH_SHORT).show()
+            }
+        })
+    }
+
+    // addProfileImage
+    fun setProfileImageUrl(context: Context, imgUrl: String){
+        val parserUser = ParseUser.getCurrentUser()
+        val query: ParseQuery<ParseUser> = ParseUser.getQuery()
+        query.getInBackground(parserUser.objectId, GetCallback { `object`, e ->
+            if(e == null){
+                parserUser.put("profileImg", imgUrl)
+                parserUser.saveInBackground()
+            }else{
+                Toast.makeText(context, e.message, Toast.LENGTH_SHORT).show()
             }
         })
     }
