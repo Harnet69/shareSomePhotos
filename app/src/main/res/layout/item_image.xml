@@ -28,6 +28,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_margin="5dp"
+            android:tag="imageFragment"
             android:bindImageUrl="@{image.url}"
             android:username="@{image.userName}"
             android:goToImagePage="@{image.url}"

@@ -91,7 +91,7 @@ fun Fragment.setActivityTitle(title: String) {
     (activity as AppCompatActivity?)!!.supportActionBar?.title = title
 }
 
-// go to Image page from feeds
+// go to Image page from any fragment, DON'T FORGET TO SET tag on Image View for fragment recognizing!!!
 @BindingAdapter("android:goToImagePage", "android:username")
 fun goToImagePage(view: ImageView, imageUrl: String?, username: String?) {
     // prevent a crash when two items were clicked in the same time
@@ -100,18 +100,19 @@ fun goToImagePage(view: ImageView, imageUrl: String?, username: String?) {
     }
 
     view.setOnSingleClickListener { imageView ->
-        // navigate to appropriate detail fragment
         imageUrl?.let {
             username?.let {
-                if (username == ParseUser.getCurrentUser().username && ParseUser.getCurrentUser().get("profileImg").toString() == imageUrl) {
-                    val action = ProfileFragmentDirections.actionProfileFragmentToImageFragment( imageUrl, username)
-                    Navigation.findNavController(imageView).navigate(action)
-                } else {
-                    val action2  = FeedsFragmentDirections.actionFeedsFragmentToImageFragment(imageUrl, username)
-                    Navigation.findNavController(imageView).navigate(action2)
+                when (imageView.tag.toString()) {
+                    "profileFragment" -> {
+                        val action = ProfileFragmentDirections.actionProfileFragmentToImageFragment(imageUrl, username)
+                        Navigation.findNavController(imageView).navigate(action)
+                    }
+                    "imageFragment" -> {
+                        val action2 = FeedsFragmentDirections.actionFeedsFragmentToImageFragment(imageUrl, username)
+                        Navigation.findNavController(imageView).navigate(action2)
+                    }
                 }
             }
-            //TODO here will be potential problem with another directions, from an another user's library image
         }
     }
 }
