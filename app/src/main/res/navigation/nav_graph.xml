@@ -19,6 +19,9 @@
         <action
             android:id="@+id/action_feedsFragment_to_imageFragment"
             app:destination="@id/imageFragment" />
+        <action
+            android:id="@+id/action_feedsFragment_to_userDetailsFragment"
+            app:destination="@id/userDetailsFragment" />
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
@@ -33,7 +36,11 @@
         android:id="@+id/usersFragment"
         android:name="com.harnet.sharesomephoto.view.UsersFragment"
         android:label="users_fragment"
-        tools:layout="@layout/users_fragment" />
+        tools:layout="@layout/users_fragment" >
+        <action
+            android:id="@+id/action_usersFragment_to_userDetailsFragment"
+            app:destination="@id/userDetailsFragment" />
+    </fragment>
     <fragment
         android:id="@+id/imageFragment"
         android:name="com.harnet.sharesomephoto.view.ImageFragment"
@@ -44,6 +51,14 @@
             app:argType="string" />
         <argument
             android:name="username"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/userDetailsFragment"
+        android:name="com.harnet.sharesomephoto.view.UserDetailsFragment"
+        android:label="user_details_fragment"
+        tools:layout="@layout/user_details_fragment" >
+        <argument android:name="username"
             app:argType="string" />
     </fragment>
 </navigation>

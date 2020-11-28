@@ -10,9 +10,12 @@
     </data>
 
     <LinearLayout
+        android:id="@+id/user_block"
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+            android:tag="usersFragment"
+        android:goToUserDetails="@{user.name}">
 
         <ImageView
             android:id="@+id/userImage_ImageView_Profile"
