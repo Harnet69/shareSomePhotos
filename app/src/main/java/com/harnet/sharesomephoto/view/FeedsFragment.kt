@@ -1,6 +1,8 @@
 package com.harnet.sharesomephoto.view
 
+import android.Manifest
 import android.app.Activity
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
 import android.view.*
@@ -67,7 +69,7 @@ class FeedsFragment : Fragment() {
         )
 
         // redirect to Profile if a user not logged
-        if(ParseUser.getCurrentUser() == null){
+        if (ParseUser.getCurrentUser() == null) {
             goToProfile()
         }
 
@@ -76,7 +78,11 @@ class FeedsFragment : Fragment() {
 
         // Add/change user image
         addImage_btn.setOnClickListener {
-            (activity as MainActivity).appPermissions.imagesService.checkPermission()
+            if (this.context?.checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+                openImageChooser(activity as Activity)
+            } else {
+                (activity as MainActivity).appPermissions.imagesService.checkPermission()
+            }
         }
 
         // Swiper refresh listener(screen refreshing process)
@@ -144,7 +150,7 @@ class FeedsFragment : Fragment() {
     }
 
     // redirect to the Profile page
-    private fun goToProfile(){
+    private fun goToProfile() {
         view?.let {
             Navigation.findNavController(it)
                 .navigate(FeedsFragmentDirections.actionFeedsFragmentToProfileFragment())
@@ -152,7 +158,7 @@ class FeedsFragment : Fragment() {
     }
 
     // redirect to the Users list
-    private fun goToUsers(){
+    private fun goToUsers() {
         view?.let {
             Navigation.findNavController(it)
                 .navigate(FeedsFragmentDirections.actionFeedsFragmentToUsersFragment())

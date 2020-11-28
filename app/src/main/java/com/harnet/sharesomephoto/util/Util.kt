@@ -7,6 +7,7 @@ import android.graphics.drawable.Drawable
 import android.util.Log
 import android.view.View
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.BindingAdapter
@@ -23,6 +24,8 @@ import com.bumptech.glide.request.target.Target
 import com.harnet.sharesomephoto.R
 import com.harnet.sharesomephoto.service.OnSingleClickListenerService
 import com.harnet.sharesomephoto.view.FeedsFragmentDirections
+import com.harnet.sharesomephoto.view.MainActivity
+import kotlinx.android.synthetic.main.profile_fragment.*
 
 fun openImageChooser(activity: Activity) {
     val intent = Intent()

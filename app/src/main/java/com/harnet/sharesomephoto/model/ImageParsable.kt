@@ -101,21 +101,6 @@ interface ImageParsable {
                     for (image in objects) {
                         val parseFile = image.getParseFile("image")
                         profileImageView.loadImage(parseFile.url, getProgressDrawable(profileImageView.context))
-//                        parseFile.getDataInBackground { data, parseFileError ->
-//                            if (data != null && parseFileError == null) {
-//                                val bitmap =
-//                                    BitmapFactory.decodeByteArray(data, 0, data.size)
-//                                // set image to Profile ImageView
-//                                profileImageView.setImageBitmap(bitmap)
-//                            } else {
-//                                Toast.makeText(
-//                                    profileImageView.context,
-//                                    parseFileError.message,
-//                                    Toast.LENGTH_SHORT
-//                                )
-//                                    .show()
-//                            }
-//                        }
                     }
                 } else {
                     Toast.makeText(

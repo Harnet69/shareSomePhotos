@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
+<layout xmlns:tools="http://schemas.android.com/tools"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
@@ -10,23 +10,22 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        xmlns:bind="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".view.ProfileFragment">
 
         <ImageView
             android:id="@+id/userImage_ImageView_Profile"
-            android:layout_width="200dp"
+            android:layout_width="match_parent"
             android:layout_height="200dp"
             android:layout_marginTop="5dp"
             android:focusable="true"
+            android:scaleType="fitCenter"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_user_photo" />
+            app:srcCompat="@drawable/ic_user_photo"/>
 
         <FrameLayout
             android:id="@+id/framelayout"
@@ -43,7 +42,7 @@
 
             <include
                 layout="@layout/profile_details_block"
-                bind:user="@{user}"
+                app:user="@{user}"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 

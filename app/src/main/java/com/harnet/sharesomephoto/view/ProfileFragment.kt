@@ -1,7 +1,9 @@
 package com.harnet.sharesomephoto.view
 
+import android.Manifest
 import android.app.ActionBar
 import android.app.Activity
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
 import android.view.KeyEvent
@@ -106,14 +108,26 @@ class ProfileFragment : Fragment(), UserParsable, ImageParsable {
         }
 
         // Add/change user image
-        userImage_ImageView_Profile.setOnClickListener {
+//        userImage_ImageView_Profile.setOnClickListener {
+//            if (!isLogInMode) {
+//                (activity as MainActivity).appPermissions.imagesService.checkPermission()
+//            } else {
+//                Toast.makeText(context, "Log in at first", Toast.LENGTH_SHORT).show()
+//            }
+//        }
+
+        userImage_ImageView_Profile.setOnLongClickListener {
             if (!isLogInMode) {
-                (activity as MainActivity).appPermissions.imagesService.checkPermission()
+                if (this.context?.checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+                    openImageChooser(activity as Activity)
+                } else {
+                    (activity as MainActivity).appPermissions.imagesService.checkPermission()
+                }
             } else {
                 Toast.makeText(context, "Log in at first", Toast.LENGTH_SHORT).show()
             }
+            return@setOnLongClickListener true
         }
-
         observeModel()
     }
 
@@ -186,5 +200,6 @@ class ProfileFragment : Fragment(), UserParsable, ImageParsable {
             openImageChooser(activity as Activity)
         }
     }
+
 
 }
