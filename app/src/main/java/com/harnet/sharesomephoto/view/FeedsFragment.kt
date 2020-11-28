@@ -4,11 +4,7 @@ import android.Manifest
 import android.app.Activity
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.util.Log
 import android.view.*
-import android.widget.ImageView
-import android.widget.LinearLayout
-import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -18,17 +14,12 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.harnet.sharesomephoto.R
 import com.harnet.sharesomephoto.adapter.FeedsAdapter
-import com.harnet.sharesomephoto.adapter.UsersAdapter
 import com.harnet.sharesomephoto.databinding.FeedsFragmentBinding
-import com.harnet.sharesomephoto.databinding.UsersFragmentBinding
-import com.harnet.sharesomephoto.util.getProgressDrawable
-import com.harnet.sharesomephoto.util.loadImage
 import com.harnet.sharesomephoto.util.openImageChooser
 import com.harnet.sharesomephoto.util.setActivityTitle
 import com.harnet.sharesomephoto.viewModel.FeedsViewModel
 import com.parse.ParseUser
 import kotlinx.android.synthetic.main.feeds_fragment.*
-import kotlinx.android.synthetic.main.users_fragment.*
 
 class FeedsFragment : Fragment() {
     private lateinit var feedsAdapter: FeedsAdapter
@@ -54,9 +45,10 @@ class FeedsFragment : Fragment() {
 
         feeds_list_FeedsFragment.apply {
             layoutManager = LinearLayoutManager(context)
+
             //Fix blinking RecyclerView
-//            feedsAdapter.setHasStableIds(true)
-            //
+            feedsAdapter.setHasStableIds(true)
+
             adapter = feedsAdapter
         }
 
@@ -170,18 +162,5 @@ class FeedsFragment : Fragment() {
         if (permissionGranted) {
             openImageChooser(activity as Activity)
         }
-    }
-
-    // create imageView
-    fun createImageView(imageUrl: String): ImageView {
-        val imageView = ImageView(context)
-        imageView.layoutParams = LinearLayout.LayoutParams(
-            LinearLayoutCompat.LayoutParams.MATCH_PARENT,
-            LinearLayout.LayoutParams.WRAP_CONTENT,
-            1.0f
-        ) // value is in pixels
-        imageView.loadImage(imageUrl, getProgressDrawable(imageView.context))
-
-        return imageView
     }
 }

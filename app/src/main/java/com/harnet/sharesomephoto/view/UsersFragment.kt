@@ -47,7 +47,7 @@ class UsersFragment : Fragment() {
             //
             adapter = usersAdapter
         }
-//
+
         // add separation line between items
         users_list_usersFragment.addItemDecoration(
             DividerItemDecoration(
