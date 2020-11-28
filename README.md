@@ -1,4 +1,4 @@
-# SHARE SOME PHOTO
+# SHARE SOME PHOTO [![Quality gate](https://sonarcloud.io/api/project_badges/quality_gate?project=Harnet69_shareSomePhotos)](https://sonarcloud.io/dashboard?id=Harnet69_shareSomePhotos)
 Photo service for sharing and storing images.
 According to Google plans to make its Google Photos service limited up to 15GB.
 
