@@ -5,13 +5,16 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.MotionEvent
 import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.ui.NavigationUI
 import com.harnet.sharesomephoto.R
 import com.harnet.sharesomephoto.model.AppPermissions
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.profile_fragment.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -75,7 +78,20 @@ class MainActivity : AppCompatActivity() {
         when (requestCode) {
             // image gallery access
             resources.getString(R.string.permissionImagesCode).toInt() -> {
-                appPermissions.imagesService.handleWithImageFromLib(fragments, data)
+
+                when (val activeFragment: Fragment? =
+                    fragments.childFragmentManager.primaryNavigationFragment) {
+                    //TODO open preview Image fragment, sending data and fragment
+                    is ProfileFragment -> {
+                        val action = ProfileFragmentDirections.actionProfileFragmentToImagePreviewFragment(data.toString())
+                        activeFragment.view?.let { Navigation.findNavController(it).navigate(action) }
+                    }
+                    is FeedsFragment -> {
+                        val action =FeedsFragmentDirections.actionFeedsFragmentToImagePreviewFragment(data.toString())
+                        activeFragment.view?.let { Navigation.findNavController(it).navigate(action) }
+                    }
+                }
+//                appPermissions.imagesService.handleWithImageFromLib(this, fragments, data)
             }
         }
     }

@@ -1,13 +1,21 @@
 package com.harnet.sharesomephoto.model
 
+import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.graphics.Bitmap
+import android.provider.MediaStore
+import android.util.Base64
 import android.util.Log
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import com.harnet.sharesomephoto.util.getProgressDrawable
 import com.harnet.sharesomephoto.util.loadImage
+import com.harnet.sharesomephoto.view.FeedsFragment
+import com.harnet.sharesomephoto.view.ProfileFragment
 import com.parse.*
+import kotlinx.android.synthetic.main.profile_fragment.*
 import java.io.ByteArrayOutputStream
 
 
@@ -22,7 +30,7 @@ interface ImageParsable {
     ) {
         val stream = ByteArrayOutputStream()
         // set an image to the appropriate format
-        chosenImage.compress(Bitmap.CompressFormat.PNG, 100, stream)
+        chosenImage.compress(Bitmap.CompressFormat.PNG, 30, stream)
         val byteArray = stream.toByteArray()
         //TODO think about generating names for files
         //create a Parse file from the image
@@ -139,20 +147,6 @@ interface ImageParsable {
         })
     }
 
-    fun setProfileImgNew(profileImageView: ImageView){
-        val parserUser = ParseUser.getCurrentUser()
-        val query: ParseQuery<ParseUser> = ParseUser.getQuery()
-        query.getInBackground(parserUser.objectId, GetCallback { `object`, e ->
-            if(e == null){
-                profileImageView.loadImage(`object`.get("profileImg").toString(), getProgressDrawable(profileImageView.context))
-                Toast.makeText(profileImageView.context, `object`.get("profileImg").toString(), Toast.LENGTH_SHORT).show()
-
-            }else{
-                Toast.makeText(profileImageView.context, e.message, Toast.LENGTH_SHORT).show()
-            }
-        })
-    }
-
     // addProfileImage
     fun setProfileImageUrl(context: Context, imgUrl: String){
         val parserUser = ParseUser.getCurrentUser()
@@ -165,5 +159,52 @@ interface ImageParsable {
                 Toast.makeText(context, e.message, Toast.LENGTH_SHORT).show()
             }
         })
+    }
+
+    //get image from Image Library of device
+    fun convertImageDataToBitmap(activity: Activity, data: Intent?): Bitmap? {
+        val selectedImage = data?.data
+        var bitmap: Bitmap? = null
+
+        try {
+            bitmap = MediaStore.Images.Media.getBitmap(activity.contentResolver, selectedImage)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        return bitmap
+    }
+
+    // convert Bitmap to String
+    fun bitMapToString(bitmap: Bitmap): String {
+        val baos = ByteArrayOutputStream()
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos)
+        val b = baos.toByteArray()
+        return Base64.encodeToString(b, Base64.DEFAULT)
+    }
+
+    // handle with image permission
+    fun handleWithImageFromLib(activity: Activity, navFragment: Fragment, data: Intent?) {
+        val bitmap = convertImageDataToBitmap(activity, data)
+        //check what fragment is current
+        when (val activeFragment: Fragment? =
+            navFragment.childFragmentManager.primaryNavigationFragment) {
+            is ProfileFragment -> {
+//                navFragment.userImage_ImageView_Profile.setImageBitmap(bitmap)
+                //TODO record this image to User account on Parse server
+                bitmap?.let {
+                    // mark previous images af not Profile's
+                    makeImgNotProfiles()
+
+                    sendImageToParseServer(activeFragment.context, bitmap, true, navFragment.userImage_ImageView_Profile)
+                }
+            }
+            is FeedsFragment -> {
+                Toast.makeText(activeFragment.context, "Feeds fragment", Toast.LENGTH_LONG).show()
+                //TODO implement method for an users fragment
+                bitmap?.let {
+                    sendImageToParseServer(activeFragment.context, bitmap, false, null)
+                }
+            }
+        }
     }
 }
