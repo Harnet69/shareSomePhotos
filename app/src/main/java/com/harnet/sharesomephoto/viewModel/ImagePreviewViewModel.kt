@@ -1,7 +1,7 @@
 package com.harnet.sharesomephoto.viewModel
 
-import androidx.lifecycle.ViewModel
+import android.app.Application
 
-class ImagePreviewViewModel : ViewModel() {
-    // TODO: Implement the ViewModel
+class ImagePreviewViewModel(application: Application) : BaseViewModel(application) {
+
 }
