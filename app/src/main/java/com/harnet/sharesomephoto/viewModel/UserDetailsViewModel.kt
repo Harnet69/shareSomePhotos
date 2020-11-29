@@ -41,11 +41,10 @@ class UserDetailsViewModel(application: Application) : BaseViewModel(application
                         User(
                             retrievedUser.username,
                             "",
-                            "email test",
+                            "",
                             retrievedUser.get("profileImg").toString()
                         )
                     )
-                    Log.i("RetrievedUser", "${retrievedUser.username} : ${retrievedUser.email}")
                 } else {
                     mIsLoading.postValue(false)
                     mIsUserLoadError.postValue(false)

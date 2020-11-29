@@ -29,6 +29,9 @@ class FeedsViewModel(application: Application) : BaseViewModel(application) {
 
     // get images from server
     private fun getImagesFromParseServer() {
+        // clean previous version of feeds
+        mImages.postValue(mutableListOf())
+
         val usersImages = mutableListOf<Image>()
 
         val query = ParseQuery<ParseObject>("Image")

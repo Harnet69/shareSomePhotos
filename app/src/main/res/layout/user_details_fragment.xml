@@ -45,20 +45,6 @@
             android:text="@{user.name}"/>
 
         <TextView
-            android:id="@+id/userEmail_UserDescr"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:ems="10"
-            android:textAlignment="center"
-            android:textSize="20sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/userName_UserDescr"
-            android:text="@{user.email}"/>
-
-        <TextView
             android:id="@+id/listError_TextView_UserDescr"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
