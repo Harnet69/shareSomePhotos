@@ -74,6 +74,6 @@
         tools:layout="@layout/image_preview_fragment" >
         <argument
             android:name="image"
-            app:argType="string" />
+            app:argType="android.graphics.Bitmap" />
     </fragment>
 </navigation>

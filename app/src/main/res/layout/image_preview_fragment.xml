@@ -2,6 +2,11 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="image"
+            type="com.harnet.sharesomephoto.model.Image" />
+    </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -9,7 +14,7 @@
         tools:context=".view.ImagePreviewFragment">
 
         <com.github.chrisbanes.photoview.PhotoView
-            android:id="@+id/imageView"
+            android:id="@+id/image_ImagePreviewFragment"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginStart="0dp"
@@ -28,40 +33,38 @@
             android:id="@+id/action_block_ImagePreviewFragment"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_marginStart="0dp"
-            android:layout_marginEnd="0dp"
             android:layout_marginBottom="20dp"
             android:alpha="0.8"
             android:background="@color/cast_libraries_material_featurehighlight_outer_highlight_default_color"
             android:orientation="horizontal"
-            app:layout_constraintBottom_toBottomOf="@+id/imageView"
+            app:layout_constraintBottom_toBottomOf="@+id/image_ImagePreviewFragment"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent" >
+            app:layout_constraintStart_toStartOf="parent">
 
             <ImageView
-                android:id="@+id/imageView2"
+                android:id="@+id/shareBtn_ImagePreviewFragment"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_margin="5dp"
                 android:layout_weight="1"
-                android:src="@drawable/send_ico"
-                android:layout_margin="5dp"/>
+                android:src="@drawable/send_ico" />
 
             <ImageView
-                android:id="@+id/imageView4"
+                android:id="@+id/comment_ImagePreviewFragment"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_margin="5dp"
                 android:layout_weight="1"
-                android:src="@drawable/comment_ico"
-                android:layout_margin="5dp"/>
+                android:src="@drawable/comment_ico" />
 
             <ImageView
-                android:id="@+id/imageView3"
+                android:id="@+id/delete__ImagePreviewFragment"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_margin="5dp"
                 android:layout_weight="1"
-                android:src="@drawable/del_ico"
-                android:layout_margin="5dp"/>
+                android:src="@drawable/del_ico" />
         </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
