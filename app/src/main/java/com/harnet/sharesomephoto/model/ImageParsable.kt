@@ -22,7 +22,7 @@ import java.io.ByteArrayOutputStream
 interface ImageParsable {
 
     // send chosen image to Parse server
-    fun sendImageToParseServer(
+    fun sendImgToParseServer(
         context: Context?,
         chosenImage: Bitmap,
         isProfileImage: Boolean,
@@ -195,14 +195,14 @@ interface ImageParsable {
                     // mark previous images af not Profile's
                     makeImgNotProfiles()
 
-                    sendImageToParseServer(activeFragment.context, bitmap, true, navFragment.userImage_ImageView_Profile)
+                    sendImgToParseServer(activeFragment.context, bitmap, true, navFragment.userImage_ImageView_Profile)
                 }
             }
             is FeedsFragment -> {
                 Toast.makeText(activeFragment.context, "Feeds fragment", Toast.LENGTH_LONG).show()
                 //TODO implement method for an users fragment
                 bitmap?.let {
-                    sendImageToParseServer(activeFragment.context, bitmap, false, null)
+                    sendImgToParseServer(activeFragment.context, bitmap, false, null)
                 }
             }
         }

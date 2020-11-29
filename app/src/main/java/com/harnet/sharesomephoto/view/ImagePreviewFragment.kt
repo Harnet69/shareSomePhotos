@@ -1,12 +1,13 @@
 package com.harnet.sharesomephoto.view
 
+import android.graphics.Bitmap
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import com.harnet.sharesomephoto.viewModel.ImagePreviewViewModel
 import com.harnet.sharesomephoto.R
@@ -28,11 +29,18 @@ class ImagePreviewFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        var imageBtm: Bitmap? = null
+
         viewModel = ViewModelProvider(this).get(ImagePreviewViewModel::class.java)
 
         arguments?.let {
-            val imageBtm = ImagePreviewFragmentArgs.fromBundle(it).image
+            imageBtm = ImagePreviewFragmentArgs.fromBundle(it).image
             image_ImagePreviewFragment.setImageBitmap(imageBtm)
+        }
+
+        shareBtn_ImagePreviewFragment.setOnClickListener {
+            imageBtm?.let { it1 -> viewModel.sendImageToParseServer(context, it1, false, null) }
+            Toast.makeText(context, "Image was shared", Toast.LENGTH_SHORT).show()
         }
     }
 }
