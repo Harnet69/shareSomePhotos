@@ -4,6 +4,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+        <variable
+            name="user"
+            type="com.harnet.sharesomephoto.model.User" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/user_detail_block_userDeskrFragment"
         android:layout_width="match_parent"
@@ -22,7 +28,7 @@
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_user_photo" />
+            android:bindImageUrl="@{user.profileImgUrl}"/>
 
         <TextView
             android:id="@+id/userName_UserDescr"
@@ -35,7 +41,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/userImage_UserDescr" />
+            app:layout_constraintTop_toBottomOf="@+id/userImage_UserDescr"
+            android:text="@{user.name}"/>
 
         <TextView
             android:id="@+id/userEmail_UserDescr"
@@ -48,7 +55,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/userName_UserDescr" />
+            app:layout_constraintTop_toBottomOf="@+id/userName_UserDescr"
+            android:text="@{user.email}"/>
 
         <TextView
             android:id="@+id/listError_TextView_UserDescr"

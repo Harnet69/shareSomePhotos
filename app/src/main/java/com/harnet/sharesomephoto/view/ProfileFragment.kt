@@ -60,10 +60,6 @@ class ProfileFragment : Fragment(), UserParsable, ImageParsable {
             profile_details_block.visibility = View.INVISIBLE
 
         } else {
-            // set Profile's user image
-//            setProfileImage(userImage_ImageView_Profile)
-//            Log.i("ImageHandling", "When Profile loaded: ")
-
             login_block.visibility = View.INVISIBLE
             profile_details_block.visibility = View.VISIBLE
 

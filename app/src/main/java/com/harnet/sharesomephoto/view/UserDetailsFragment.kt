@@ -31,6 +31,11 @@ class UserDetailsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(this).get(UserDetailsViewModel::class.java)
 
+        arguments?.let {
+            val username: String = UserDetailsFragmentArgs.fromBundle(it).username
+           viewModel.refresh(username)
+        }
+
         observeViewModel()
     }
 
@@ -38,6 +43,7 @@ class UserDetailsFragment : Fragment() {
         // update the layout using values of mutable variables from a ViewModel
         viewModel.mUser.observe(viewLifecycleOwner, Observer { user ->
             user?.let {
+                dataBinding.user = user
                 user_detail_block_userDeskrFragment.visibility = View.VISIBLE
             }
         })

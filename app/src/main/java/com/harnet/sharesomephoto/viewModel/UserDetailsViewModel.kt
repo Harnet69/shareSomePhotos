@@ -1,6 +1,7 @@
 package com.harnet.sharesomephoto.viewModel
 
 import android.app.Application
+import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import com.harnet.sharesomephoto.model.User
@@ -36,7 +37,15 @@ class UserDetailsViewModel(application: Application) : BaseViewModel(application
             if (e == null) {
                 if (objects.isNotEmpty()) {
                     val retrievedUser = objects[0]
-                    retrieveUser(User(retrievedUser.username, "", retrievedUser.email, retrievedUser.get("profileImg").toString()))
+                    retrieveUser(
+                        User(
+                            retrievedUser.username,
+                            "",
+                            "email test",
+                            retrievedUser.get("profileImg").toString()
+                        )
+                    )
+                    Log.i("RetrievedUser", "${retrievedUser.username} : ${retrievedUser.email}")
                 } else {
                     mIsLoading.postValue(false)
                     mIsUserLoadError.postValue(false)
