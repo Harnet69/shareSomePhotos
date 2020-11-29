@@ -30,11 +30,11 @@ interface ImageParsable {
     ) {
         val stream = ByteArrayOutputStream()
         // set an image to the appropriate format
-        chosenImage.compress(Bitmap.CompressFormat.PNG, 30, stream)
+        chosenImage.compress(Bitmap.CompressFormat.JPEG, 20, stream)
         val byteArray = stream.toByteArray()
         //TODO think about generating names for files
         //create a Parse file from the image
-        val parseFile = ParseFile("image.png", byteArray)
+        val parseFile = ParseFile("image.jpg", byteArray)
         // Create Parse Image class
         val imageParseObj = ParseObject("Image")
         // attach an image
@@ -54,6 +54,7 @@ interface ImageParsable {
                     //TODO check if user have had a Profile image already
 
                     profileImageView?.let {
+                        makeImgNotProfiles()
                         setProfileImage(profileImageView)
                     }
                 } else {
@@ -61,6 +62,7 @@ interface ImageParsable {
                 }
                 Toast.makeText(context, "Image has been shared", Toast.LENGTH_SHORT).show()
             } else {
+                e.printStackTrace()
                 Toast.makeText(context, "Smth went wrong with sharing ${e.message}", Toast.LENGTH_SHORT).show()
             }
         })

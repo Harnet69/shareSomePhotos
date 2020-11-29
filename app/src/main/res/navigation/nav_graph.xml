@@ -75,5 +75,8 @@
         <argument
             android:name="image"
             app:argType="android.graphics.Bitmap" />
+        <argument
+            android:name="isProfilesImg"
+            app:argType="boolean" />
     </fragment>
 </navigation>
