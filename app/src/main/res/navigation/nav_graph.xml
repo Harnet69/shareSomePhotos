@@ -78,5 +78,11 @@
         <argument
             android:name="isProfilesImg"
             app:argType="boolean" />
+        <action
+            android:id="@+id/action_imagePreviewFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
+        <action
+            android:id="@+id/action_imagePreviewFragment_to_feedsFragment"
+            app:destination="@id/feedsFragment" />
     </fragment>
 </navigation>

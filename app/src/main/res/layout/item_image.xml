@@ -20,11 +20,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
-            android:text="@{image.userName}"
             android:textSize="20sp"
             android:paddingStart="5dp"
-            android:tag="feedsFragment"
-            android:goToUserDetails="@{image.userName}"/>
+            android:tag="feedsFragment" />
 
         <ImageView
             android:id="@+id/image_ItemImage"
@@ -32,9 +30,6 @@
             android:layout_height="match_parent"
             android:layout_margin="5dp"
             android:tag="imageFragment"
-            android:bindImageUrl="@{image.url}"
-            android:username="@{image.userName}"
-            android:goToImagePage="@{image.url}"
             android:scaleType="fitCenter" />
 
     </LinearLayout>

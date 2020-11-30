@@ -43,13 +43,13 @@ class FeedsViewModel(application: Application) : BaseViewModel(application) {
                 if (objects.isNotEmpty()) {
                     for (image in objects) {
                         val parseFile = image.getParseFile("image")
-                        usersImages.add(Image(parseFile.url, image.get("username").toString()))
+                        usersImages.add(Image(parseFile.url))
                         retrieveImages(usersImages)
                     }
                 } else {
                     mIsLoading.postValue(false)
                     mIsImageLoadError.postValue(false)
-                    Toast.makeText(getApplication(), "No images yet", Toast.LENGTH_SHORT).show()
+//                    Toast.makeText(getApplication(), "No images yet", Toast.LENGTH_SHORT).show()
                 }
             } else {
                 // switch off waiting spinner and inform user is smth wrong

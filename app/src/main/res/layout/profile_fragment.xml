@@ -26,10 +26,7 @@
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_user_photo"
-            android:bindImageUrl="@{user.profileImgUrl}"
-            android:username='@{user.name}'
-            android:goToImagePage="@{user.profileImgUrl}"/>
+            app:srcCompat="@drawable/ic_user_photo"/>
 
         <FrameLayout
             android:id="@+id/framelayout"

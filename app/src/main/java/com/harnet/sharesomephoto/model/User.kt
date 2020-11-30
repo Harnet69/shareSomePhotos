@@ -1,3 +1,6 @@
 package com.harnet.sharesomephoto.model
 
-data class User(val name: String, val password: String, val email: String, val profileImgUrl: String?)
+data class User(val name: String, val password: String, val email: String){
+    lateinit var userId: String
+    lateinit var profileImgId: String
+}

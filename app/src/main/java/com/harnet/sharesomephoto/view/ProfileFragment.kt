@@ -32,7 +32,7 @@ class ProfileFragment : Fragment(), UserParsable, ImageParsable {
     private lateinit var viewModel: ProfileViewModel
     private lateinit var dataBinding: ProfileFragmentBinding
 
-    var isLogInMode: Boolean = true
+    var isLogInMode: Boolean = false
     var currentUser: ParseUser? = null
 
     override fun onCreateView(
@@ -55,9 +55,10 @@ class ProfileFragment : Fragment(), UserParsable, ImageParsable {
         userName_LoginBlock.requestFocus()
 
         // if user have been logged already !!! Should be in a separate block
-        if (ParseUser.getCurrentUser() == null) {
+        if (currentUser == null) {
             login_block.visibility = View.VISIBLE
             profile_details_block.visibility = View.INVISIBLE
+            isLogInMode = true
 
         } else {
             login_block.visibility = View.INVISIBLE
@@ -126,22 +127,16 @@ class ProfileFragment : Fragment(), UserParsable, ImageParsable {
         viewModel.mIsUserLogged.observe(viewLifecycleOwner, Observer { isLogged ->
             //switching between profile details and login blocks
             if (isLogged && ParseUser.getCurrentUser() != null) {
-                dataBinding.user = isLoggedGetUser()?.let {
-                    isLoggedGetUser()?.let { it1 ->
-                        User(
-                            it.username,
-                            "",
-                            it1.email,
-                            it.get("profileImg").toString()
-                        )
-                    }
+                // bind the user to view
+                currentUser?.let {
+                    val userForBinding = User(it.username, "", it.email)
+                    // get and bind user Profile image
+                    viewModel.setProfileImg(userImage_ImageView_Profile)
+                    dataBinding.user = userForBinding
                 }
 
                 login_block.visibility = View.INVISIBLE
                 profile_details_block.visibility = View.VISIBLE
-
-                // set Profile's user image
-//                setProfileImage(userImage_ImageView_Profile)
 
                 Toast.makeText(context, "Hello " + isLoggedGetUser()?.username, Toast.LENGTH_LONG)
                     .show()
@@ -166,8 +161,7 @@ class ProfileFragment : Fragment(), UserParsable, ImageParsable {
                 User(
                     userName_LoginBlock.text.toString(),
                     userPassword_LoginBlock.text.toString(),
-                    userEmail_LoginBlock.text.toString(),
-                    null
+                    userEmail_LoginBlock.text.toString()
                 )
             )
         }
@@ -189,6 +183,4 @@ class ProfileFragment : Fragment(), UserParsable, ImageParsable {
             openImageChooser(activity as Activity)
         }
     }
-
-
 }

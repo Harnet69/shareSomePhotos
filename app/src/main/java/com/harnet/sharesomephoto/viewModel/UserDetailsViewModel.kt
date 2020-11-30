@@ -41,8 +41,7 @@ class UserDetailsViewModel(application: Application) : BaseViewModel(application
                         User(
                             retrievedUser.username,
                             "",
-                            "",
-                            retrievedUser.get("profileImg").toString()
+                            ""
                         )
                     )
                 } else {

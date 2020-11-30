@@ -40,7 +40,7 @@ class UsersViewModel(application: Application) : BaseViewModel(application) {
             if (e == null) {
                 if (objects.isNotEmpty()) {
                     for (user in objects) {
-                        usersFromParse.add(User(user.username, "", "", user.get("profileImg").toString()))
+                        usersFromParse.add(User(user.username, "", ""))
                     }
 
                     retrieveUsers(usersFromParse)

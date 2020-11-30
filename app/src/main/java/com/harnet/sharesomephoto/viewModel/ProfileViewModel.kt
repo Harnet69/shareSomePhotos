@@ -2,16 +2,15 @@ package com.harnet.sharesomephoto.viewModel
 
 import android.app.Application
 import android.text.TextUtils
+import android.util.Log
 import android.util.Patterns
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import com.harnet.sharesomephoto.model.User
-import com.parse.GetCallback
-import com.parse.GetDataCallback
-import com.parse.LogInCallback
-import com.parse.ParseQuery
-import com.parse.ParseUser
-
+import com.harnet.sharesomephoto.util.getProgressDrawable
+import com.harnet.sharesomephoto.util.loadImage
+import com.parse.*
 
 class ProfileViewModel(application: Application) : BaseViewModel(application) {
     val mIsUserExists = MutableLiveData<Boolean>()
@@ -23,11 +22,11 @@ class ProfileViewModel(application: Application) : BaseViewModel(application) {
 
         // check if all fields not empty
         if (checkUserInputForEmpty(newUser) && checkUserInputForWhiteSpaces(newUser)) {
-            val parseUser = ParseUser()
             //create a new user
+            val parseUser = ParseUser()
             parseUser.username = newUser.name.trim()
             parseUser.setPassword(newUser.password.trim())
-            parseUser.email = newUser.email
+            parseUser.email = newUser.email.trim()
 
             // sign in user
             parseUser.signUpInBackground { e ->
@@ -36,27 +35,51 @@ class ProfileViewModel(application: Application) : BaseViewModel(application) {
                         .show()
                     getCurrentUserIfLogged()
                 } else {
-                    e.printStackTrace()
                     Toast.makeText(getApplication(), e.message, Toast.LENGTH_SHORT).show()
+                    e.printStackTrace()
                     mIsUserExists.setValue(true)
                 }
             }
         }
     }
 
+    //set user's profile image
+    fun setProfileImg(imageView: ImageView){
+        val parseUser = ParseUser.getCurrentUser()
+        val imageId = parseUser.get("profileImg").toString()
+
+        val query = ParseQuery<ParseObject>("Image")
+        query.whereEqualTo("username", parseUser)
+        query.whereEqualTo("objectId", imageId)
+
+        query.findInBackground(FindCallback { objects, e ->
+            if (e == null) {
+                if (objects.isNotEmpty()) {
+                    for (image in objects) {
+                        val parseFile = image.getParseFile("image")
+                        imageView.loadImage(
+                            parseFile.url,
+                            getProgressDrawable(imageView.context)
+                        )
+                    }
+                } else {
+                    Log.i("userImages", "No image of the user")
+                }
+            } else {
+                Toast.makeText(imageView.context, e.message, Toast.LENGTH_LONG).show()
+                e.printStackTrace()
+            }
+        })
+    }
+
     //log in
     fun logIn(userName: String, userPassword: String) {
-        if (checkUserInputForWhiteSpaces(User(userName, userPassword, "", null))) {
+        if (checkUserInputForWhiteSpaces(User(userName, userPassword, ""))) {
             ParseUser.logInInBackground(userName, userPassword, LogInCallback { user, e ->
-                if (user != null) {
+                if (e == null && user != null) {
                     mIsUserLogged.setValue(true)
                 } else {
-                    Toast.makeText(
-                        getApplication(),
-                        e.message,
-                        Toast.LENGTH_SHORT
-                    )
-                        .show()
+                    Toast.makeText(getApplication(), e.message,Toast.LENGTH_SHORT).show()
                     e.printStackTrace()
                 }
             })
@@ -66,8 +89,7 @@ class ProfileViewModel(application: Application) : BaseViewModel(application) {
     //log out
     fun logOut() {
         ParseUser.logOut()
-        Toast.makeText(getApplication(), "Log out", Toast.LENGTH_SHORT)
-            .show()
+        Toast.makeText(getApplication(), "Log out", Toast.LENGTH_SHORT).show()
         mIsUserLogged.setValue(false)
     }
 
@@ -147,16 +169,16 @@ class ProfileViewModel(application: Application) : BaseViewModel(application) {
 
     }
 
-    fun getProfileImgUrl(){
-        val parserUser = ParseUser.getCurrentUser()
-        val query: ParseQuery<ParseUser> = ParseUser.getQuery()
-        query.getInBackground(parserUser.objectId, GetCallback { `object`, e ->
-            if(e == null){
-                Toast.makeText(getApplication(), `object`.get("profileImg").toString(), Toast.LENGTH_SHORT).show()
-
-            }else{
-                Toast.makeText(getApplication(), e.message, Toast.LENGTH_SHORT).show()
-            }
-        })
-    }
+//    fun setProfileImgUrl(){
+//        val parserUser = ParseUser.getCurrentUser()
+//        val query: ParseQuery<ParseUser> = ParseUser.getQuery()
+//        query.getInBackground(parserUser.objectId, GetCallback { `object`, e ->
+//            if(e == null){
+//                Toast.makeText(getApplication(), `object`.get("profileImg").toString(), Toast.LENGTH_SHORT).show()
+//
+//            }else{
+//                Toast.makeText(getApplication(), e.message, Toast.LENGTH_SHORT).show()
+//            }
+//        })
+//    }
 }

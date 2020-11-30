@@ -12,6 +12,7 @@ import androidx.databinding.DataBindingUtil
 import com.harnet.sharesomephoto.viewModel.ImagePreviewViewModel
 import com.harnet.sharesomephoto.R
 import com.harnet.sharesomephoto.databinding.ImagePreviewFragmentBinding
+import com.harnet.sharesomephoto.util.setActivityTitle
 import kotlinx.android.synthetic.main.image_preview_fragment.*
 
 class ImagePreviewFragment : Fragment() {
@@ -29,6 +30,7 @@ class ImagePreviewFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        this.setActivityTitle("Image preview")
         var imageBtm: Bitmap? = null
         var isProfileImg: Boolean? = null
         viewModel = ViewModelProvider(this).get(ImagePreviewViewModel::class.java)

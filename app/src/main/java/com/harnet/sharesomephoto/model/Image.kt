@@ -1,6 +1,8 @@
 package com.harnet.sharesomephoto.model
 
-data class Image(
-    val url: String,
-    val userName: String
-)
+import java.util.*
+
+data class Image(val authorId: String){
+    lateinit var imageId: String
+    lateinit var createAt: Date
+}
