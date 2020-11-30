@@ -5,7 +5,6 @@ import android.graphics.Bitmap
 import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
-import com.harnet.sharesomephoto.model.Image
 import com.parse.ParseFile
 import com.parse.ParseObject
 import com.parse.ParseUser

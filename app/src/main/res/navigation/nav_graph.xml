@@ -75,14 +75,14 @@
         <argument
             android:name="image"
             app:argType="android.graphics.Bitmap" />
-        <argument
-            android:name="isProfilesImg"
-            app:argType="boolean" />
         <action
             android:id="@+id/action_imagePreviewFragment_to_profileFragment"
             app:destination="@id/profileFragment" />
         <action
             android:id="@+id/action_imagePreviewFragment_to_feedsFragment"
             app:destination="@id/feedsFragment" />
+        <argument
+            android:name="fromFragment"
+            app:argType="string" />
     </fragment>
 </navigation>
