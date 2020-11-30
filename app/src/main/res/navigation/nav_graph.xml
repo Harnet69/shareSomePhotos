@@ -81,5 +81,8 @@
         <argument
             android:name="fromFragment"
             app:argType="string" />
+        <action
+            android:id="@+id/action_imagePreviewFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
     </fragment>
 </navigation>

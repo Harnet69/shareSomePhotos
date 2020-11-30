@@ -53,7 +53,14 @@ class ImagePreviewFragment : Fragment() {
             imageBtm?.let {
                 loadingProgressBar_ImagePreview.visibility = View.VISIBLE
                 action_block_ImagePreviewFragment.visibility = View.GONE
-                viewModel.sendImgToParseServer(sendError_ImagePreview, it)
+                when (fromFragment) {
+                    "profile" -> {
+                        viewModel.sendImgToParseServer(sendError_ImagePreview, it, true)
+                    }
+                    "feeds" -> {
+                        viewModel.sendImgToParseServer(sendError_ImagePreview, it, false)
+                 }
+                }
             }
         }
 
@@ -88,6 +95,7 @@ class ImagePreviewFragment : Fragment() {
 
                     when (fromFragment) {
                         "profile" -> {
+                            //TODO set the image as Users profile one
                             Log.i("GoToFragment", "observeViewModel: goto Profile ")
 //                            val action =
 //                                ImagePreviewFragmentDirections.actionImagePreviewFragmentToProfileFragment()
