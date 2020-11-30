@@ -96,7 +96,6 @@ class MainActivity : AppCompatActivity() {
                         }
                     }
                 }
-//                appPermissions.imagesService.handleWithImageFromLib(this, fragments, data)
             }
         }
     }

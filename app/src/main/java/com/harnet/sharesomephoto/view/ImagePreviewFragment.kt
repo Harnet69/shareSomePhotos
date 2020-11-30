@@ -41,12 +41,10 @@ class ImagePreviewFragment : Fragment() {
             image_ImagePreviewFragment.setImageBitmap(imageBtm)
         }
 
-        shareBtn_ImagePreviewFragment.setOnClickListener {
-            imageBtm?.let { it1 -> isProfileImg?.let { it2 ->
-//                viewModel.makeImgNotProfiles()
-                viewModel.sendImageToParseServer(context, it1,
-                    it2, image_ImagePreviewFragment)
-            } }
+        shareBtn_ImagePreviewFragment.setOnClickListener {btn ->
+            imageBtm?.let {
+                viewModel.sendImgToParseServer(btn, it)
+             }
         }
     }
 }

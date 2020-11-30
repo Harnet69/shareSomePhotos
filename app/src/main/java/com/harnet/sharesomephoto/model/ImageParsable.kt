@@ -22,17 +22,11 @@ import java.io.ByteArrayOutputStream
 interface ImageParsable {
 
     // send chosen image to Parse server
-    fun sendImgToParseServer(
-        context: Context?,
-        chosenImage: Bitmap,
-        isProfileImage: Boolean,
-        profileImageView: ImageView?
-    ) {
+    fun sendImgToParseServer(context: Context?, chosenImage: Bitmap, isProfileImage: Boolean, profileImageView: ImageView?) {
         val stream = ByteArrayOutputStream()
         // set an image to the appropriate format
         chosenImage.compress(Bitmap.CompressFormat.JPEG, 20, stream)
         val byteArray = stream.toByteArray()
-        //TODO think about generating names for files
         //create a Parse file from the image
         val parseFile = ParseFile("image.jpg", byteArray)
         // Create Parse Image class
@@ -52,7 +46,6 @@ interface ImageParsable {
             if (e == null) {
                 if (isProfileImage) {
                     //TODO check if user have had a Profile image already
-
                     profileImageView?.let {
                         makeImgNotProfiles()
                         setProfileImage(profileImageView)
