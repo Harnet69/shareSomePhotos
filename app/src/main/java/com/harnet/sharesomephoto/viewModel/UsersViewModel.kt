@@ -42,6 +42,7 @@ class UsersViewModel(application: Application) : BaseViewModel(application) {
                     for (user in objects) {
                         val userToSend = User(user.username, "", "")
                         userToSend.userId = user.objectId
+                        userToSend.profileImgId = user.get("profileImg").toString()
 
                         usersFromParse.add(userToSend)
                     }
