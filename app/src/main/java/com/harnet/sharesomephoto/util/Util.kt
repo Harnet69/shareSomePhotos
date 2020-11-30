@@ -131,7 +131,6 @@ fun goToUserDetails(view: View, username: String?) {
     }
 
     view.setOnSingleClickListener {
-//        Toast.makeText(view.context, view.tag.toString() +" / " +  username, Toast.LENGTH_SHORT).show()
         username?.let {
             when (view.tag.toString()) {
                 "usersFragment" -> {

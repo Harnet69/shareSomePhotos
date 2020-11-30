@@ -121,6 +121,7 @@ class ProfileViewModel(application: Application) : BaseViewModel(application) {
     }
 
     // get Profile image and set it to Profile's image
+    //TODO move it to dataBinding
     fun setProfileImage(profileImageView: ImageView) {
         val userProfileImageId = ParseUser.getCurrentUser().get("profileImg")
         val query = ParseQuery<ParseObject>("Image")

@@ -40,7 +40,10 @@ class UsersViewModel(application: Application) : BaseViewModel(application) {
             if (e == null) {
                 if (objects.isNotEmpty()) {
                     for (user in objects) {
-                        usersFromParse.add(User(user.username, "", ""))
+                        val userToSend = User(user.username, "", "")
+                        userToSend.userId = user.objectId
+
+                        usersFromParse.add(userToSend)
                     }
 
                     retrieveUsers(usersFromParse)

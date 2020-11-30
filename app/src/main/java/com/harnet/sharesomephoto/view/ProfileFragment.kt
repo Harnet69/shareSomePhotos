@@ -131,8 +131,8 @@ class ProfileFragment : Fragment(), UserParsable, ImageParsable {
                 // bind the user to view
                 currentUser?.let {
                     val userForBinding = User(it.username, "", it.email)
-                    // get and bind user Profile image
                     viewModel.setProfileImage(userImage_ImageView_Profile)
+                    // get and bind user Profile image
                     dataBinding.user = userForBinding
                 }
 
