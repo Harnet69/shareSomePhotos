@@ -76,9 +76,6 @@
             android:name="image"
             app:argType="android.graphics.Bitmap" />
         <action
-            android:id="@+id/action_imagePreviewFragment_to_profileFragment"
-            app:destination="@id/profileFragment" />
-        <action
             android:id="@+id/action_imagePreviewFragment_to_feedsFragment"
             app:destination="@id/feedsFragment" />
         <argument

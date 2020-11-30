@@ -4,6 +4,7 @@ import android.Manifest
 import android.app.Activity
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -61,6 +62,7 @@ class FeedsFragment : Fragment() {
         )
 
         // redirect to Profile if a user not logged
+        Log.i("WhereIsTheUser", "onViewCreated: " + ParseUser.getCurrentUser())
         if (ParseUser.getCurrentUser() == null) {
             goToProfile()
         }

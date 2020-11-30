@@ -51,7 +51,9 @@ class ImagePreviewFragment : Fragment() {
 
         shareBtn_ImagePreviewFragment.setOnClickListener { btn ->
             imageBtm?.let {
-                viewModel.sendImgToParseServer(btn, it)
+                loadingProgressBar_ImagePreview.visibility = View.VISIBLE
+                action_block_ImagePreviewFragment.visibility = View.GONE
+                viewModel.sendImgToParseServer(sendError_ImagePreview, it)
             }
         }
 
@@ -81,19 +83,21 @@ class ImagePreviewFragment : Fragment() {
             // check isError not null
             isSent?.let {
                 if (it) {
+                    loadingProgressBar_ImagePreview.visibility = View.INVISIBLE
                     sendError_ImagePreview.visibility = View.GONE
+
                     when (fromFragment) {
                         "profile" -> {
                             Log.i("GoToFragment", "observeViewModel: goto Profile ")
-                            val action =
-                                ImagePreviewFragmentDirections.actionImagePreviewFragmentToProfileFragment()
-                            view?.let { it1 -> Navigation.findNavController(it1).navigate(action) }
+//                            val action =
+//                                ImagePreviewFragmentDirections.actionImagePreviewFragmentToProfileFragment()
+//                            view?.let { it1 -> Navigation.findNavController(it1).navigate(action) }
                         }
                         "feeds" -> {
                             Log.i("GoToFragment", "observeViewModel: goto Feeds ")
-                            val action =
-                                ImagePreviewFragmentDirections.actionImagePreviewFragmentToFeedsFragment()
-                            view?.let { it1 -> Navigation.findNavController(it1).navigate(action) }
+//                            val action =
+//                                ImagePreviewFragmentDirections.actionImagePreviewFragmentToFeedsFragment()
+//                            view?.let { it1 -> Navigation.findNavController(it1).navigate(action) }
                         }
                     }
                 }

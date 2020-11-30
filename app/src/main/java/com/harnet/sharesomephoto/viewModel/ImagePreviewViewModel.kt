@@ -34,7 +34,7 @@ class ImagePreviewViewModel(application: Application) : BaseViewModel(applicatio
     }
 
     // send chosen image to Parse server
-    fun sendImgToParseServer(view: View, chosenImage: Bitmap) {
+    fun sendImgToParseServer(sendError_ImagePreview: View, chosenImage: Bitmap) {
         val stream = ByteArrayOutputStream()
         // set an image to the appropriate format
         chosenImage.compress(Bitmap.CompressFormat.JPEG, 20, stream)
@@ -51,12 +51,12 @@ class ImagePreviewViewModel(application: Application) : BaseViewModel(applicatio
 
         imageParseObj.saveInBackground(SaveCallback { e ->
             if (e == null) {
+                Toast.makeText(sendError_ImagePreview.context, "Image has been sent", Toast.LENGTH_SHORT).show()
                 mIsImageSent.setValue(true)
-                Toast.makeText(view.context, "Image has been sent", Toast.LENGTH_SHORT).show()
             } else {
-                mIsImageSent.setValue(false)
+                sendError_ImagePreview.visibility = View.VISIBLE
+                Toast.makeText(sendError_ImagePreview.context, "Image didn't send ${e.message}", Toast.LENGTH_SHORT).show()
                 e.printStackTrace()
-                Toast.makeText(view.context, "Image didn't send ${e.message}", Toast.LENGTH_SHORT).show()
             }
         })
     }
