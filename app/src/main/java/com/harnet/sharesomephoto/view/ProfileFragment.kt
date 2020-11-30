@@ -61,6 +61,7 @@ class ProfileFragment : Fragment(), UserParsable, ImageParsable {
             isLogInMode = true
 
         } else {
+            viewModel.setProfileImage(userImage_ImageView_Profile)
             login_block.visibility = View.INVISIBLE
             profile_details_block.visibility = View.VISIBLE
 
@@ -131,7 +132,7 @@ class ProfileFragment : Fragment(), UserParsable, ImageParsable {
                 currentUser?.let {
                     val userForBinding = User(it.username, "", it.email)
                     // get and bind user Profile image
-                    viewModel.setProfileImg(userImage_ImageView_Profile)
+                    viewModel.setProfileImage(userImage_ImageView_Profile)
                     dataBinding.user = userForBinding
                 }
 

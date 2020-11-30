@@ -2,7 +2,6 @@ package com.harnet.sharesomephoto.viewModel
 
 import android.app.Application
 import android.text.TextUtils
-import android.util.Log
 import android.util.Patterns
 import android.widget.ImageView
 import android.widget.Toast
@@ -41,35 +40,6 @@ class ProfileViewModel(application: Application) : BaseViewModel(application) {
                 }
             }
         }
-    }
-
-    //set user's profile image
-    fun setProfileImg(imageView: ImageView){
-        val parseUser = ParseUser.getCurrentUser()
-        val imageId = parseUser.get("profileImg").toString()
-
-        val query = ParseQuery<ParseObject>("Image")
-        query.whereEqualTo("username", parseUser)
-        query.whereEqualTo("objectId", imageId)
-
-        query.findInBackground(FindCallback { objects, e ->
-            if (e == null) {
-                if (objects.isNotEmpty()) {
-                    for (image in objects) {
-                        val parseFile = image.getParseFile("image")
-                        imageView.loadImage(
-                            parseFile.url,
-                            getProgressDrawable(imageView.context)
-                        )
-                    }
-                } else {
-                    Log.i("userImages", "No image of the user")
-                }
-            } else {
-                Toast.makeText(imageView.context, e.message, Toast.LENGTH_LONG).show()
-                e.printStackTrace()
-            }
-        })
     }
 
     //log in
@@ -143,8 +113,6 @@ class ProfileViewModel(application: Application) : BaseViewModel(application) {
             Toast.makeText(getApplication(), "Whitespaces not allowed in name", Toast.LENGTH_SHORT)
                 .show()
         }
-
-
         return false
     }
 
@@ -152,33 +120,29 @@ class ProfileViewModel(application: Application) : BaseViewModel(application) {
         return !TextUtils.isEmpty(target) && Patterns.EMAIL_ADDRESS.matcher(target).matches()
     }
 
+    // get Profile image and set it to Profile's image
+    fun setProfileImage(profileImageView: ImageView) {
+        val userProfileImageId = ParseUser.getCurrentUser().get("profileImg")
+        val query = ParseQuery<ParseObject>("Image")
+        query.whereEqualTo("objectId", userProfileImageId)
 
-    // addProfileImage
-    fun addProfileImageUrl(imgUrl: String){
-        val parserUser = ParseUser.getCurrentUser()
-        val query: ParseQuery<ParseUser> = ParseUser.getQuery()
-        query.getInBackground(parserUser.objectId, GetCallback { `object`, e ->
-            if(e == null){
-                parserUser.put("profileImg", imgUrl)
-                parserUser.saveInBackground()
-                Toast.makeText(getApplication(), "Image was changed $imgUrl", Toast.LENGTH_SHORT).show()
-            }else{
-                Toast.makeText(getApplication(), e.message, Toast.LENGTH_SHORT).show()
+        query.findInBackground(FindCallback { objects, parseObjectError ->
+            if (parseObjectError == null) {
+                if (objects.isNotEmpty()) {
+                    for (image in objects) {
+                        val parseFile = image.getParseFile("image")
+                        profileImageView.loadImage(
+                            parseFile.url,
+                            getProgressDrawable(profileImageView.context)
+                        )
+                    }
+                } else {
+                    Toast.makeText(profileImageView.context, "No users with images", Toast.LENGTH_SHORT).show()
+                }
+            } else {
+                parseObjectError.printStackTrace()
+                Toast.makeText(profileImageView.context, parseObjectError.message, Toast.LENGTH_SHORT).show()
             }
         })
-
     }
-
-//    fun setProfileImgUrl(){
-//        val parserUser = ParseUser.getCurrentUser()
-//        val query: ParseQuery<ParseUser> = ParseUser.getQuery()
-//        query.getInBackground(parserUser.objectId, GetCallback { `object`, e ->
-//            if(e == null){
-//                Toast.makeText(getApplication(), `object`.get("profileImg").toString(), Toast.LENGTH_SHORT).show()
-//
-//            }else{
-//                Toast.makeText(getApplication(), e.message, Toast.LENGTH_SHORT).show()
-//            }
-//        })
-//    }
 }

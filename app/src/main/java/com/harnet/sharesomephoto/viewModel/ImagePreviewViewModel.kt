@@ -99,7 +99,7 @@ class ImagePreviewViewModel(application: Application) : BaseViewModel(applicatio
     }
 
     // addProfileImage
-    fun setProfileImgToUser(context: Context, imgId: String){
+    private fun setProfileImgToUser(context: Context, imgId: String){
         val parserUser = ParseUser.getCurrentUser()
         val query: ParseQuery<ParseUser> = ParseUser.getQuery()
         query.getInBackground(parserUser.objectId, GetCallback { `object`, e ->
