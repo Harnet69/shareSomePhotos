@@ -23,7 +23,8 @@
             android:layout_height="match_parent"
             android:layout_margin="5dp"
             android:layout_weight="1"
-            app:srcCompat="@drawable/profile_ico" />
+            app:srcCompat="@drawable/profile_ico"
+            android:bindImageUrl="@{user.profileImgId}"/>
 
         <TextView
             android:id="@+id/user_name_ItemImage"

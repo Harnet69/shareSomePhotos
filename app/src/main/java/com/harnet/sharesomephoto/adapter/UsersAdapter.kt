@@ -53,7 +53,7 @@ class UsersAdapter(private var usersList: ArrayList<User>): RecyclerView.Adapter
         // bind data to xml variable view
         holder.view.user = usersList[position]
         //TODO change User model to keep user Image as well
-        setProfileImage(usersList[position].profileImgId, holder.view.userImageImageViewProfile)
+//        setProfileImage(usersList[position].profileImgId, holder.view.userImageImageViewProfile)
     }
 
     // Fix blinking RecyclerView
