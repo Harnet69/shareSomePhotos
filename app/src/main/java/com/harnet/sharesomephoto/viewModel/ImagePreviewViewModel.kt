@@ -1,26 +1,25 @@
 package com.harnet.sharesomephoto.viewModel
 
 import android.app.Application
-import android.content.Context
 import android.graphics.Bitmap
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
+import com.harnet.sharesomephoto.model.Imageable
 import com.parse.*
 import kotlinx.coroutines.launch
 import java.io.ByteArrayOutputStream
-import java.lang.Exception
 
-class ImagePreviewViewModel(application: Application) : BaseViewModel(application) {
+class ImagePreviewViewModel(application: Application) : BaseViewModel(application), Imageable {
     val mImage = MutableLiveData<Bitmap>()
+    val mImgUrl = MutableLiveData<String>()
 
     val mIsLoadError = MutableLiveData<Boolean>()
     val mIsSendError = MutableLiveData<Boolean>()
     val mIsLoading = MutableLiveData<Boolean>()
     val mIsImageSent = MutableLiveData<Boolean>()
 
-    fun refresh(image: Bitmap){
+    fun refresh(image: Bitmap) {
         retrieveImage(image)
     }
 
@@ -35,7 +34,11 @@ class ImagePreviewViewModel(application: Application) : BaseViewModel(applicatio
     }
 
     // send chosen image to Parse server
-    fun sendImgToParseServer(sendError_ImagePreview: View, chosenImage: Bitmap, isProfileImage: Boolean) {
+    fun sendImgToParseServer(
+        sendError_ImagePreview: View,
+        chosenImage: Bitmap,
+        isProfileImage: Boolean
+    ) {
         launch {
             val stream = ByteArrayOutputStream()
             // set an image to the appropriate format
@@ -54,62 +57,22 @@ class ImagePreviewViewModel(application: Application) : BaseViewModel(applicatio
             imageParseObj.saveInBackground(SaveCallback { e ->
                 if (e == null) {
                     //TODO
-                        if(isProfileImage){
-                            setLastSentImg(sendError_ImagePreview.context)
-                            Toast.makeText(
-                                sendError_ImagePreview.context,
-                                "Profile image was changed",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        }
-                    Toast.makeText(
-                        sendError_ImagePreview.context,
-                        "Image has been shared",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                    mIsImageSent.setValue(true)
-                } else {
-                    sendError_ImagePreview.visibility = View.VISIBLE
+                    if (isProfileImage) {
+                        // set Profile image
+                        setProfileImage(getApplication())
+                        mIsImageSent.setValue(true)
+                    } else {
+                        sendError_ImagePreview.visibility = View.VISIBLE
+                    }
+                }else{
+                    e.printStackTrace()
                     Toast.makeText(
                         sendError_ImagePreview.context,
                         "Image didn't send ${e.message}",
                         Toast.LENGTH_SHORT
                     ).show()
-                    e.printStackTrace()
                 }
             })
         }
-    }
-
-    //get the last added image as profile's
-    fun setLastSentImg(context: Context){
-        val query = ParseQuery<ParseObject>("Image")
-        query.whereEqualTo("authorId", ParseUser.getCurrentUser().objectId)
-        query.orderByDescending("createdAt")
-        query.findInBackground(FindCallback { objects, e ->
-            if (e == null) {
-                if (objects.isNotEmpty()) {
-                    //TODO here the last added image
-                    setProfileImgToUser(context, objects[0].objectId)
-                }
-            } else {
-                e.printStackTrace()
-            }
-        })
-    }
-
-    // addProfileImage
-    private fun setProfileImgToUser(context: Context, imgId: String){
-        val parserUser = ParseUser.getCurrentUser()
-        val query: ParseQuery<ParseUser> = ParseUser.getQuery()
-        query.getInBackground(parserUser.objectId, GetCallback { `object`, e ->
-            if(e == null){
-                parserUser.put("profileImg", imgId)
-                parserUser.saveInBackground()
-            }else{
-                e.printStackTrace()
-                Toast.makeText(context, e.message, Toast.LENGTH_SHORT).show()
-            }
-        })
     }
 }

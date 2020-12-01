@@ -9,6 +9,7 @@ import android.provider.MediaStore
 import android.util.Base64
 import android.view.View
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.BindingAdapter
@@ -26,8 +27,10 @@ import com.harnet.sharesomephoto.service.OnSingleClickListenerService
 import com.harnet.sharesomephoto.view.FeedsFragmentDirections
 import com.harnet.sharesomephoto.view.ProfileFragmentDirections
 import com.harnet.sharesomephoto.view.UsersFragmentDirections
+import com.parse.FindCallback
+import com.parse.ParseObject
+import com.parse.ParseQuery
 import java.io.ByteArrayOutputStream
-import java.io.FileOutputStream
 
 fun openImageChooser(activity: Activity) {
     val intent = Intent()
@@ -167,4 +170,26 @@ fun convertImageDataToBitmap(activity: Activity, data: Intent?): Bitmap? {
         e.printStackTrace()
     }
     return bitmap
+}
+
+//TODO move to binding
+private fun getImgUrlByImgId(imgId: String) {
+    val query = ParseQuery<ParseObject>("Image")
+    query.whereEqualTo("objectId", imgId)
+
+    query.findInBackground(FindCallback { objects, parseObjectError ->
+        if (parseObjectError == null) {
+            if (objects.isNotEmpty()) {
+                for (image in objects) {
+                    val parseFile = image.getParseFile("image")
+                    val mImgUrl =  parseFile.url.toString()
+                }
+            } else {
+//                Toast.makeText(userImageView.context, "No profile image", Toast.LENGTH_SHORT).show()
+            }
+        } else {
+            parseObjectError.printStackTrace()
+//            Toast.makeText(userImageView.context, parseObjectError.message, Toast.LENGTH_SHORT).show()
+        }
+    })
 }
