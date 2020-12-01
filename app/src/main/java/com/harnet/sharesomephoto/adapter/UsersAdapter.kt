@@ -77,7 +77,7 @@ class UsersAdapter(private var usersList: ArrayList<User>): RecyclerView.Adapter
                         )
                     }
                 } else {
-                    Toast.makeText(userImageView.context, "No profile image", Toast.LENGTH_SHORT).show()
+//                    Toast.makeText(userImageView.context, "No profile image", Toast.LENGTH_SHORT).show()
                 }
             } else {
                 parseObjectError.printStackTrace()

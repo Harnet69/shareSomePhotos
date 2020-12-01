@@ -4,7 +4,6 @@ import android.Manifest
 import android.app.Activity
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.util.Log
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
@@ -20,8 +19,6 @@ import com.harnet.sharesomephoto.databinding.ProfileFragmentBinding
 import com.harnet.sharesomephoto.model.ImageParsable
 import com.harnet.sharesomephoto.model.User
 import com.harnet.sharesomephoto.model.UserParsable
-import com.harnet.sharesomephoto.util.getProgressDrawable
-import com.harnet.sharesomephoto.util.loadImage
 import com.harnet.sharesomephoto.util.openImageChooser
 import com.harnet.sharesomephoto.util.setActivityTitle
 import com.harnet.sharesomephoto.viewModel.ProfileViewModel
@@ -55,7 +52,6 @@ class ProfileFragment : Fragment(), UserParsable, ImageParsable {
 
         //set focus to user name edit field
         userName_LoginBlock.requestFocus()
-
         // if user have been logged already !!! Should be in a separate block
         if (currentUser == null) {
             login_block.visibility = View.VISIBLE
@@ -63,10 +59,8 @@ class ProfileFragment : Fragment(), UserParsable, ImageParsable {
             isLogInMode = true
 
         } else {
-            val thisUser =
-                User(ParseUser.getCurrentUser().username, "", ParseUser.getCurrentUser().email)
+            val thisUser = User(ParseUser.getCurrentUser().username, "", ParseUser.getCurrentUser().email)
             thisUser.profileImgId = ParseUser.getCurrentUser().get("profileImg").toString()
-
             dataBinding.user = thisUser
 //            context?.let { getProgressDrawable(it) }?.let {
 //                userImage_ImageView_Profile.loadImage(ParseUser.getCurrentUser().get("profileImg").toString(), it)
@@ -138,14 +132,12 @@ class ProfileFragment : Fragment(), UserParsable, ImageParsable {
             //switching between profile details and login blocks
             if (isLogged && ParseUser.getCurrentUser() != null) {
                 // bind the user to view
-                currentUser?.let {
-                    val userForBinding = User(it.username, "", it.email)
+                    val userForBinding = User(ParseUser.getCurrentUser().username, "", ParseUser.getCurrentUser().email)
                     userForBinding.profileImgId =
-                        it.get("profileImg").toString()
+                        ParseUser.getCurrentUser().get("profileImg").toString()
 
                     // get and bind user Profile image
                     dataBinding.user = userForBinding
-                }
 
                 login_block.visibility = View.INVISIBLE
                 profile_details_block.visibility = View.VISIBLE
