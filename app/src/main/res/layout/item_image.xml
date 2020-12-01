@@ -31,7 +31,8 @@
             android:layout_margin="5dp"
             android:tag="imageFragment"
             android:scaleType="fitCenter"
-            android:bindImageUrl="@{image.imageURL}"/>
+            android:bindImageUrl="@{image.imageURL}"
+            android:goToImagePage="@{image.imageURL}"/>
 
     </LinearLayout>
 </layout>
