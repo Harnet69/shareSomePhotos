@@ -108,27 +108,18 @@ fun goToImagePage(view: ImageView, imageUrl: String?, username: String?) {
             username?.let {
                 when (imageView.tag.toString()) {
                     "profileFragment" -> {
-                        val action = ProfileFragmentDirections.actionProfileFragmentToImageFragment(
-                            imageUrl,
-                            username
-                        )
+                        val action = ProfileFragmentDirections.actionProfileFragmentToImageFragment(imageUrl)
                         Navigation.findNavController(imageView).navigate(action)
                     }
                     "imageFragment" -> {
-                        val action = FeedsFragmentDirections.actionFeedsFragmentToImageFragment(
-                            imageUrl,
-                            username
-                        )
+                        val action = FeedsFragmentDirections.actionFeedsFragmentToImageFragment(imageUrl)
                         Navigation.findNavController(imageView).navigate(action)
                     }
 
                     "userDetails" -> {
                         Log.i("userDetails", "goToImagePage: $imageUrl : $username")
                         val action =
-                            UserDetailsFragmentDirections.actionUserDetailsFragmentToImageFragment(
-                                imageUrl,
-                                username
-                            )
+                            UserDetailsFragmentDirections.actionUserDetailsFragmentToImageFragment(imageUrl)
                         Navigation.findNavController(imageView).navigate(action)
                     }
                 }

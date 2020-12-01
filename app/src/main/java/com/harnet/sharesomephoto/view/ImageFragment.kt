@@ -33,7 +33,6 @@ class ImageFragment : Fragment() {
 
         arguments?.let {
             val imageUrl = ImageFragmentArgs.fromBundle(it).imageUrl
-            val imageUsername = ImageFragmentArgs.fromBundle(it).username
             dataBinding.imageURL =  imageUrl
         }
     }

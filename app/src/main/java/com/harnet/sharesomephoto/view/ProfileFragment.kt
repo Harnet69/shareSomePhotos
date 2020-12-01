@@ -61,10 +61,8 @@ class ProfileFragment : Fragment(), UserParsable, ImageParsable {
         } else {
             val thisUser = User(ParseUser.getCurrentUser().username, "", ParseUser.getCurrentUser().email)
             thisUser.profileImgId = ParseUser.getCurrentUser().get("profileImg").toString()
+
             dataBinding.user = thisUser
-//            context?.let { getProgressDrawable(it) }?.let {
-//                userImage_ImageView_Profile.loadImage(ParseUser.getCurrentUser().get("profileImg").toString(), it)
-//            }
             login_block.visibility = View.INVISIBLE
             profile_details_block.visibility = View.VISIBLE
 

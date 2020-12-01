@@ -55,9 +55,6 @@
         <argument
             android:name="image_url"
             app:argType="string" />
-        <argument
-            android:name="username"
-            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/userDetailsFragment"
