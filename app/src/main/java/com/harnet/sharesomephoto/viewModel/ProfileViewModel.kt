@@ -3,13 +3,11 @@ package com.harnet.sharesomephoto.viewModel
 import android.app.Application
 import android.text.TextUtils
 import android.util.Patterns
-import android.widget.ImageView
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import com.harnet.sharesomephoto.model.User
-import com.harnet.sharesomephoto.util.getProgressDrawable
-import com.harnet.sharesomephoto.util.loadImage
-import com.parse.*
+import com.parse.LogInCallback
+import com.parse.ParseUser
 
 class ProfileViewModel(application: Application) : BaseViewModel(application) {
     val mIsUserExists = MutableLiveData<Boolean>()
@@ -121,29 +119,29 @@ class ProfileViewModel(application: Application) : BaseViewModel(application) {
     }
 
     // get Profile image and set it to Profile's image
-    //TODO move it to dataBinding
-    fun setProfileImage(profileImageView: ImageView) {
-        val userProfileImageId = ParseUser.getCurrentUser().get("profileImg")
-        val query = ParseQuery<ParseObject>("Image")
-        query.whereEqualTo("objectId", userProfileImageId)
-
-        query.findInBackground(FindCallback { objects, parseObjectError ->
-            if (parseObjectError == null) {
-                if (objects.isNotEmpty()) {
-                    for (image in objects) {
-                        val parseFile = image.getParseFile("image")
-                        profileImageView.loadImage(
-                            parseFile.url,
-                            getProgressDrawable(profileImageView.context)
-                        )
-                    }
-                } else {
-                    Toast.makeText(profileImageView.context, "No users with images", Toast.LENGTH_SHORT).show()
-                }
-            } else {
-                parseObjectError.printStackTrace()
-                Toast.makeText(profileImageView.context, parseObjectError.message, Toast.LENGTH_SHORT).show()
-            }
-        })
-    }
+//    //TODO move it to dataBinding
+//    fun setProfileImage(profileImageView: ImageView) {
+//        val userProfileImageId = ParseUser.getCurrentUser().get("profileImg")
+//        val query = ParseQuery<ParseObject>("Image")
+//        query.whereEqualTo("objectId", userProfileImageId)
+//
+//        query.findInBackground(FindCallback { objects, parseObjectError ->
+//            if (parseObjectError == null) {
+//                if (objects.isNotEmpty()) {
+//                    for (image in objects) {
+//                        val parseFile = image.getParseFile("image")
+//                        profileImageView.loadImage(
+//                            parseFile.url,
+//                            getProgressDrawable(profileImageView.context)
+//                        )
+//                    }
+//                } else {
+//                    Toast.makeText(profileImageView.context, "No users with images", Toast.LENGTH_SHORT).show()
+//                }
+//            } else {
+//                parseObjectError.printStackTrace()
+//                Toast.makeText(profileImageView.context, parseObjectError.message, Toast.LENGTH_SHORT).show()
+//            }
+//        })
+//    }
 }

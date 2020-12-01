@@ -63,7 +63,8 @@ class ProfileFragment : Fragment(), UserParsable, ImageParsable {
             isLogInMode = true
 
         } else {
-            val thisUser = User(ParseUser.getCurrentUser().username, "", ParseUser.getCurrentUser().email)
+            val thisUser =
+                User(ParseUser.getCurrentUser().username, "", ParseUser.getCurrentUser().email)
             thisUser.profileImgId = ParseUser.getCurrentUser().get("profileImg").toString()
 
             dataBinding.user = thisUser
@@ -139,7 +140,8 @@ class ProfileFragment : Fragment(), UserParsable, ImageParsable {
                 // bind the user to view
                 currentUser?.let {
                     val userForBinding = User(it.username, "", it.email)
-                    userForBinding.profileImgId = ParseUser.getCurrentUser().get("profileImg").toString()
+                    userForBinding.profileImgId =
+                        it.get("profileImg").toString()
 
                     // get and bind user Profile image
                     dataBinding.user = userForBinding
