@@ -5,12 +5,12 @@ import android.graphics.Bitmap
 import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
-import com.harnet.sharesomephoto.model.Imageable
+import com.harnet.sharesomephoto.model.ProfileImageable
 import com.parse.*
 import kotlinx.coroutines.launch
 import java.io.ByteArrayOutputStream
 
-class ImagePreviewViewModel(application: Application) : BaseViewModel(application), Imageable {
+class ImagePreviewViewModel(application: Application) : BaseViewModel(application), ProfileImageable {
     val mImage = MutableLiveData<Bitmap>()
     val mImgUrl = MutableLiveData<String>()
 

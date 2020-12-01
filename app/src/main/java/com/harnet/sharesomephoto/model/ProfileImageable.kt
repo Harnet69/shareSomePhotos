@@ -8,7 +8,7 @@ import com.parse.ParseObject
 import com.parse.ParseQuery
 import com.parse.ParseUser
 
-interface Imageable {
+interface ProfileImageable {
 
     // set Profile's image
     fun setProfileImage(context: Context) {

@@ -20,6 +20,8 @@ import com.harnet.sharesomephoto.databinding.ProfileFragmentBinding
 import com.harnet.sharesomephoto.model.ImageParsable
 import com.harnet.sharesomephoto.model.User
 import com.harnet.sharesomephoto.model.UserParsable
+import com.harnet.sharesomephoto.util.getProgressDrawable
+import com.harnet.sharesomephoto.util.loadImage
 import com.harnet.sharesomephoto.util.openImageChooser
 import com.harnet.sharesomephoto.util.setActivityTitle
 import com.harnet.sharesomephoto.viewModel.ProfileViewModel
@@ -61,7 +63,13 @@ class ProfileFragment : Fragment(), UserParsable, ImageParsable {
             isLogInMode = true
 
         } else {
-            viewModel.setProfileImage(userImage_ImageView_Profile)
+            val thisUser = User(ParseUser.getCurrentUser().username, "", ParseUser.getCurrentUser().email)
+            thisUser.profileImgId = ParseUser.getCurrentUser().get("profileImg").toString()
+
+            dataBinding.user = thisUser
+//            context?.let { getProgressDrawable(it) }?.let {
+//                userImage_ImageView_Profile.loadImage(ParseUser.getCurrentUser().get("profileImg").toString(), it)
+//            }
             login_block.visibility = View.INVISIBLE
             profile_details_block.visibility = View.VISIBLE
 
@@ -131,7 +139,8 @@ class ProfileFragment : Fragment(), UserParsable, ImageParsable {
                 // bind the user to view
                 currentUser?.let {
                     val userForBinding = User(it.username, "", it.email)
-                    viewModel.setProfileImage(userImage_ImageView_Profile)
+                    userForBinding.profileImgId = ParseUser.getCurrentUser().get("profileImg").toString()
+
                     // get and bind user Profile image
                     dataBinding.user = userForBinding
                 }
