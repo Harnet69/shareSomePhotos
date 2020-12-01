@@ -62,7 +62,6 @@ class FeedsFragment : Fragment() {
         )
 
         // redirect to Profile if a user not logged
-        Log.i("WhereIsTheUser", "onViewCreated: " + ParseUser.getCurrentUser())
         if (ParseUser.getCurrentUser() == null) {
             goToProfile()
         }

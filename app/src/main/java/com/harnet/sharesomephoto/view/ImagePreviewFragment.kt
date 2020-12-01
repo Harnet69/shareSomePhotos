@@ -55,13 +55,13 @@ class ImagePreviewFragment : Fragment() {
                 action_block_ImagePreviewFragment.visibility = View.GONE
                 when (fromFragment) {
                     "profile" -> {
-                        viewModel.sendImgToParseServer(sendError_ImagePreview, it, true)
+                        viewModel.sendImgToParseServer(sendError_ImagePreview, loadingProgressBar_ImagePreview, it, true)
                     }
                     "feeds" -> {
-                        viewModel.sendImgToParseServer(sendError_ImagePreview, it, false)
+                        viewModel.sendImgToParseServer(sendError_ImagePreview,loadingProgressBar_ImagePreview, it, false)
                     }
                     "userDetails" -> {
-                        viewModel.sendImgToParseServer(sendError_ImagePreview, it, false)
+                        viewModel.sendImgToParseServer(sendError_ImagePreview,loadingProgressBar_ImagePreview,  it, false)
                     }
                 }
             }

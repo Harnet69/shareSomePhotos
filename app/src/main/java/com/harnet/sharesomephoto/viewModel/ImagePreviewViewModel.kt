@@ -3,6 +3,8 @@ package com.harnet.sharesomephoto.viewModel
 import android.app.Application
 import android.graphics.Bitmap
 import android.view.View
+import android.widget.ProgressBar
+import android.widget.TextView
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import com.harnet.sharesomephoto.model.ProfileImageable
@@ -36,6 +38,7 @@ class ImagePreviewViewModel(application: Application) : BaseViewModel(applicatio
     // send chosen image to Parse server
     fun sendImgToParseServer(
         sendError_ImagePreview: View,
+        loadingProgressBar: ProgressBar,
         chosenImage: Bitmap,
         isProfileImage: Boolean
     ) {
@@ -62,8 +65,14 @@ class ImagePreviewViewModel(application: Application) : BaseViewModel(applicatio
                         setProfileImage(getApplication())
                         mIsImageSent.setValue(true)
                     } else {
-                        sendError_ImagePreview.visibility = View.INVISIBLE
+                        Toast.makeText(
+                            sendError_ImagePreview.context,
+                            "Image have been shared",
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
+                    sendError_ImagePreview.visibility = View.GONE
+                    loadingProgressBar.visibility = View.GONE
                 }else{
                     e.printStackTrace()
                     sendError_ImagePreview.visibility = View.VISIBLE
