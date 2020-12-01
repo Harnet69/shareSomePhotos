@@ -44,7 +44,7 @@ class FeedsViewModel(application: Application) : BaseViewModel(application) {
                     for (image in objects) {
                         val parseFile = image.getParseFile("image")
                         //TODO AUTHOR NAme it should be
-                        val imageForBind = Image("author")
+                        val imageForBind = Image(image.get("authorId").toString())
                         imageForBind.imageURL = parseFile.url
                         usersImages.add(imageForBind)
                     }

@@ -108,7 +108,6 @@ fun goToImagePage(view: ImageView, imageUrl: String?) {
                         val action = FeedsFragmentDirections.actionFeedsFragmentToImageFragment(url)
                         Navigation.findNavController(imageView).navigate(action)
                     }
-
                     "userDetails" -> {
                         val action =
                         UserDetailsFragmentDirections.actionUserDetailsFragmentToImageFragment(url)
