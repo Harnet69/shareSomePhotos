@@ -23,11 +23,14 @@
             android:layout_marginTop="5dp"
             android:focusable="true"
             android:scaleType="fitCenter"
-            android:tag="profileFragment"
+            android:tag="userDetails"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent"
+            android:bindImageUrl="@{user.profileImgId}"
+            android:username="@{user.name}"
+            android:goToImagePage="@{user.profileImgId}"/>
 
         <TextView
             android:id="@+id/userName_UserDescr"

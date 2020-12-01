@@ -7,6 +7,7 @@ import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
 import android.provider.MediaStore
 import android.util.Base64
+import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.Toast
@@ -26,6 +27,7 @@ import com.harnet.sharesomephoto.R
 import com.harnet.sharesomephoto.service.OnSingleClickListenerService
 import com.harnet.sharesomephoto.view.FeedsFragmentDirections
 import com.harnet.sharesomephoto.view.ProfileFragmentDirections
+import com.harnet.sharesomephoto.view.UserDetailsFragmentDirections
 import com.harnet.sharesomephoto.view.UsersFragmentDirections
 import com.parse.FindCallback
 import com.parse.ParseObject
@@ -113,11 +115,21 @@ fun goToImagePage(view: ImageView, imageUrl: String?, username: String?) {
                         Navigation.findNavController(imageView).navigate(action)
                     }
                     "imageFragment" -> {
-                        val action2 = FeedsFragmentDirections.actionFeedsFragmentToImageFragment(
+                        val action = FeedsFragmentDirections.actionFeedsFragmentToImageFragment(
                             imageUrl,
                             username
                         )
-                        Navigation.findNavController(imageView).navigate(action2)
+                        Navigation.findNavController(imageView).navigate(action)
+                    }
+
+                    "userDetails" -> {
+                        Log.i("userDetails", "goToImagePage: $imageUrl : $username")
+                        val action =
+                            UserDetailsFragmentDirections.actionUserDetailsFragmentToImageFragment(
+                                imageUrl,
+                                username
+                            )
+                        Navigation.findNavController(imageView).navigate(action)
                     }
                 }
             }

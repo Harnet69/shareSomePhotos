@@ -59,7 +59,10 @@ class ImagePreviewFragment : Fragment() {
                     }
                     "feeds" -> {
                         viewModel.sendImgToParseServer(sendError_ImagePreview, it, false)
-                 }
+                    }
+                    "userDetails" -> {
+                        viewModel.sendImgToParseServer(sendError_ImagePreview, it, false)
+                    }
                 }
             }
         }

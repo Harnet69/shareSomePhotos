@@ -37,13 +37,9 @@ class UserDetailsViewModel(application: Application) : BaseViewModel(application
             if (e == null) {
                 if (objects.isNotEmpty()) {
                     val retrievedUser = objects[0]
-                    retrieveUser(
-                        User(
-                            retrievedUser.username,
-                            "",
-                            ""
-                        )
-                    )
+                    val userForBind = User(retrievedUser.username,"","")
+                    userForBind.profileImgId = retrievedUser["profileImg"].toString()
+                    retrieveUser(userForBind)
                 } else {
                     mIsLoading.postValue(false)
                     mIsUserLoadError.postValue(false)

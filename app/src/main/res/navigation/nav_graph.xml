@@ -66,6 +66,9 @@
         tools:layout="@layout/user_details_fragment" >
         <argument android:name="username"
             app:argType="string" />
+        <action
+            android:id="@+id/action_userDetailsFragment_to_imageFragment"
+            app:destination="@id/imageFragment" />
     </fragment>
     <fragment
         android:id="@+id/imagePreviewFragment"
