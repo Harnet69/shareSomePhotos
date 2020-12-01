@@ -96,33 +96,30 @@ fun Fragment.setActivityTitle(title: String) {
 }
 
 // go to Image page from any fragment, DON'T FORGET TO SET tag on Image View for fragment recognizing!!!
-@BindingAdapter("android:goToImagePage", "android:username")
-fun goToImagePage(view: ImageView, imageUrl: String?, username: String?) {
+@BindingAdapter("android:goToImagePage")
+fun goToImagePage(view: ImageView, imageUrl: String?) {
     // prevent a crash when two items were clicked in the same time
     fun View.setOnSingleClickListener(l: (View) -> Unit) {
         setOnClickListener(OnSingleClickListenerService(l))
     }
 
     view.setOnSingleClickListener { imageView ->
-        imageUrl?.let {
-            username?.let {
+        imageUrl?.let {url ->
                 when (imageView.tag.toString()) {
                     "profileFragment" -> {
-                        val action = ProfileFragmentDirections.actionProfileFragmentToImageFragment(imageUrl)
+                        val action = ProfileFragmentDirections.actionProfileFragmentToImageFragment(url)
                         Navigation.findNavController(imageView).navigate(action)
                     }
                     "imageFragment" -> {
-                        val action = FeedsFragmentDirections.actionFeedsFragmentToImageFragment(imageUrl)
+                        val action = FeedsFragmentDirections.actionFeedsFragmentToImageFragment(url)
                         Navigation.findNavController(imageView).navigate(action)
                     }
 
                     "userDetails" -> {
-                        Log.i("userDetails", "goToImagePage: $imageUrl : $username")
                         val action =
-                            UserDetailsFragmentDirections.actionUserDetailsFragmentToImageFragment(imageUrl)
+                        UserDetailsFragmentDirections.actionUserDetailsFragmentToImageFragment(url)
                         Navigation.findNavController(imageView).navigate(action)
                     }
-                }
             }
         }
     }
