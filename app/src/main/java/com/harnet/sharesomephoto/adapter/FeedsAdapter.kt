@@ -49,7 +49,7 @@ class FeedsAdapter(private var imagesList: ArrayList<Image>) :
     override fun onBindViewHolder(holder: FeedsAdapter.ImagesViewHolder, position: Int) {
         // bind data to xml variable view
         holder.view.image = imagesList[position]
-//        Log.i("FeedsImages", imagesList[position].url)
+        Log.i("FeedsImages", imagesList[position].imageURL)
 //        holder.view.imageItemImage.loadImage(imagesList[position].url, getProgressDrawable(holder.view.imageItemImage.context))
         //TODO change User model to keep user Image as well
 //        getProfileImgByUser(imagesList[position].name, holder.view.userImageImageViewProfile)

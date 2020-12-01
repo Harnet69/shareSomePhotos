@@ -6,11 +6,8 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
 import android.provider.MediaStore
-import android.util.Base64
-import android.util.Log
 import android.view.View
 import android.widget.ImageView
-import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.BindingAdapter
@@ -29,10 +26,6 @@ import com.harnet.sharesomephoto.view.FeedsFragmentDirections
 import com.harnet.sharesomephoto.view.ProfileFragmentDirections
 import com.harnet.sharesomephoto.view.UserDetailsFragmentDirections
 import com.harnet.sharesomephoto.view.UsersFragmentDirections
-import com.parse.FindCallback
-import com.parse.ParseObject
-import com.parse.ParseQuery
-import java.io.ByteArrayOutputStream
 
 fun openImageChooser(activity: Activity) {
     val intent = Intent()
@@ -81,6 +74,7 @@ fun ImageView.loadImage(uri: String?, progressDrawable: CircularProgressDrawable
         .into(this)// this - extended ImageView class
 }
 
+// load image from URL
 @BindingAdapter("android:bindImageUrl")
 fun loadBindingImage(view: ImageView, url: String?) {
     view.loadImage(url, getProgressDrawable(view.context))
@@ -151,14 +145,6 @@ fun goToUserDetails(view: View, username: String?) {
     }
 }
 
-// convert Bitmap to String
-fun convertBitMapToString(bitmap: Bitmap): String {
-    val baos = ByteArrayOutputStream()
-    bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos)
-    val b = baos.toByteArray()
-    return Base64.encodeToString(b, Base64.DEFAULT)
-}
-
 //get image from Image Library of device
 fun convertImageDataToBitmap(activity: Activity, data: Intent?): Bitmap? {
     val selectedImage = data?.data
@@ -170,26 +156,4 @@ fun convertImageDataToBitmap(activity: Activity, data: Intent?): Bitmap? {
         e.printStackTrace()
     }
     return bitmap
-}
-
-//TODO move to binding
-private fun getImgUrlByImgId(imgId: String) {
-    val query = ParseQuery<ParseObject>("Image")
-    query.whereEqualTo("objectId", imgId)
-
-    query.findInBackground(FindCallback { objects, parseObjectError ->
-        if (parseObjectError == null) {
-            if (objects.isNotEmpty()) {
-                for (image in objects) {
-                    val parseFile = image.getParseFile("image")
-                    val mImgUrl =  parseFile.url.toString()
-                }
-            } else {
-//                Toast.makeText(userImageView.context, "No profile image", Toast.LENGTH_SHORT).show()
-            }
-        } else {
-            parseObjectError.printStackTrace()
-//            Toast.makeText(userImageView.context, parseObjectError.message, Toast.LENGTH_SHORT).show()
-        }
-    })
 }

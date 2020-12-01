@@ -13,7 +13,6 @@ import androidx.navigation.Navigation
 import androidx.navigation.ui.NavigationUI
 import com.harnet.sharesomephoto.R
 import com.harnet.sharesomephoto.model.AppPermissions
-import com.harnet.sharesomephoto.util.convertBitMapToString
 import com.harnet.sharesomephoto.util.convertImageDataToBitmap
 import kotlinx.android.synthetic.main.activity_main.*
 

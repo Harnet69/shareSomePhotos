@@ -112,10 +112,10 @@ class FeedsFragment : Fragment() {
 
     private fun observeViewModel() {
         // update the layout using values of mutable variables from a ViewModel
-        viewModel.mImages.observe(viewLifecycleOwner, Observer { images ->
-            images?.let {
+        viewModel.mFeeds.observe(viewLifecycleOwner, Observer { images ->
+            images?.let {imagesList ->
                 feeds_list_FeedsFragment.visibility = View.VISIBLE
-                feedsAdapter.updateFeedsList(images)
+                feedsAdapter.updateFeedsList(imagesList)
             }
         })
 

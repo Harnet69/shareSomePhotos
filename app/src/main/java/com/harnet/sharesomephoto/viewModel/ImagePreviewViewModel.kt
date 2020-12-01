@@ -62,10 +62,11 @@ class ImagePreviewViewModel(application: Application) : BaseViewModel(applicatio
                         setProfileImage(getApplication())
                         mIsImageSent.setValue(true)
                     } else {
-                        sendError_ImagePreview.visibility = View.VISIBLE
+                        sendError_ImagePreview.visibility = View.INVISIBLE
                     }
                 }else{
                     e.printStackTrace()
+                    sendError_ImagePreview.visibility = View.VISIBLE
                     Toast.makeText(
                         sendError_ImagePreview.context,
                         "Image didn't send ${e.message}",

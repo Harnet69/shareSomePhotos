@@ -1,6 +1,7 @@
 package com.harnet.sharesomephoto.viewModel
 
 import android.app.Application
+import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import com.harnet.sharesomephoto.model.Image
@@ -9,7 +10,7 @@ import com.parse.ParseObject
 import com.parse.ParseQuery
 
 class FeedsViewModel(application: Application) : BaseViewModel(application) {
-    val mImages = MutableLiveData<List<Image>>()
+    val mFeeds = MutableLiveData<List<Image>>()
     val mIsImageLoadError = MutableLiveData<Boolean>()
     val mIsLoading = MutableLiveData<Boolean>()
 
@@ -20,7 +21,7 @@ class FeedsViewModel(application: Application) : BaseViewModel(application) {
     // retrieve images
     private fun retrieveImages(imagesFromParse: List<Image>) {
         // set received list to observable mutable list
-        mImages.postValue(imagesFromParse)
+        mFeeds.postValue(imagesFromParse)
         // switch off error message
         mIsImageLoadError.postValue(false)
         // switch off waiting spinner
@@ -30,12 +31,11 @@ class FeedsViewModel(application: Application) : BaseViewModel(application) {
     // get images from server
     private fun getImagesFromParseServer() {
         // clean previous version of feeds
-        mImages.postValue(mutableListOf())
+        mFeeds.postValue(mutableListOf())
 
         val usersImages = mutableListOf<Image>()
 
         val query = ParseQuery<ParseObject>("Image")
-        query.whereEqualTo("isProfileImg", false)
         query.orderByDescending("createdAt")
 
         query.findInBackground(FindCallback { objects, parseObjectError ->
@@ -43,9 +43,12 @@ class FeedsViewModel(application: Application) : BaseViewModel(application) {
                 if (objects.isNotEmpty()) {
                     for (image in objects) {
                         val parseFile = image.getParseFile("image")
-                        usersImages.add(Image(parseFile.url))
-                        retrieveImages(usersImages)
+                        //TODO AUTHOR NAme it should be
+                        val imageForBind = Image("author")
+                        imageForBind.imageURL = parseFile.url
+                        usersImages.add(imageForBind)
                     }
+                    retrieveImages(usersImages)
                 } else {
                     mIsLoading.postValue(false)
                     mIsImageLoadError.postValue(false)
