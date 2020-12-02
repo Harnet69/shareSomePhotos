@@ -3,8 +3,8 @@
 ## ABOUT APP
 Photo service for sharing and storing images. According to Google plans to make its Google Photos service limited up to 15GB.
 
-## Application process:
-![App process](https://github.com/Harnet69/shareSomePhotos/blob/master/app/GitHubMediaFiles/video.gif)
+## Application video:
+![Game process](https://github.com/Harnet69/shareSomePhotos/blob/main/app/GitHubMediaFiles/video.gif)
 
 ## TECHNOLOGIES
 - Kotlin
