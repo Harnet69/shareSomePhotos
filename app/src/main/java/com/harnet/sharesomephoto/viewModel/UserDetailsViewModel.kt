@@ -49,7 +49,7 @@ class UserDetailsViewModel(application: Application) : BaseViewModel(application
                 mIsLoading.postValue(false)
                 // switch off error message
                 mIsUserLoadError.postValue(true)
-                Toast.makeText(getApplication(), e.message, Toast.LENGTH_SHORT).show()
+                Toast.makeText(getApplication(), e.message, Toast.LENGTH_LONG).show()
             }
         })
     }
