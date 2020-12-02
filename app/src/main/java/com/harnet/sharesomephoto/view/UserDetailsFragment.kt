@@ -2,6 +2,7 @@ package com.harnet.sharesomephoto.view
 
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -13,7 +14,6 @@ import com.harnet.sharesomephoto.databinding.UserDetailsFragmentBinding
 import com.harnet.sharesomephoto.util.setActivityTitle
 import com.harnet.sharesomephoto.viewModel.UserDetailsViewModel
 import kotlinx.android.synthetic.main.user_details_fragment.*
-import kotlinx.android.synthetic.main.users_fragment.*
 
 class UserDetailsFragment : Fragment() {
     private lateinit var viewModel: UserDetailsViewModel
@@ -34,8 +34,8 @@ class UserDetailsFragment : Fragment() {
         viewModel = ViewModelProvider(this).get(UserDetailsViewModel::class.java)
 
         arguments?.let {
-            val username: String = UserDetailsFragmentArgs.fromBundle(it).username
-           viewModel.refresh(username)
+            val userId: String = UserDetailsFragmentArgs.fromBundle(it).userId
+           viewModel.refresh(userId)
         }
 
         observeViewModel()

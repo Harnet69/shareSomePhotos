@@ -165,7 +165,6 @@ fun convertImageDataToBitmap(activity: Activity, data: Intent?): Bitmap? {
 
 @BindingAdapter("android:bindUserName")
 fun loadUserNameById(textView: TextView, userId: String){
-        Log.i("WhereIsUsername", "loadUserNameById: $userId")
     val query: ParseQuery<ParseUser> = ParseUser.getQuery()
     // exclude user of this device
     query.whereEqualTo("objectId", userId)

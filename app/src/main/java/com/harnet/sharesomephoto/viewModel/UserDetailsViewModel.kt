@@ -1,6 +1,7 @@
 package com.harnet.sharesomephoto.viewModel
 
 import android.app.Application
+import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import com.harnet.sharesomephoto.model.User
@@ -13,8 +14,8 @@ class UserDetailsViewModel(application: Application) : BaseViewModel(application
     val mIsUserLoadError = MutableLiveData<Boolean>()
     val mIsLoading = MutableLiveData<Boolean>()
 
-    fun refresh(username: String) {
-        getUserFromParseServer(username)
+    fun refresh(userId: String) {
+        getUserById(userId)
     }
 
     // retrieve images
@@ -27,22 +28,21 @@ class UserDetailsViewModel(application: Application) : BaseViewModel(application
         mIsLoading.postValue(false)
     }
 
-    private fun getUserFromParseServer(username: String) {
+    private fun getUserById(userId: String) {
         val query: ParseQuery<ParseUser> = ParseUser.getQuery()
-        query.whereEqualTo("username", username)
+        query.whereEqualTo("objectId", userId)
 
         query.findInBackground(FindCallback { objects, e ->
 
             if (e == null) {
                 if (objects.isNotEmpty()) {
                     val retrievedUser = objects[0]
-                    val userForBind = User(retrievedUser.username,"","")
+                    val userForBind = User(retrievedUser.username, "", "")
                     userForBind.profileImgUrl = retrievedUser["profileImg"].toString()
                     retrieveUser(userForBind)
                 } else {
                     mIsLoading.postValue(false)
                     mIsUserLoadError.postValue(false)
-//                    Toast.makeText(getApplication(), "No users here yet", Toast.LENGTH_LONG).show()
                 }
             } else {
                 // switch off waiting spinner and inform user is smth wrong
@@ -53,5 +53,4 @@ class UserDetailsViewModel(application: Application) : BaseViewModel(application
             }
         })
     }
-
 }
