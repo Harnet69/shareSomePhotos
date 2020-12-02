@@ -37,7 +37,7 @@ class ImagePreviewViewModel(application: Application) : BaseViewModel(applicatio
 
     // send chosen image to Parse server
     fun sendImgToParseServer(
-        sendError_ImagePreview: View,
+        sendErrorImagePreview: View,
         loadingProgressBar: ProgressBar,
         chosenImage: Bitmap,
         isProfileImage: Boolean
@@ -56,28 +56,26 @@ class ImagePreviewViewModel(application: Application) : BaseViewModel(applicatio
             // attach the userId who uploading the file
             imageParseObj.put("authorId", ParseUser.getCurrentUser().objectId)
 
-
             imageParseObj.saveInBackground(SaveCallback { e ->
                 if (e == null) {
-                    //TODO
                     if (isProfileImage) {
                         // set Profile image
                         setProfileImage(getApplication())
                         mIsImageSent.setValue(true)
                     } else {
                         Toast.makeText(
-                            sendError_ImagePreview.context,
+                            sendErrorImagePreview.context,
                             "Image have been shared",
                             Toast.LENGTH_SHORT
                         ).show()
                     }
-                    sendError_ImagePreview.visibility = View.GONE
+                    sendErrorImagePreview.visibility = View.GONE
                     loadingProgressBar.visibility = View.GONE
                 }else{
                     e.printStackTrace()
-                    sendError_ImagePreview.visibility = View.VISIBLE
+                    sendErrorImagePreview.visibility = View.VISIBLE
                     Toast.makeText(
-                        sendError_ImagePreview.context,
+                        sendErrorImagePreview.context,
                         "Image didn't send ${e.message}",
                         Toast.LENGTH_SHORT
                     ).show()

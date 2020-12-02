@@ -117,31 +117,4 @@ class ProfileViewModel(application: Application) : BaseViewModel(application) {
     private fun isValidEmail(target: CharSequence): Boolean {
         return !TextUtils.isEmpty(target) && Patterns.EMAIL_ADDRESS.matcher(target).matches()
     }
-
-    // get Profile image and set it to Profile's image
-//    //TODO move it to dataBinding
-//    fun setProfileImage(profileImageView: ImageView) {
-//        val userProfileImageId = ParseUser.getCurrentUser().get("profileImg")
-//        val query = ParseQuery<ParseObject>("Image")
-//        query.whereEqualTo("objectId", userProfileImageId)
-//
-//        query.findInBackground(FindCallback { objects, parseObjectError ->
-//            if (parseObjectError == null) {
-//                if (objects.isNotEmpty()) {
-//                    for (image in objects) {
-//                        val parseFile = image.getParseFile("image")
-//                        profileImageView.loadImage(
-//                            parseFile.url,
-//                            getProgressDrawable(profileImageView.context)
-//                        )
-//                    }
-//                } else {
-//                    Toast.makeText(profileImageView.context, "No users with images", Toast.LENGTH_SHORT).show()
-//                }
-//            } else {
-//                parseObjectError.printStackTrace()
-//                Toast.makeText(profileImageView.context, parseObjectError.message, Toast.LENGTH_SHORT).show()
-//            }
-//        })
-//    }
 }

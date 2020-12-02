@@ -6,7 +6,6 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.provider.MediaStore
 import android.util.Base64
-import android.util.Log
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -20,7 +19,6 @@ import java.io.ByteArrayOutputStream
 
 
 interface ImageParsable {
-
     // send chosen image to Parse server
     fun sendImgToParseServer(context: Context?, chosenImage: Bitmap, isProfileImage: Boolean, profileImageView: ImageView?) {
         val stream = ByteArrayOutputStream()
@@ -45,7 +43,6 @@ interface ImageParsable {
         imageParseObj.saveInBackground(SaveCallback { e ->
             if (e == null) {
                 if (isProfileImage) {
-                    //TODO check if user have had a Profile image already
                     profileImageView?.let {
                         makeImgNotProfiles()
                         setProfileImage(profileImageView)
@@ -61,33 +58,7 @@ interface ImageParsable {
         })
     }
 
-    //get profile image of user
-    fun getProfileImgByUser(userName: String, userImageView: ImageView) {
-            val query = ParseQuery<ParseObject>("Image")
-            query.whereEqualTo("username", userName)
-            query.whereEqualTo("isProfileImg", true)
-
-            query.findInBackground(FindCallback { objects, parseObjectError ->
-                if (parseObjectError == null) {
-                    if (objects.isNotEmpty()) {
-                        for (image in objects) {
-                            val parseFile = image.getParseFile("image")
-                            userImageView.loadImage(
-                                parseFile.url,
-                                getProgressDrawable(userImageView.context)
-                            )
-                        }
-                    } else {
-                        Log.i("userImages", "No users with images")
-                    }
-                } else {
-                    parseObjectError.printStackTrace()
-                }
-            })
-    }
-
     fun refreshImagesGallery(context: Context?) {
-        //TODO refresh gallery when it will be implemented
         Toast.makeText(context, "Refresh images gallery", Toast.LENGTH_SHORT).show()
     }
 
@@ -185,7 +156,6 @@ interface ImageParsable {
             navFragment.childFragmentManager.primaryNavigationFragment) {
             is ProfileFragment -> {
 //                navFragment.userImage_ImageView_Profile.setImageBitmap(bitmap)
-                //TODO record this image to User account on Parse server
                 bitmap?.let {
                     // mark previous images af not Profile's
                     makeImgNotProfiles()
@@ -195,7 +165,6 @@ interface ImageParsable {
             }
             is FeedsFragment -> {
                 Toast.makeText(activeFragment.context, "Feeds fragment", Toast.LENGTH_LONG).show()
-                //TODO implement method for an users fragment
                 bitmap?.let {
                     sendImgToParseServer(activeFragment.context, bitmap, false, null)
                 }

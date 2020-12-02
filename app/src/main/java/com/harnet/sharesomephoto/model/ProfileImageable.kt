@@ -23,7 +23,7 @@ interface ProfileImageable {
         query.findInBackground(FindCallback { objects, e ->
             if (e == null) {
                 if (objects.isNotEmpty()) {
-                    //TODO here the last added image
+                    //last added image
                     val imgId = objects[0].objectId
                     getImgUrlByImgId(context, imgId)
                 }
