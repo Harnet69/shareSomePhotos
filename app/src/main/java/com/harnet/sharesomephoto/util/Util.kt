@@ -6,8 +6,10 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
 import android.provider.MediaStore
+import android.util.Log
 import android.view.View
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.BindingAdapter
@@ -21,11 +23,15 @@ import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.Target
 import com.harnet.sharesomephoto.R
+import com.harnet.sharesomephoto.model.User
 import com.harnet.sharesomephoto.service.OnSingleClickListenerService
 import com.harnet.sharesomephoto.view.FeedsFragmentDirections
 import com.harnet.sharesomephoto.view.ProfileFragmentDirections
 import com.harnet.sharesomephoto.view.UserDetailsFragmentDirections
 import com.harnet.sharesomephoto.view.UsersFragmentDirections
+import com.parse.FindCallback
+import com.parse.ParseQuery
+import com.parse.ParseUser
 
 fun openImageChooser(activity: Activity) {
     val intent = Intent()
@@ -155,4 +161,21 @@ fun convertImageDataToBitmap(activity: Activity, data: Intent?): Bitmap? {
         e.printStackTrace()
     }
     return bitmap
+}
+
+@BindingAdapter("android:bindUserName")
+fun loadUserNameById(textView: TextView, userId: String){
+        Log.i("WhereIsUsername", "loadUserNameById: $userId")
+    val query: ParseQuery<ParseUser> = ParseUser.getQuery()
+    // exclude user of this device
+    query.whereEqualTo("objectId", userId)
+    query.findInBackground(FindCallback { objects, e ->
+        if (e == null) {
+            if (objects.isNotEmpty()) {
+                textView.text = objects[0].username
+            }
+        } else {
+            e.printStackTrace()
+        }
+    })
 }
