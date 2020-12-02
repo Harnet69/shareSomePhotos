@@ -42,7 +42,7 @@ class UsersViewModel(application: Application) : BaseViewModel(application) {
                     for (user in objects) {
                         val userToSend = User(user.username, "", "")
                         userToSend.userId = user.objectId
-                        userToSend.profileImgId = user.get("profileImg").toString()
+                        userToSend.profileImgUrl = user.get("profileImg").toString()
 
                         usersFromParse.add(userToSend)
                     }
@@ -51,7 +51,7 @@ class UsersViewModel(application: Application) : BaseViewModel(application) {
                 } else {
                     mIsLoading.postValue(false)
                     mIsArticleLoadError.postValue(false)
-                    Toast.makeText(getApplication(), "No users here yet", Toast.LENGTH_LONG).show()
+//                    Toast.makeText(getApplication(), "No users here yet", Toast.LENGTH_LONG).show()
                 }
             } else {
                 // switch off waiting spinner and inform user is smth wrong

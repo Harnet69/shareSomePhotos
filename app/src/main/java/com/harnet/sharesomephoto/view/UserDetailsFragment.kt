@@ -10,6 +10,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import com.harnet.sharesomephoto.R
 import com.harnet.sharesomephoto.databinding.UserDetailsFragmentBinding
+import com.harnet.sharesomephoto.util.setActivityTitle
 import com.harnet.sharesomephoto.viewModel.UserDetailsViewModel
 import kotlinx.android.synthetic.main.user_details_fragment.*
 import kotlinx.android.synthetic.main.users_fragment.*
@@ -29,6 +30,7 @@ class UserDetailsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        this.setActivityTitle("User details")
         viewModel = ViewModelProvider(this).get(UserDetailsViewModel::class.java)
 
         arguments?.let {

@@ -60,7 +60,7 @@ class ProfileFragment : Fragment(), UserParsable, ImageParsable {
 
         } else {
             val thisUser = User(ParseUser.getCurrentUser().username, "", ParseUser.getCurrentUser().email)
-            thisUser.profileImgId = ParseUser.getCurrentUser().get("profileImg").toString()
+            thisUser.profileImgUrl = ParseUser.getCurrentUser().get("profileImg").toString()
 
             dataBinding.user = thisUser
             login_block.visibility = View.INVISIBLE
@@ -131,7 +131,7 @@ class ProfileFragment : Fragment(), UserParsable, ImageParsable {
             if (isLogged && ParseUser.getCurrentUser() != null) {
                 // bind the user to view
                     val userForBinding = User(ParseUser.getCurrentUser().username, "", ParseUser.getCurrentUser().email)
-                    userForBinding.profileImgId =
+                    userForBinding.profileImgUrl =
                         ParseUser.getCurrentUser().get("profileImg").toString()
 
                     // get and bind user Profile image

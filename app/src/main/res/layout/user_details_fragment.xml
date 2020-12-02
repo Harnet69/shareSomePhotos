@@ -28,8 +28,8 @@
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:bindImageUrl="@{user.profileImgId}"
-            android:goToImagePage="@{user.profileImgId}"/>
+            android:bindImageUrl="@{user.profileImgUrl}"
+            android:goToImagePage="@{user.profileImgUrl}"/>
 
         <TextView
             android:id="@+id/userName_UserDescr"

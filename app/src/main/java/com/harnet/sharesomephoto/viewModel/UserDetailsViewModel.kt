@@ -1,7 +1,6 @@
 package com.harnet.sharesomephoto.viewModel
 
 import android.app.Application
-import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import com.harnet.sharesomephoto.model.User
@@ -38,12 +37,12 @@ class UserDetailsViewModel(application: Application) : BaseViewModel(application
                 if (objects.isNotEmpty()) {
                     val retrievedUser = objects[0]
                     val userForBind = User(retrievedUser.username,"","")
-                    userForBind.profileImgId = retrievedUser["profileImg"].toString()
+                    userForBind.profileImgUrl = retrievedUser["profileImg"].toString()
                     retrieveUser(userForBind)
                 } else {
                     mIsLoading.postValue(false)
                     mIsUserLoadError.postValue(false)
-                    Toast.makeText(getApplication(), "No users here yet", Toast.LENGTH_LONG).show()
+//                    Toast.makeText(getApplication(), "No users here yet", Toast.LENGTH_LONG).show()
                 }
             } else {
                 // switch off waiting spinner and inform user is smth wrong

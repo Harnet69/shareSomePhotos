@@ -23,7 +23,8 @@
             android:textSize="20sp"
             android:paddingStart="5dp"
             android:tag="feedsFragment"
-            android:text="@{image.authorId}"/>
+            android:bindUserName="@{image.authorId}"
+            android:goToUserDetails="@{image.authorId}"/>
 
         <ImageView
             android:id="@+id/image_ItemImage"
