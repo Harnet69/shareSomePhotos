@@ -28,7 +28,6 @@ class UsersFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         dataBinding = DataBindingUtil.inflate(inflater, R.layout.users_fragment, container, false)
-
         return dataBinding.root
     }
 
@@ -44,7 +43,6 @@ class UsersFragment : Fragment() {
             layoutManager = LinearLayoutManager(context)
             //Fix blinking RecyclerView
             usersAdapter.setHasStableIds(true)
-
             adapter = usersAdapter
         }
 

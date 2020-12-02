@@ -15,7 +15,7 @@
         android:layout_height="100dp"
         android:orientation="horizontal"
             android:tag="usersFragment"
-        android:goToUserDetails="@{user.name}">
+        android:goToUserDetails="@{user.userId}">
 
         <ImageView
             android:id="@+id/userImage_ImageView_Profile"
@@ -32,7 +32,7 @@
             android:layout_height="match_parent"
             android:layout_weight="2"
             android:gravity="center_vertical"
-            android:bindUserName="@{user.userId}"
+            android:text="@{user.name}"
             android:textSize="20sp"
             android:paddingStart="5dp"/>
     </LinearLayout>
