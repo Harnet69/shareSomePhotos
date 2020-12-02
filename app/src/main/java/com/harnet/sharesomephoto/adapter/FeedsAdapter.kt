@@ -16,16 +16,14 @@ class FeedsAdapter(private var imagesList: ArrayList<Image>) :
     RecyclerView.Adapter<FeedsAdapter.ImagesViewHolder>(), ImageParsable {
 
     //for updating information from a backend
-    fun updateFeedsList(newImagesList: List<Image>) {
+    fun updateFeedsList(newImagesList: ArrayList<Image>) {
         // get new parsed articles
-        if (newImagesList.isNotEmpty()) {
-            val newCastedImagesList = newImagesList as ArrayList<Image>
-
+//        if (newImagesList.isNotEmpty()) {
             imagesList.clear()
-            imagesList.addAll(newCastedImagesList)
+            imagesList.addAll(newImagesList)
             //reset RecycleView and recreate a list
             notifyDataSetChanged()
-        }
+//        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FeedsAdapter.ImagesViewHolder {
@@ -49,10 +47,9 @@ class FeedsAdapter(private var imagesList: ArrayList<Image>) :
     override fun onBindViewHolder(holder: FeedsAdapter.ImagesViewHolder, position: Int) {
         // bind data to xml variable view
         holder.view.image = imagesList[position]
-        Log.i("FeedsImages", imagesList[position].imageURL)
-//        holder.view.imageItemImage.loadImage(imagesList[position].url, getProgressDrawable(holder.view.imageItemImage.context))
+        Log.i("ImagesFromParse", "onBindViewHolder: $")
+//        holder.view.imageItemImage.loadImage(imagesList[position].imageURL, getProgressDrawable(holder.view.imageItemImage.context))
         //TODO change User model to keep user Image as well
 //        getProfileImgByUser(imagesList[position].name, holder.view.userImageImageViewProfile)
     }
-
 }

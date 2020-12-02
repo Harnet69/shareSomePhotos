@@ -46,10 +46,6 @@ class FeedsFragment : Fragment() {
 
         feeds_list_FeedsFragment.apply {
             layoutManager = LinearLayoutManager(context)
-
-            //Fix blinking RecyclerView
-            feedsAdapter.setHasStableIds(true)
-
             adapter = feedsAdapter
         }
 

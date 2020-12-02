@@ -41,8 +41,7 @@ class UsersFragment : Fragment() {
 
         users_list_usersFragment.apply {
             layoutManager = LinearLayoutManager(context)
-            //Fix blinking RecyclerView
-            usersAdapter.setHasStableIds(true)
+
             adapter = usersAdapter
         }
 

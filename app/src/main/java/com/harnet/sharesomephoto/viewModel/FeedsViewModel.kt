@@ -10,7 +10,7 @@ import com.parse.ParseObject
 import com.parse.ParseQuery
 
 class FeedsViewModel(application: Application) : BaseViewModel(application) {
-    val mFeeds = MutableLiveData<List<Image>>()
+    val mFeeds = MutableLiveData<ArrayList<Image>>()
     val mIsImageLoadError = MutableLiveData<Boolean>()
     val mIsLoading = MutableLiveData<Boolean>()
 
@@ -19,7 +19,7 @@ class FeedsViewModel(application: Application) : BaseViewModel(application) {
     }
 
     // retrieve images
-    private fun retrieveImages(imagesFromParse: List<Image>) {
+    private fun retrieveImages(imagesFromParse: ArrayList<Image>) {
         // set received list to observable mutable list
         mFeeds.postValue(imagesFromParse)
         // switch off error message
@@ -31,9 +31,9 @@ class FeedsViewModel(application: Application) : BaseViewModel(application) {
     // get images from server
     private fun getImagesFromParseServer() {
         // clean previous version of feeds
-        mFeeds.postValue(mutableListOf())
+        mFeeds.postValue(arrayListOf())
 
-        val usersImages = mutableListOf<Image>()
+        val usersImages = ArrayList<Image>()
 
         val query = ParseQuery<ParseObject>("Image")
         query.orderByDescending("createdAt")
@@ -43,7 +43,6 @@ class FeedsViewModel(application: Application) : BaseViewModel(application) {
                 if (objects.isNotEmpty()) {
                     for (image in objects) {
                         val parseFile = image.getParseFile("image")
-                        //TODO AUTHOR NAme it should be
                         val imageForBind = Image(image.get("authorId").toString())
                         imageForBind.imageURL = parseFile.url
                         usersImages.add(imageForBind)
@@ -52,7 +51,6 @@ class FeedsViewModel(application: Application) : BaseViewModel(application) {
                 } else {
                     mIsLoading.postValue(false)
                     mIsImageLoadError.postValue(false)
-//                    Toast.makeText(getApplication(), "No images yet", Toast.LENGTH_SHORT).show()
                 }
             } else {
                 // switch off waiting spinner and inform user is smth wrong
