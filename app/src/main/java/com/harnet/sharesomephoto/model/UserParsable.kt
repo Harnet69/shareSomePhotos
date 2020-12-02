@@ -37,10 +37,10 @@ interface UserParsable {
     //log in
     fun logIn(userName: String, userPassword: String) {
         ParseUser.logInInBackground(userName, userPassword, LogInCallback { user, e ->
-//            if (user != null) {
-//            } else {
-//                e.printStackTrace()
-//            }
+            if (user != null) {
+            } else {
+                e.printStackTrace()
+            }
         })
     }
 

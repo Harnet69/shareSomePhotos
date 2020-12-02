@@ -70,7 +70,7 @@ class ImagePreviewFragment : Fragment() {
         viewModel.mImage.observe(viewLifecycleOwner, Observer { image ->
             image?.let {
                 image_preview_block.visibility = View.VISIBLE
-                // TODO think about send with databinding
+                // set new added image
                 image_ImagePreviewFragment.setImageBitmap(image)
             }
         })

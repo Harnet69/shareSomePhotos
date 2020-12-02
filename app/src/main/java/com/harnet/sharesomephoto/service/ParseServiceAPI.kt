@@ -22,21 +22,6 @@ class ParseServiceAPI: Application() {
                 .build()
         )
 
-
-        // Test Parse server
-//        val tweetObject = ParseObject("Feed")
-//        tweetObject.put("name", "Hallil")
-//        tweetObject.put("tweet", "Hello World")
-//        tweetObject.put("scores", 20)
-//        // send to a Parse server
-//        tweetObject.saveInBackground(SaveCallback { e ->
-//            if (e == null) {
-//                Log.i("tweet", "insertTweet: ")
-//            } else {
-//                Log.i("tweet", "insertTweet: Smth wrong " + e.printStackTrace())
-//            }
-//        })
-
         // create user automatically if app don't have login system
 //        ParseUser.enableAutomaticUser()
 
