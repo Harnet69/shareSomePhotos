@@ -26,6 +26,7 @@
 
             <ImageView
                 android:id="@+id/userImage_UserDescr"
+                android:tag="userDetailsFragment"
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
                 android:layout_marginTop="5dp"
@@ -33,7 +34,6 @@
                 android:focusable="true"
                 android:goToImagePage="@{user.profileImgUrl}"
                 android:scaleType="fitCenter"
-                android:tag="userDetails"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"

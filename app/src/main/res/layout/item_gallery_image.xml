@@ -16,6 +16,7 @@
 
         <ImageView
             android:id="@+id/galleryImg"
+            android:tag="userDetailsFragment"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_margin="5dp"
@@ -26,6 +27,7 @@
 
         <ImageView
             android:id="@+id/galleryImg1"
+            android:tag="userDetailsFragment"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_margin="5dp"
@@ -36,6 +38,7 @@
 
         <ImageView
             android:id="@+id/galleryImg2"
+            android:tag="userDetailsFragment"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_margin="5dp"
