@@ -24,34 +24,41 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:context=".view.UserDetailsFragment">
 
-            <ImageView
-                android:id="@+id/userImage_UserDescr"
-                android:tag="userDetailsFragment"
+            <LinearLayout
+                android:id="@+id/linearLayout"
                 android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:layout_marginTop="5dp"
-                android:bindImageUrl="@{user.profileImgUrl}"
-                android:focusable="true"
-                android:goToImagePage="@{user.profileImgUrl}"
-                android:scaleType="fitCenter"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent">
 
-            <TextView
-                android:id="@+id/userName_UserDescr"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:ems="10"
-                android:text="@{user.name}"
-                android:textAlignment="center"
-                android:textSize="20sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/userImage_UserDescr" />
+                <ImageView
+                    android:id="@+id/userImage_UserDescr"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:paddingStart="3dp"
+                    android:paddingEnd="3dp"
+                    android:bindImageUrl="@{user.profileImgUrl}"
+                    android:focusable="true"
+                    android:goToImagePage="@{user.profileImgUrl}"
+                    android:scaleType="fitCenter"
+                    android:tag="userDetailsFragment" />
+
+                <TextView
+                    android:id="@+id/userName_UserDescr"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_margin="3dp"
+                    android:layout_marginTop="5dp"
+                    android:ems="10"
+                    android:fontFamily="@font/jolly_lodger"
+                    android:text="@{user.name}"
+                    android:gravity="center_vertical"
+                    android:paddingStart="5dp"
+                    android:textSize="40sp"/>
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/listError_TextView_UserDescr"
@@ -80,7 +87,6 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginTop="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -90,7 +96,6 @@
                 android:id="@+id/userGallery_userDescrFragment"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:background="@android:color/holo_blue_bright"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/listImageError_TextView_UserDescr"
                 app:layout_constraintStart_toStartOf="parent"
