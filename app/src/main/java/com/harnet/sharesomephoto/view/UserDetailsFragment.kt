@@ -1,7 +1,6 @@
 package com.harnet.sharesomephoto.view
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,13 +8,18 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.harnet.sharesomephoto.R
+import com.harnet.sharesomephoto.adapter.UserDetailsAdapter
 import com.harnet.sharesomephoto.databinding.UserDetailsFragmentBinding
+import com.harnet.sharesomephoto.model.Image
 import com.harnet.sharesomephoto.util.setActivityTitle
 import com.harnet.sharesomephoto.viewModel.UserDetailsViewModel
+import kotlinx.android.synthetic.main.feeds_fragment.*
 import kotlinx.android.synthetic.main.user_details_fragment.*
 
 class UserDetailsFragment : Fragment() {
+    private lateinit var userDetaildAdapter: UserDetailsAdapter
     private lateinit var viewModel: UserDetailsViewModel
     private lateinit var dataBinding: UserDetailsFragmentBinding
 
@@ -32,6 +36,13 @@ class UserDetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         this.setActivityTitle("User details")
+        userDetaildAdapter = UserDetailsAdapter(arrayListOf())
+
+        userGallery_userDescrFragment.apply {
+            layoutManager = LinearLayoutManager(context)
+            adapter = userDetaildAdapter
+        }
+
         viewModel = ViewModelProvider(this).get(UserDetailsViewModel::class.java)
 
         arguments?.let {
@@ -88,6 +99,7 @@ class UserDetailsFragment : Fragment() {
             userImages?.let {
 //                dataBinding.user = it
                 // TODO implement adapter of recycler view
+                userDetaildAdapter.updateFeedsList(userImages as ArrayList<Image>)
                 userGallery_userDescrFragment.visibility = View.VISIBLE
             }
         })

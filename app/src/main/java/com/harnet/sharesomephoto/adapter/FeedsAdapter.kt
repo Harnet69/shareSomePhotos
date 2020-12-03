@@ -13,17 +13,15 @@ import com.harnet.sharesomephoto.util.getProgressDrawable
 import com.harnet.sharesomephoto.util.loadImage
 
 class FeedsAdapter(private var imagesList: ArrayList<Image>) :
-    RecyclerView.Adapter<FeedsAdapter.ImagesViewHolder>(), ImageParsable {
+    RecyclerView.Adapter<FeedsAdapter.ImagesViewHolder>() {
 
     //for updating information from a backend
     fun updateFeedsList(newImagesList: ArrayList<Image>) {
         // get new parsed articles
-//        if (newImagesList.isNotEmpty()) {
             imagesList.clear()
             imagesList.addAll(newImagesList)
             //reset RecycleView and recreate a list
             notifyDataSetChanged()
-//        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FeedsAdapter.ImagesViewHolder {
