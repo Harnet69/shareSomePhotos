@@ -86,9 +86,6 @@ class UserDetailsFragment : Fragment() {
         // update the layout using values of mutable variables from a ViewModel
         viewModel.mUserImages.observe(viewLifecycleOwner, Observer { userImages ->
             userImages?.let {
-                for(image in it){
-                    Log.i("retrieveImages", "retrieved UserImages: ${image.imageURL}")
-                }
 //                dataBinding.user = it
                 // TODO implement adapter of recycler view
                 userGallery_userDescrFragment.visibility = View.VISIBLE

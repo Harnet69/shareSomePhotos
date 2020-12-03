@@ -29,6 +29,7 @@ class FeedsViewModel(application: Application) : BaseViewModel(application) {
     }
 
     // get images from server
+    // TODO think about move to a separate User interface
     private fun getImagesFromParseServer() {
         // clean previous version of feeds
         mFeeds.postValue(arrayListOf())
