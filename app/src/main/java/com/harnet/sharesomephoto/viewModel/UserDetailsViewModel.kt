@@ -1,6 +1,7 @@
 package com.harnet.sharesomephoto.viewModel
 
 import android.app.Application
+import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import com.harnet.sharesomephoto.model.Image

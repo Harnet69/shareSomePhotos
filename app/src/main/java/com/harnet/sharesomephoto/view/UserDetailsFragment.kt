@@ -1,6 +1,7 @@
 package com.harnet.sharesomephoto.view
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -85,9 +86,12 @@ class UserDetailsFragment : Fragment() {
         // update the layout using values of mutable variables from a ViewModel
         viewModel.mUserImages.observe(viewLifecycleOwner, Observer { userImages ->
             userImages?.let {
+                for(image in it){
+                    Log.i("retrieveImages", "retrieved UserImages: ${image.imageURL}")
+                }
 //                dataBinding.user = it
                 // TODO implement adapter of recycler view
-                user_detail_block_userDeskrFragment.visibility = View.VISIBLE
+                userGallery_userDescrFragment.visibility = View.VISIBLE
             }
         })
 
@@ -95,21 +99,21 @@ class UserDetailsFragment : Fragment() {
         viewModel.mIsUserLoadError.observe(viewLifecycleOwner, Observer { isError ->
             // check isError not null
             isError?.let {
-                listError_TextView_UserDescr.visibility = if (it) View.VISIBLE else View.GONE
+                listImageError_TextView_UserDescr.visibility = if (it) View.VISIBLE else View.GONE
             }
         })
 
         // loading spinner
-        viewModel.mIsLoading.observe(viewLifecycleOwner, Observer { isLoading ->
+        viewModel.mIsImagesLoading.observe(viewLifecycleOwner, Observer { isLoading ->
             //check isLoading not null
             isLoading?.let {
                 // if data still loading - show spinner, else - remove it
-                loadingView_ProgressBar_UserDescr.visibility =
+                loadingImagesView_ProgressBar_UserDescr.visibility =
                     if (it) View.VISIBLE else View.GONE
                 if (it) {
                     //hide all views when progress bar is visible
                     listError_TextView_UserDescr.visibility = View.GONE
-                    user_detail_block_userDeskrFragment.visibility = View.GONE
+                    userGallery_userDescrFragment.visibility = View.GONE
                 }
             }
         })
