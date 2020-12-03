@@ -13,23 +13,23 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/user_detail_block_userDeskrFragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         tools:context=".view.UserDetailsFragment">
 
         <ImageView
             android:id="@+id/userImage_UserDescr"
+            android:tag="userDetails"
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:layout_marginTop="5dp"
+            android:bindImageUrl="@{user.profileImgUrl}"
             android:focusable="true"
+            android:goToImagePage="@{user.profileImgUrl}"
             android:scaleType="fitCenter"
-            android:tag="userDetails"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:bindImageUrl="@{user.profileImgUrl}"
-            android:goToImagePage="@{user.profileImgUrl}"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/userName_UserDescr"
@@ -37,13 +37,13 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:ems="10"
+            android:text="@{user.name}"
             android:textAlignment="center"
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/userImage_UserDescr"
-            android:text="@{user.name}"/>
+            app:layout_constraintTop_toBottomOf="@+id/userImage_UserDescr" />
 
         <TextView
             android:id="@+id/listError_TextView_UserDescr"
