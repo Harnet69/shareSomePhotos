@@ -1,6 +1,5 @@
 package com.harnet.sharesomephoto.adapter
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
@@ -8,20 +7,19 @@ import androidx.recyclerview.widget.RecyclerView
 import com.harnet.sharesomephoto.R
 import com.harnet.sharesomephoto.databinding.ItemImageBinding
 import com.harnet.sharesomephoto.model.Image
-import com.harnet.sharesomephoto.model.ImageParsable
-import com.harnet.sharesomephoto.util.getProgressDrawable
-import com.harnet.sharesomephoto.util.loadImage
 
 class FeedsAdapter(private var imagesList: ArrayList<Image>) :
     RecyclerView.Adapter<FeedsAdapter.ImagesViewHolder>() {
 
     //for updating information from a backend
     fun updateFeedsList(newImagesList: ArrayList<Image>) {
-        // get new parsed articles
+        if(newImagesList.isNotEmpty()) {
+            // get new parsed articles
             imagesList.clear()
             imagesList.addAll(newImagesList)
             //reset RecycleView and recreate a list
             notifyDataSetChanged()
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FeedsAdapter.ImagesViewHolder {

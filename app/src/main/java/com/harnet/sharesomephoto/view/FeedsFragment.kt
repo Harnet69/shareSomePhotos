@@ -22,7 +22,6 @@ import com.harnet.sharesomephoto.viewModel.FeedsViewModel
 import com.parse.ParseUser
 import kotlinx.android.synthetic.main.feeds_fragment.*
 
-
 class FeedsFragment : Fragment() {
     private lateinit var feedsAdapter: FeedsAdapter
     private lateinit var dataBinding: FeedsFragmentBinding
@@ -33,7 +32,6 @@ class FeedsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         dataBinding = DataBindingUtil.inflate(inflater, R.layout.feeds_fragment, container, false)
-
         return dataBinding.root
     }
 

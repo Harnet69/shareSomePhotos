@@ -13,11 +13,13 @@ class UserDetailsAdapter(private var userImages: ArrayList<Image>) :
 
     //for updating information from a backend
     fun updateFeedsList(newImagesList: ArrayList<Image>) {
-        // get new parsed articles
-        userImages.clear()
-        userImages.addAll(newImagesList)
-        //reset RecycleView and recreate a list
-        notifyDataSetChanged()
+        if(newImagesList.isNotEmpty()) {
+            // get new parsed articles
+            userImages.clear()
+            userImages.addAll(newImagesList)
+            //reset RecycleView and recreate a list
+            notifyDataSetChanged()
+        }
     }
 
     class UserImagesViewHolder(var view: ItemGalleryImageBinding) :
