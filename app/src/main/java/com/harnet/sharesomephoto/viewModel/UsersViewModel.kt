@@ -40,10 +40,11 @@ class UsersViewModel(application: Application) : BaseViewModel(application) {
 
             if (e == null) {
                 if (objects.isNotEmpty()) {
-                    for (user in objects) {
-                        val userToSend = User(user.username, "", "")
-                        userToSend.userId = user.objectId
-                        userToSend.profileImgUrl = user.get("profileImg").toString()
+                    for (i in objects.indices) {
+                        val userToSend = User(objects[i].username, "", "")
+                        userToSend.userId = objects[i].objectId
+                        userToSend.userIdForList = i.toString() // for users list blinking reduction
+                        userToSend.profileImgUrl = objects[i].get("profileImg").toString()
 
                         usersFromParse.add(userToSend)
                     }

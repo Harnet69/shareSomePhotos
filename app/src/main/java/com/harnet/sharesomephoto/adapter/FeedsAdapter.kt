@@ -46,4 +46,9 @@ class FeedsAdapter(private var imagesList: ArrayList<Image>) :
         // bind data to xml variable view
         holder.view.image = imagesList[position]
     }
+
+    // fix blinking RecyclerView
+    override fun getItemId(position: Int): Long {
+        return imagesList.get(position).imageId.toLong()
+    }
 }

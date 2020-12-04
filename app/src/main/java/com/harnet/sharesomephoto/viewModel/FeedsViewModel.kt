@@ -42,9 +42,10 @@ class FeedsViewModel(application: Application) : BaseViewModel(application) {
         query.findInBackground(FindCallback { objects, parseObjectError ->
             if (parseObjectError == null) {
                 if (objects.isNotEmpty()) {
-                    for (image in objects) {
-                        val parseFile = image.getParseFile("image")
-                        val imageForBind = Image(image.get("authorId").toString())
+                    for (i in objects.indices) {
+                        val parseFile = objects[i].getParseFile("image")
+                        val imageForBind = Image(objects[i].get("authorId").toString())
+                        imageForBind.imageId = i.toString() // for users list blinking reduction
                         imageForBind.imageURL = parseFile.url
                         usersImages.add(imageForBind)
                     }

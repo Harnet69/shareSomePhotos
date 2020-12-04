@@ -28,8 +28,6 @@ class FeedsFragment : Fragment() {
     private lateinit var dataBinding: FeedsFragmentBinding
     private lateinit var viewModel: FeedsViewModel
 
-    var isProfileImg = true
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -49,6 +47,8 @@ class FeedsFragment : Fragment() {
 
         feeds_list_FeedsFragment.apply {
             layoutManager = LinearLayoutManager(context)
+            //Fix blinking RecyclerView
+            feedsAdapter.setHasStableIds(true)
             adapter = feedsAdapter
         }
 

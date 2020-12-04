@@ -45,4 +45,9 @@ class UsersAdapter(private var usersList: ArrayList<User>): RecyclerView.Adapter
         // bind data to xml variable view
         holder.view.user = usersList[position]
     }
+
+    // fix blinking RecyclerView
+    override fun getItemId(position: Int): Long {
+        return usersList.get(position).userIdForList.toLong()
+    }
 }
