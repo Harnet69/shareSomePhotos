@@ -3,11 +3,7 @@ package com.harnet.sharesomephoto.view
 import android.Manifest
 import android.app.Activity
 import android.content.pm.PackageManager
-import android.graphics.Bitmap
-import android.graphics.drawable.BitmapDrawable
-import android.graphics.drawable.Drawable
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -16,13 +12,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.target.CustomTarget
-import com.bumptech.glide.request.transition.Transition
 import com.harnet.sharesomephoto.R
 import com.harnet.sharesomephoto.adapter.FeedsAdapter
 import com.harnet.sharesomephoto.databinding.FeedsFragmentBinding
-import com.harnet.sharesomephoto.util.getProgressDrawable
 import com.harnet.sharesomephoto.util.loadImageToMenuItem
 import com.harnet.sharesomephoto.util.openImageChooser
 import com.harnet.sharesomephoto.util.setActivityTitle
@@ -97,37 +89,12 @@ class FeedsFragment : Fragment() {
         observeViewModel()
     }
 
-//    override fun onPrepareOptionsMenu(menu: Menu) {
-//        val profileMenuItem = menu.findItem(R.id.profile_menu_item)
-//        val profileImg = ParseUser.getCurrentUser().get("profileImg")
-//
-//        Glide.with(this)
-//                .asBitmap()
-//                .load(profileImg)
-//                .circleCrop()
-//                .into(object : CustomTarget<Bitmap>() {
-//                    override fun onResourceReady(
-//                        bitmapImg: Bitmap,
-//                        transition: Transition<in Bitmap>?
-//                    ) {
-//                        val imgBitmap = BitmapDrawable(resources, bitmapImg)
-//                        profileMenuItem.icon = imgBitmap
-//                    }
-//
-//                    override fun onLoadCleared(placeholder: Drawable?) {
-//                    }
-//
-//                })
-//
-//        return super.onPrepareOptionsMenu(menu)
-//    }
-
     // options menu
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.main_menu, menu)
         //set image to profile menu item
-        context?.let { getProgressDrawable(it) }?.let { loadImageToMenuItem(requireContext(), menu, it) }
+        context?.let { loadImageToMenuItem(it, menu.findItem(R.id.profile_menu_item)) }
     }
 
     // click listener for menu items

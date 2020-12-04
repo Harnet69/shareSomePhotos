@@ -8,8 +8,6 @@ import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.provider.MediaStore
-import android.util.Log
-import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.ImageView
@@ -23,15 +21,12 @@ import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
-import com.bumptech.glide.load.resource.bitmap.CenterCrop
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.target.Target
 import com.bumptech.glide.request.transition.Transition
 import com.harnet.sharesomephoto.R
-import com.harnet.sharesomephoto.model.User
 import com.harnet.sharesomephoto.service.OnSingleClickListenerService
 import com.harnet.sharesomephoto.view.FeedsFragmentDirections
 import com.harnet.sharesomephoto.view.ProfileFragmentDirections
@@ -40,7 +35,6 @@ import com.harnet.sharesomephoto.view.UsersFragmentDirections
 import com.parse.FindCallback
 import com.parse.ParseQuery
 import com.parse.ParseUser
-import kotlin.coroutines.coroutineContext
 
 fun openImageChooser(activity: Activity) {
     val intent = Intent()
@@ -90,11 +84,15 @@ fun ImageView.loadImage(uri: String?, progressDrawable: CircularProgressDrawable
         .into(this)// this - extended ImageView class
 }
 
-fun loadImageToMenuItem(context: Context, menu: Menu, progressDrawable: CircularProgressDrawable){
-    val profileMenuItem = menu.findItem(R.id.profile_menu_item)
+// set user image to menu Profile's item
+fun loadImageToMenuItem(context: Context, profileMenuItem: MenuItem){
     val profileImg = ParseUser.getCurrentUser().get("profileImg")
+    val options = RequestOptions()
+        .placeholder(getProgressDrawable(context))
+        .error(R.drawable.profile_ico)
 
     Glide.with(context)
+        .setDefaultRequestOptions(options)
         .asBitmap()
         .load(profileImg)
         .circleCrop()
