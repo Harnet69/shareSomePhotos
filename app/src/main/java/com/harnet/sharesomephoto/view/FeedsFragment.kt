@@ -3,6 +3,9 @@ package com.harnet.sharesomephoto.view
 import android.Manifest
 import android.app.Activity
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.Log
 import android.view.*
@@ -13,6 +16,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.target.CustomTarget
+import com.bumptech.glide.request.transition.Transition
 import com.harnet.sharesomephoto.R
 import com.harnet.sharesomephoto.adapter.FeedsAdapter
 import com.harnet.sharesomephoto.databinding.FeedsFragmentBinding
@@ -22,10 +28,13 @@ import com.harnet.sharesomephoto.viewModel.FeedsViewModel
 import com.parse.ParseUser
 import kotlinx.android.synthetic.main.feeds_fragment.*
 
+
 class FeedsFragment : Fragment() {
     private lateinit var feedsAdapter: FeedsAdapter
     private lateinit var dataBinding: FeedsFragmentBinding
     private lateinit var viewModel: FeedsViewModel
+
+    var isProfileImg = true
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -86,6 +95,31 @@ class FeedsFragment : Fragment() {
         observeViewModel()
     }
 
+    override fun onPrepareOptionsMenu(menu: Menu) {
+        val profileMenuItem = menu.findItem(R.id.profile_menu_item)
+        val profileImg = ParseUser.getCurrentUser().get("profileImg")
+
+        Glide.with(this)
+                .asBitmap()
+                .load(profileImg)
+            .circleCrop()
+                .into(object : CustomTarget<Bitmap>() {
+                    override fun onResourceReady(
+                        bitmapImg: Bitmap,
+                        transition: Transition<in Bitmap>?
+                    ) {
+                        val imgBitmap = BitmapDrawable(resources, bitmapImg)
+                        profileMenuItem.icon = imgBitmap
+                    }
+
+                    override fun onLoadCleared(placeholder: Drawable?) {
+                    }
+
+                })
+
+        return super.onPrepareOptionsMenu(menu)
+    }
+
     // options menu
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
@@ -95,10 +129,10 @@ class FeedsFragment : Fragment() {
     // click listener for menu items
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.users -> {
+            R.id.users_menu_item -> {
                 goToUsers()
             }
-            R.id.profile -> {
+            R.id.profile_menu_item -> {
                 goToProfile()
             }
         }
@@ -108,7 +142,7 @@ class FeedsFragment : Fragment() {
     private fun observeViewModel() {
         // update the layout using values of mutable variables from a ViewModel
         viewModel.mFeeds.observe(viewLifecycleOwner, Observer { images ->
-            images?.let {imagesList ->
+            images?.let { imagesList ->
                 feeds_list_FeedsFragment.visibility = View.VISIBLE
                 feedsAdapter.updateFeedsList(imagesList)
             }
