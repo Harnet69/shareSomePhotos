@@ -3,10 +3,14 @@ package com.harnet.sharesomephoto.util
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.content.res.Resources
 import android.graphics.Bitmap
+import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.provider.MediaStore
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -23,7 +27,9 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.RequestOptions
+import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.target.Target
+import com.bumptech.glide.request.transition.Transition
 import com.harnet.sharesomephoto.R
 import com.harnet.sharesomephoto.model.User
 import com.harnet.sharesomephoto.service.OnSingleClickListenerService
@@ -34,6 +40,7 @@ import com.harnet.sharesomephoto.view.UsersFragmentDirections
 import com.parse.FindCallback
 import com.parse.ParseQuery
 import com.parse.ParseUser
+import kotlin.coroutines.coroutineContext
 
 fun openImageChooser(activity: Activity) {
     val intent = Intent()
@@ -81,6 +88,29 @@ fun ImageView.loadImage(uri: String?, progressDrawable: CircularProgressDrawable
             }
         })
         .into(this)// this - extended ImageView class
+}
+
+fun loadImageToMenuItem(context: Context, menu: Menu, progressDrawable: CircularProgressDrawable){
+    val profileMenuItem = menu.findItem(R.id.profile_menu_item)
+    val profileImg = ParseUser.getCurrentUser().get("profileImg")
+
+    Glide.with(context)
+        .asBitmap()
+        .load(profileImg)
+        .circleCrop()
+        .into(object : CustomTarget<Bitmap>() {
+            override fun onResourceReady(
+                bitmapImg: Bitmap,
+                transition: Transition<in Bitmap>?
+            ) {
+                val imgBitmap = BitmapDrawable(Resources.getSystem(), bitmapImg)
+                profileMenuItem.icon = imgBitmap
+            }
+
+            override fun onLoadCleared(placeholder: Drawable?) {
+            }
+
+        })
 }
 
 // load image from URL

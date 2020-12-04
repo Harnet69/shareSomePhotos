@@ -22,6 +22,8 @@ import com.bumptech.glide.request.transition.Transition
 import com.harnet.sharesomephoto.R
 import com.harnet.sharesomephoto.adapter.FeedsAdapter
 import com.harnet.sharesomephoto.databinding.FeedsFragmentBinding
+import com.harnet.sharesomephoto.util.getProgressDrawable
+import com.harnet.sharesomephoto.util.loadImageToMenuItem
 import com.harnet.sharesomephoto.util.openImageChooser
 import com.harnet.sharesomephoto.util.setActivityTitle
 import com.harnet.sharesomephoto.viewModel.FeedsViewModel
@@ -95,35 +97,37 @@ class FeedsFragment : Fragment() {
         observeViewModel()
     }
 
-    override fun onPrepareOptionsMenu(menu: Menu) {
-        val profileMenuItem = menu.findItem(R.id.profile_menu_item)
-        val profileImg = ParseUser.getCurrentUser().get("profileImg")
-
-        Glide.with(this)
-                .asBitmap()
-                .load(profileImg)
-            .circleCrop()
-                .into(object : CustomTarget<Bitmap>() {
-                    override fun onResourceReady(
-                        bitmapImg: Bitmap,
-                        transition: Transition<in Bitmap>?
-                    ) {
-                        val imgBitmap = BitmapDrawable(resources, bitmapImg)
-                        profileMenuItem.icon = imgBitmap
-                    }
-
-                    override fun onLoadCleared(placeholder: Drawable?) {
-                    }
-
-                })
-
-        return super.onPrepareOptionsMenu(menu)
-    }
+//    override fun onPrepareOptionsMenu(menu: Menu) {
+//        val profileMenuItem = menu.findItem(R.id.profile_menu_item)
+//        val profileImg = ParseUser.getCurrentUser().get("profileImg")
+//
+//        Glide.with(this)
+//                .asBitmap()
+//                .load(profileImg)
+//                .circleCrop()
+//                .into(object : CustomTarget<Bitmap>() {
+//                    override fun onResourceReady(
+//                        bitmapImg: Bitmap,
+//                        transition: Transition<in Bitmap>?
+//                    ) {
+//                        val imgBitmap = BitmapDrawable(resources, bitmapImg)
+//                        profileMenuItem.icon = imgBitmap
+//                    }
+//
+//                    override fun onLoadCleared(placeholder: Drawable?) {
+//                    }
+//
+//                })
+//
+//        return super.onPrepareOptionsMenu(menu)
+//    }
 
     // options menu
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.main_menu, menu)
+        //set image to profile menu item
+        context?.let { getProgressDrawable(it) }?.let { loadImageToMenuItem(requireContext(), menu, it) }
     }
 
     // click listener for menu items
