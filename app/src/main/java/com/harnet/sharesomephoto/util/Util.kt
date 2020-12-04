@@ -84,9 +84,8 @@ fun ImageView.loadImage(uri: String?, progressDrawable: CircularProgressDrawable
         .into(this)// this - extended ImageView class
 }
 
-// set user image to menu Profile's item
-fun loadImageToMenuItem(context: Context, profileMenuItem: MenuItem){
-    val profileImg = ParseUser.getCurrentUser().get("profileImg")
+// set an image to a menu item
+fun loadImageToMenuItem(context: Context, profileMenuItem: MenuItem, imageUrl: String){
     val options = RequestOptions()
         .placeholder(getProgressDrawable(context))
         .error(R.drawable.profile_ico)
@@ -94,7 +93,7 @@ fun loadImageToMenuItem(context: Context, profileMenuItem: MenuItem){
     Glide.with(context)
         .setDefaultRequestOptions(options)
         .asBitmap()
-        .load(profileImg)
+        .load(imageUrl)
         .circleCrop()
         .into(object : CustomTarget<Bitmap>() {
             override fun onResourceReady(

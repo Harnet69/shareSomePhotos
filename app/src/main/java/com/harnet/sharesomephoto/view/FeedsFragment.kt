@@ -92,7 +92,8 @@ class FeedsFragment : Fragment() {
         super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.main_menu, menu)
         //set image to profile menu item
-        context?.let { loadImageToMenuItem(it, menu.findItem(R.id.profile_menu_item)) }
+        val profileImg = ParseUser.getCurrentUser().get("profileImg").toString()
+        context?.let { loadImageToMenuItem(it, menu.findItem(R.id.profile_menu_item), profileImg) }
     }
 
     // click listener for menu items
