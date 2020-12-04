@@ -56,7 +56,7 @@ fun ImageView.loadImage(uri: String?, progressDrawable: CircularProgressDrawable
     val options = RequestOptions()
         .placeholder(progressDrawable)
         .error(R.drawable.profile_ico)
-        .transform(CenterCrop(), RoundedCorners(50))
+//        .transform(CenterCrop(), RoundedCorners(50))
     Glide.with(context)
         .setDefaultRequestOptions(options)
         .load(uri)
