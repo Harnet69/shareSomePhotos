@@ -2,6 +2,7 @@ package com.harnet.sharesomephoto.view
 
 import android.graphics.Bitmap
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -86,10 +87,19 @@ class ImagePreviewFragment : Fragment() {
         // redirect to Profile fragment when image was sent
         viewModel.mIsImageSent.observe(viewLifecycleOwner, Observer { isSent ->
             // check isError not null
-            isSent?.let {
-                if (it) {
+            isSent?.let {imgWasSent ->
+                if (imgWasSent) {
                     loadingProgressBar_ImagePreview.visibility = View.INVISIBLE
                     sendError_ImagePreview.visibility = View.GONE
+
+                    when (fromFragment) {
+                        "profile" -> {
+                            Log.i("ImageWasSent", "Go to Profile ")
+                        }
+                        "feeds" -> {
+                            Log.i("ImageWasSent", "Go to Feeds ")
+                        }
+                    }
                 }
             }
         })

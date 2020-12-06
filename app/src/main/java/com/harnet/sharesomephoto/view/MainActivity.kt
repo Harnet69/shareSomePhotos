@@ -84,14 +84,14 @@ class MainActivity : AppCompatActivity() {
                 when (val activeFragment: Fragment? =
                     fragments.childFragmentManager.primaryNavigationFragment) {
                     is ProfileFragment -> {
-                        imageBtm?.let {
-                            val action = ProfileFragmentDirections.actionProfileFragmentToImagePreviewFragment(it, "profile")
+                        imageBtm?.let {image ->
+                            val action = ProfileFragmentDirections.actionProfileFragmentToImagePreviewFragment(image, "profile")
                             activeFragment.view?.let { Navigation.findNavController(it).navigate(action) }
                         }
                     }
                     is FeedsFragment -> {
-                        imageBtm?.let {
-                        val action = FeedsFragmentDirections.actionFeedsFragmentToImagePreviewFragment(it, "feeds")
+                        imageBtm?.let {image ->
+                        val action = FeedsFragmentDirections.actionFeedsFragmentToImagePreviewFragment(image, "feeds")
                         activeFragment.view?.let { Navigation.findNavController(it).navigate(action) }
                         }
                     }

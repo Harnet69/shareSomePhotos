@@ -12,7 +12,8 @@ import com.parse.*
 import kotlinx.coroutines.launch
 import java.io.ByteArrayOutputStream
 
-class ImagePreviewViewModel(application: Application) : BaseViewModel(application), ProfileImageable {
+class ImagePreviewViewModel(application: Application) : BaseViewModel(application),
+    ProfileImageable {
     val mImage = MutableLiveData<Bitmap>()
     val mImgUrl = MutableLiveData<String>()
 
@@ -62,17 +63,12 @@ class ImagePreviewViewModel(application: Application) : BaseViewModel(applicatio
                     if (isProfileImage) {
                         // set Profile image
                         setProfileImage(getApplication())
-                        mIsImageSent.setValue(true)
-                    } else {
-                        Toast.makeText(
-                            sendErrorImagePreview.context,
-                            "Image have been shared",
-                            Toast.LENGTH_SHORT
-                        ).show()
                     }
                     sendErrorImagePreview.visibility = View.GONE
                     loadingProgressBar.visibility = View.GONE
-                }else{
+
+                    mIsImageSent.setValue(true)
+                } else {
                     e.printStackTrace()
                     sendErrorImagePreview.visibility = View.VISIBLE
                     Toast.makeText(
