@@ -10,6 +10,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.Navigation
 import com.harnet.sharesomephoto.R
 import com.harnet.sharesomephoto.databinding.ImagePreviewFragmentBinding
 import com.harnet.sharesomephoto.util.setActivityTitle
@@ -91,15 +92,7 @@ class ImagePreviewFragment : Fragment() {
                 if (imgWasSent) {
                     loadingProgressBar_ImagePreview.visibility = View.INVISIBLE
                     sendError_ImagePreview.visibility = View.GONE
-
-                    when (fromFragment) {
-                        "profile" -> {
-                            Log.i("ImageWasSent", "Go to Profile ")
-                        }
-                        "feeds" -> {
-                            Log.i("ImageWasSent", "Go to Feeds ")
-                        }
-                    }
+                    view?.let { Navigation.findNavController(it).navigateUp() }
                 }
             }
         })
