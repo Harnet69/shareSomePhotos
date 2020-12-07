@@ -52,13 +52,28 @@ class ImagePreviewFragment : Fragment() {
                 action_block_ImagePreviewFragment.visibility = View.GONE
                 when (fromFragment) {
                     "profile" -> {
-                        viewModel.sendImgToParseServer(sendError_ImagePreview, loadingProgressBar_ImagePreview, it, true)
+                        viewModel.sendImgToParseServer(
+                            sendError_ImagePreview,
+                            loadingProgressBar_ImagePreview,
+                            it,
+                            true
+                        )
                     }
                     "feeds" -> {
-                        viewModel.sendImgToParseServer(sendError_ImagePreview,loadingProgressBar_ImagePreview, it, false)
+                        viewModel.sendImgToParseServer(
+                            sendError_ImagePreview,
+                            loadingProgressBar_ImagePreview,
+                            it,
+                            false
+                        )
                     }
                     "userDetails" -> {
-                        viewModel.sendImgToParseServer(sendError_ImagePreview,loadingProgressBar_ImagePreview,  it, false)
+                        viewModel.sendImgToParseServer(
+                            sendError_ImagePreview,
+                            loadingProgressBar_ImagePreview,
+                            it,
+                            false
+                        )
                     }
                 }
             }
@@ -85,18 +100,6 @@ class ImagePreviewFragment : Fragment() {
             }
         })
 
-        // redirect to Profile fragment when image was sent
-        viewModel.mIsImageSent.observe(viewLifecycleOwner, Observer { isSent ->
-            // check isError not null
-            isSent?.let {imgWasSent ->
-                if (imgWasSent) {
-                    loadingProgressBar_ImagePreview.visibility = View.INVISIBLE
-                    sendError_ImagePreview.visibility = View.GONE
-                    view?.let { Navigation.findNavController(it).navigateUp() }
-                }
-            }
-        })
-
         // loading spinner
         viewModel.mIsLoading.observe(viewLifecycleOwner, Observer { isLoading ->
             //check isLoading not null
@@ -107,6 +110,21 @@ class ImagePreviewFragment : Fragment() {
                     //hide all views when progress bar is visible
                     loadError_ImagePreview.visibility = View.GONE
                     image_preview_block.visibility = View.GONE
+                }
+            }
+        })
+
+        // redirect to Profile fragment when image was sent
+        viewModel.mIsImageSent.observe(viewLifecycleOwner, Observer { isSent ->
+            // check isError not null
+            isSent?.let { imgWasSent ->
+                if (imgWasSent) {
+                    loadingProgressBar_ImagePreview.visibility = View.INVISIBLE
+                    sendError_ImagePreview.visibility = View.GONE
+
+                    if (!fromFragment.equals("profile")) {
+                        view?.let { Navigation.findNavController(it).navigateUp() }
+                    }
                 }
             }
         })
