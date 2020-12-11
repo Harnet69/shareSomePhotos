@@ -2,12 +2,12 @@
     <string name="app_name">Share Some Photo</string>
     <string name="permissionImagesCode">123</string>
 
-    <string name="signUp">Sign Up</string>
-    <string name="orSignUp">or, Sign Up</string>
-    <string name="logIn">Log in</string>
-    <string name="orLogIn">or, Log in</string>
-    <string name="ssp_hint_username">Username</string>
-    <string name="ssp_hint_password">Password</string>
-    <string name="ssp_hint_eMail">Email</string>
+    <string name="btn_signUp">Sign Up</string>
+    <string name="label_orSignUp">or, Sign Up</string>
+    <string name="btn_logIn">Log in</string>
+    <string name="label_orLogIn">or, Log in</string>
+    <string name="hint_username">Username</string>
+    <string name="hint_password">Password</string>
+    <string name="hint_eMail">Email</string>
 
 </resources>

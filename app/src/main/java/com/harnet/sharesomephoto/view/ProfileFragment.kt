@@ -72,13 +72,13 @@ class ProfileFragment : Fragment(), UserParsable, ImageParsable {
         logIn_signUp_TextView_LoginBlock.setOnClickListener {
             //functionality of switching and Text btns
             if (isLogInMode) {
-                login_signUp_btn_LoginBlock.text = getString(R.string.signUp)
-                logIn_signUp_TextView_LoginBlock.text = getString(R.string.orLogIn)
+                login_signUp_btn_LoginBlock.text = getString(R.string.btn_signUp)
+                logIn_signUp_TextView_LoginBlock.text = getString(R.string.label_orLogIn)
                 userEmail_LoginBlock.visibility = View.VISIBLE
                 isLogInMode = false
             } else {
-                login_signUp_btn_LoginBlock.text = getString(R.string.logIn)
-                logIn_signUp_TextView_LoginBlock.text = getString(R.string.orSignUp)
+                login_signUp_btn_LoginBlock.text = getString(R.string.btn_logIn)
+                logIn_signUp_TextView_LoginBlock.text = getString(R.string.label_orSignUp)
                 userEmail_LoginBlock.visibility = View.GONE
                 isLogInMode = true
             }

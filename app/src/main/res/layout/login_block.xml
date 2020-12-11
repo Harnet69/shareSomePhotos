@@ -21,7 +21,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="@string/ssp_hint_username"
+            android:hint="@string/hint_username"
             android:inputType="textPersonName" />
 
         <com.google.android.material.textfield.TextInputEditText
@@ -29,7 +29,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="@string/ssp_hint_password"
+            android:hint="@string/hint_password"
             android:inputType="textPassword"
             app:errorEnabled="true"/>
 
@@ -38,7 +38,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="@string/ssp_hint_eMail"
+            android:hint="@string/hint_eMail"
             android:visibility="gone"
             android:inputType="textEmailAddress" />
 
@@ -53,7 +53,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="10dp"
-                android:text="Log in"
+                android:text="@string/btn_logIn"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/logIn_signUp_TextView_LoginBlock"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -64,7 +64,7 @@
                 android:layout_height="0dp"
                 android:layout_marginEnd="10dp"
                 android:gravity="center_vertical"
-                android:text="or, Sign up"
+                android:text="@string/label_orSignUp"
                 android:textColor="@color/cast_libraries_material_featurehighlight_outer_highlight_default_color"
                 android:textColorLink="#FFFFFF"
                 app:layout_constraintBottom_toBottomOf="parent"
