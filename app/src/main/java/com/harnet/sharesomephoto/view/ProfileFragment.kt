@@ -97,9 +97,9 @@ class ProfileFragment : Fragment(), UserParsable, ImageParsable {
         // logout button
         logOut_btn_DetailsBlock.setOnClickListener {
             isLogInMode = true
-            userName_LoginBlock.text.clear()
-            userPassword_LoginBlock.text.clear()
-            userEmail_LoginBlock.text.clear()
+            userName_LoginBlock.text?.clear()
+            userPassword_LoginBlock.text?.clear()
+            userEmail_LoginBlock.text?.clear()
             userImage_ImageView_Profile.setImageResource(R.drawable.ic_user_photo)
             viewModel.logOut()
 

@@ -47,7 +47,7 @@ class ProfileViewModel(application: Application) : BaseViewModel(application) {
                 if (e == null && user != null) {
                     mIsUserLogged.setValue(true)
                 } else {
-                    Toast.makeText(getApplication(), e.message,Toast.LENGTH_SHORT).show()
+                    Toast.makeText(getApplication(), e.message, Toast.LENGTH_SHORT).show()
                     e.printStackTrace()
                 }
             })

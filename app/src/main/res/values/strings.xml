@@ -6,5 +6,8 @@
     <string name="orSignUp">or, Sign Up</string>
     <string name="logIn">Log in</string>
     <string name="orLogIn">or, Log in</string>
+    <string name="ssp_hint_username">Username</string>
+    <string name="ssp_hint_password">Password</string>
+    <string name="ssp_hint_eMail">Email</string>
 
 </resources>
