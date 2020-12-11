@@ -100,13 +100,13 @@ class ProfileFragment : Fragment(), UserParsable, ImageParsable {
             userName_LoginBlock.text?.clear()
             userPassword_LoginBlock.text?.clear()
             userEmail_LoginBlock.text?.clear()
-            userImage_ImageView_Profile.setImageResource(R.drawable.ic_user_photo)
+            img_ItemUser.setImageResource(R.drawable.ic_user_photo)
             viewModel.logOut()
 
         }
 
         // Add/change user image
-        userImage_ImageView_Profile.setOnLongClickListener {
+        img_ItemUser.setOnLongClickListener {
             if (!isLogInMode) {
                 if (this.context?.checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
                     openImageChooser(activity as Activity)

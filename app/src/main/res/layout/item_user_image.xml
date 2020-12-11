@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
+
         <variable
             name="image"
             type="com.harnet.sharesomephoto.model.Image" />
     </data>
 
     <LinearLayout
-        android:id="@+id/image_block"
-        android:layout_height="wrap_content"
+        android:id="@+id/feed_block_ItemFeed"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="horizontal">
 
         <com.github.chrisbanes.photoview.PhotoView
-            android:id="@+id/galleryImg"
-            android:layout_width="match_parent"
+            android:id="@+id/img_UserImage"
+            android:layout_width="0dp"
             android:layout_height="250dp"
             android:layout_margin="5dp"
             android:layout_weight="1"

@@ -1,41 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
+
         <variable
             name="image"
             type="com.harnet.sharesomephoto.model.Image" />
     </data>
 
     <LinearLayout
-        android:id="@+id/image_block"
+        android:id="@+id/feed_block_ItemFeed"
         android:layout_width="match_parent"
         android:layout_height="300dp"
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/user_name_ItemImage"
+            android:id="@+id/userName__ItemUser"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:textSize="30sp"
-            android:fontFamily="@font/jolly_lodger"
-            android:paddingStart="10dp"
-            android:tag="feedsFragment"
             android:bindUserName="@{image.authorId}"
-            android:goToUserDetails="@{image.authorId}"/>
+            android:fontFamily="@font/jolly_lodger"
+            android:goToUserDetails="@{image.authorId}"
+            android:gravity="center_vertical"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:tag="feedsFragment"
+            android:textSize="30sp" />
 
         <ImageView
-            android:id="@+id/galleryImg1"
+            android:id="@+id/img_ItemFeed"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginStart="5dp"
             android:layout_marginEnd="5dp"
-            android:tag="imageFragment"
-            android:scaleType="fitCenter"
             android:bindImageUrl="@{image.imageURL}"
-            android:goToImagePage="@{image.imageURL}"/>
+            android:goToImagePage="@{image.imageURL}"
+            android:scaleType="fitCenter"
+            android:tag="imageFragment" />
 
     </LinearLayout>
 </layout>

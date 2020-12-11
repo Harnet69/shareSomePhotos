@@ -44,7 +44,8 @@
                     android:focusable="true"
                     android:goToImagePage="@{user.profileImgUrl}"
                     android:scaleType="fitCenter"
-                    android:tag="userDetailsFragment" />
+                    android:tag="userDetailsFragment"
+                    android:contentDescription="@string/user_profile_image" />
 
                 <TextView
                     android:id="@+id/userName_UserDescr"
@@ -57,6 +58,7 @@
                     android:text="@{user.name}"
                     android:gravity="center_vertical"
                     android:paddingStart="5dp"
+                    android:paddingEnd="5dp"
                     android:textSize="40sp"/>
             </LinearLayout>
 
@@ -64,7 +66,7 @@
                 android:id="@+id/listError_TextView_UserDescr"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Error occured while loading data"
+                android:text="@string/msg_loading_error"
                 android:visibility="invisible"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -105,7 +107,7 @@
                 android:id="@+id/listImageError_TextView_UserDescr"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Error occured while loading data"
+                android:text="@string/msg_loading_error"
                 android:visibility="invisible"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

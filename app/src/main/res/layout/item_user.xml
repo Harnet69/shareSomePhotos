@@ -10,31 +10,33 @@
     </data>
 
     <LinearLayout
-        android:id="@+id/user_block"
+        android:id="@+id/userBlock_ItemUser"
         android:layout_width="match_parent"
         android:layout_height="100dp"
+        android:goToUserDetails="@{user.userId}"
         android:orientation="horizontal"
-            android:tag="usersFragment"
-        android:goToUserDetails="@{user.userId}">
+        android:tag="usersFragment">
 
         <ImageView
-            android:id="@+id/userImage_ImageView_Profile"
+            android:id="@+id/img_ItemUser"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_margin="5dp"
             android:layout_weight="1"
-            app:srcCompat="@drawable/profile_ico"
-            android:bindImageUrl="@{user.profileImgUrl}"/>
+            android:bindImageUrl="@{user.profileImgUrl}"
+            android:contentDescription="@string/user_profile_image"
+            app:srcCompat="@drawable/profile_ico" />
 
         <TextView
-            android:id="@+id/user_name_ItemImage"
+            android:id="@+id/userName__ItemUser"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="2"
-            android:gravity="center_vertical"
-            android:text="@{user.name}"
-            android:textSize="40sp"
             android:fontFamily="@font/jolly_lodger"
-            android:paddingStart="5dp"/>
+            android:gravity="center_vertical"
+            android:paddingStart="5dp"
+            android:paddingEnd="5dp"
+            android:text="@{user.name}"
+            android:textSize="40sp" />
     </LinearLayout>
 </layout>

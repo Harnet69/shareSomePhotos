@@ -160,7 +160,7 @@ interface ImageParsable {
                     // mark previous images af not Profile's
                     makeImgNotProfiles()
 
-                    sendImgToParseServer(activeFragment.context, bitmap, true, navFragment.userImage_ImageView_Profile)
+                    sendImgToParseServer(activeFragment.context, bitmap, true, navFragment.img_ItemUser)
                 }
             }
             is FeedsFragment -> {

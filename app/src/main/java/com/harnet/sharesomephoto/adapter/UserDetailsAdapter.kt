@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.harnet.sharesomephoto.R
-import com.harnet.sharesomephoto.databinding.ItemGalleryImageBinding
+import com.harnet.sharesomephoto.databinding.ItemUserImageBinding
 import com.harnet.sharesomephoto.model.Image
 
 class UserDetailsAdapter(private var userImages: ArrayList<Image>) :
@@ -22,15 +22,15 @@ class UserDetailsAdapter(private var userImages: ArrayList<Image>) :
         }
     }
 
-    class UserImagesViewHolder(var view: ItemGalleryImageBinding) :
+    class UserImagesViewHolder(var view: ItemUserImageBinding) :
         RecyclerView.ViewHolder(view.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserImagesViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         // elements of the list transforms into views. DataBinding approach
-        val view = DataBindingUtil.inflate<ItemGalleryImageBinding>(
+        val view = DataBindingUtil.inflate<ItemUserImageBinding>(
             inflater,
-            R.layout.item_gallery_image,
+            R.layout.item_user_image,
             parent,
             false
         )

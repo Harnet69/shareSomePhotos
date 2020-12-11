@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="user"
             type="com.harnet.sharesomephoto.model.User" />
@@ -36,13 +37,13 @@
                 android:id="@+id/listError_TextView_usersFragment"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Error occured while loading data"
+                android:text="@string/msg_loading_error"
+                android:visibility="invisible"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:visibility="invisible"/>
+                app:layout_constraintTop_toTopOf="parent" />
 
             <ProgressBar
                 android:id="@+id/loadingView_ProgressBar_usersFragment"

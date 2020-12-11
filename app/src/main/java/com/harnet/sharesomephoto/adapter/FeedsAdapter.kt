@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.harnet.sharesomephoto.R
-import com.harnet.sharesomephoto.databinding.ItemImageBinding
+import com.harnet.sharesomephoto.databinding.ItemFeedBinding
 import com.harnet.sharesomephoto.model.Image
 
 class FeedsAdapter(private var imagesList: ArrayList<Image>) :
@@ -25,16 +25,16 @@ class FeedsAdapter(private var imagesList: ArrayList<Image>) :
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FeedsAdapter.ImagesViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         // elements of the list transforms into views. DataBinding approach
-        val view = DataBindingUtil.inflate<ItemImageBinding>(
+        val view = DataBindingUtil.inflate<ItemFeedBinding>(
             inflater,
-            R.layout.item_image,
+            R.layout.item_feed,
             parent,
             false
         )
         return ImagesViewHolder(view)
     }
 
-    class ImagesViewHolder(var view: ItemImageBinding): RecyclerView.ViewHolder(view.root)
+    class ImagesViewHolder(var view: ItemFeedBinding): RecyclerView.ViewHolder(view.root)
 
     override fun getItemCount(): Int {
         return imagesList.size
