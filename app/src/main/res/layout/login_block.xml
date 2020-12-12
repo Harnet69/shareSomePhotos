@@ -16,22 +16,36 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/userName_LoginBlock"
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="@string/hint_username"
-            android:inputType="textPersonName" />
+            android:inputType="textPersonName"
+            app:errorEnabled="true">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/userPassword_LoginBlock"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/userName_LoginBlock"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="@string/hint_password"
             android:inputType="textPassword"
-            app:errorEnabled="true"/>
+            app:errorEnabled="true">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/userPassword_LoginBlock"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword" />
+
+        </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/userEmail_LoginBlock"
