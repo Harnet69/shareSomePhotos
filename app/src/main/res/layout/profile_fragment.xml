@@ -11,50 +11,57 @@
     </data>
 
 
-    <LinearLayout
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        tools:context=".view.ProfileFragment">
+        android:layout_height="wrap_content">
 
-        <ImageView
-            android:id="@+id/img_ItemUser"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:bindImageUrl="@{user.profileImgUrl}"
-            android:contentDescription="@string/user_profile_image"
-            android:focusable="true"
-            android:goToImagePage="@{user.profileImgUrl}"
-            android:scaleType="fitCenter"
-            android:tag="profileFragment"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_user_photo" />
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            tools:context=".view.ProfileFragment">
 
-        <FrameLayout
-            android:id="@+id/frame_layout"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="3"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/img_ItemUser">
-
-            <include
-                layout="@layout/profile_login_block"
+            <ImageView
+                android:id="@+id/img_ItemUser"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:bindImageUrl="@{user.profileImgUrl}"
+                android:contentDescription="@string/user_profile_image"
+                android:focusable="true"
+                android:goToImagePage="@{user.profileImgUrl}"
+                android:scaleType="fitCenter"
+                android:tag="profileFragment"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_user_photo" />
 
-            <include
-                layout="@layout/profile_details_block"
+            <FrameLayout
+                android:id="@+id/frame_layout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:user="@{user}" />
+                android:layout_height="0dp"
+                android:layout_weight="3"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/img_ItemUser">
 
-        </FrameLayout>
-    </LinearLayout>
+                <include
+                    layout="@layout/profile_login_block"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <include
+                    layout="@layout/profile_details_block"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:user="@{user}" />
+
+            </FrameLayout>
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
 </layout>

@@ -100,6 +100,7 @@ class ProfileFragment : Fragment(), UserParsable, ImageParsable {
             userName_LoginBlock.text?.clear()
             userPassword_LoginBlock.text?.clear()
             userEmail_LoginBlock.text?.clear()
+            userEmailBlock_LoginBlock.visibility = View.GONE
             img_ItemUser.setImageResource(R.drawable.ic_user_photo)
             viewModel.logOut()
 
