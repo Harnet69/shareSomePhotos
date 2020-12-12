@@ -10,13 +10,10 @@ import com.parse.LogInCallback
 import com.parse.ParseUser
 
 class ProfileViewModel(application: Application) : BaseViewModel(application) {
-    val mIsUserExists = MutableLiveData<Boolean>()
     val mIsUserLogged = MutableLiveData<Boolean>()
 
     // sign Up a new user
     fun signUp(newUser: User) {
-        mIsUserExists.setValue(false)
-
         // check if all fields not empty
         if (checkUserInputForEmpty(newUser) && checkUserInputForWhiteSpaces(newUser)) {
             //create a new user
@@ -34,7 +31,6 @@ class ProfileViewModel(application: Application) : BaseViewModel(application) {
                 } else {
                     Toast.makeText(getApplication(), e.message, Toast.LENGTH_SHORT).show()
                     e.printStackTrace()
-                    mIsUserExists.setValue(true)
                 }
             }
         }
@@ -73,9 +69,9 @@ class ProfileViewModel(application: Application) : BaseViewModel(application) {
 
     private fun checkUserInputForEmpty(newUser: User): Boolean {
         // check if fields not empty
-        if (!newUser.name.equals("")) {
-            if (!newUser.password.equals("")) {
-                if (!newUser.email.equals("")) {
+        if (newUser.name != "") {
+            if (newUser.password != "") {
+                if (newUser.email != "") {
                     if (isValidEmail(newUser.email)) {
                         return true
                     } else {

@@ -123,10 +123,6 @@ class ProfileFragment : Fragment(), UserParsable, ImageParsable {
     }
 
     private fun observeModel() {
-        viewModel.mIsUserExists.observe(viewLifecycleOwner, Observer { isExists ->
-            // if user exists
-        })
-
         viewModel.mIsUserLogged.observe(viewLifecycleOwner, Observer { isLogged ->
             //switching between profile details and login blocks
             if (isLogged && ParseUser.getCurrentUser() != null) {
@@ -145,8 +141,8 @@ class ProfileFragment : Fragment(), UserParsable, ImageParsable {
                     .show()
                 isLogInMode = false
             } else {
-                login_block.setVisibility(View.VISIBLE)
-                profile_details_block.setVisibility(View.INVISIBLE)
+                login_block.visibility = View.VISIBLE
+                profile_details_block.visibility = View.INVISIBLE
                 isLogInMode = true
             }
         })
