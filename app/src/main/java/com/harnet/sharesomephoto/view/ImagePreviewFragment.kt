@@ -46,36 +46,25 @@ class ImagePreviewFragment : Fragment() {
             imageBtm?.let { viewModel.refresh(imageBtm as Bitmap) }
         }
 
-        shareBtn_ImagePreviewFragment.setOnClickListener { btn ->
+        shareBtn_ImagePreviewFragment.setOnClickListener {
             imageBtm?.let {
                 loadingProgressBar_ImagePreview.visibility = View.VISIBLE
                 action_block_ImagePreviewFragment.visibility = View.GONE
+
+                var isProfileImage = false
                 when (fromFragment) {
                     "profile" -> {
-                        viewModel.sendImgToParseServer(
-                            sendError_ImagePreview,
-                            loadingProgressBar_ImagePreview,
-                            it,
-                            true
-                        )
+                        isProfileImage = true
                     }
                     "feeds" -> {
-                        viewModel.sendImgToParseServer(
-                            sendError_ImagePreview,
-                            loadingProgressBar_ImagePreview,
-                            it,
-                            false
-                        )
+                        isProfileImage = false
                     }
                     "userDetails" -> {
-                        viewModel.sendImgToParseServer(
-                            sendError_ImagePreview,
-                            loadingProgressBar_ImagePreview,
-                            it,
-                            false
-                        )
+                        isProfileImage = false
                     }
                 }
+                viewModel.sendImgToParseServer(sendError_ImagePreview, loadingProgressBar_ImagePreview,
+                    it, isProfileImage)
             }
         }
 
