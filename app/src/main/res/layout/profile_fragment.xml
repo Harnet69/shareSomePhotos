@@ -1,40 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:tools="http://schemas.android.com/tools"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="user"
             type="com.harnet.sharesomephoto.model.User" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:orientation="vertical"
         tools:context=".view.ProfileFragment">
 
         <ImageView
             android:id="@+id/img_ItemUser"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:layout_marginTop="5dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:bindImageUrl="@{user.profileImgUrl}"
+            android:contentDescription="@string/user_profile_image"
             android:focusable="true"
+            android:goToImagePage="@{user.profileImgUrl}"
             android:scaleType="fitCenter"
             android:tag="profileFragment"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_user_photo"
-            android:bindImageUrl="@{user.profileImgUrl}"
-            android:goToImagePage="@{user.profileImgUrl}"
-            android:contentDescription="@string/user_profile_image" />
+            app:srcCompat="@drawable/ic_user_photo" />
 
         <FrameLayout
             android:id="@+id/frame_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="3"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/img_ItemUser">
@@ -46,10 +51,10 @@
 
             <include
                 layout="@layout/profile_details_block"
-                app:user="@{user}"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                app:user="@{user}" />
 
         </FrameLayout>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
 </layout>
