@@ -23,9 +23,9 @@ import com.harnet.sharesomephoto.util.openImageChooser
 import com.harnet.sharesomephoto.util.setActivityTitle
 import com.harnet.sharesomephoto.viewModel.ProfileViewModel
 import com.parse.ParseUser
-import kotlinx.android.synthetic.main.login_block.*
 import kotlinx.android.synthetic.main.profile_details_block.*
 import kotlinx.android.synthetic.main.profile_fragment.*
+import kotlinx.android.synthetic.main.profile_login_block.*
 
 class ProfileFragment : Fragment(), UserParsable, ImageParsable {
     private lateinit var viewModel: ProfileViewModel
@@ -74,12 +74,12 @@ class ProfileFragment : Fragment(), UserParsable, ImageParsable {
             if (isLogInMode) {
                 login_signUp_btn_LoginBlock.text = getString(R.string.btn_signUp)
                 logIn_signUp_TextView_LoginBlock.text = getString(R.string.label_orLogIn)
-                userEmail_LoginBlock.visibility = View.VISIBLE
+                userEmailBlock_LoginBlock.visibility = View.VISIBLE
                 isLogInMode = false
             } else {
                 login_signUp_btn_LoginBlock.text = getString(R.string.btn_logIn)
                 logIn_signUp_TextView_LoginBlock.text = getString(R.string.label_orSignUp)
-                userEmail_LoginBlock.visibility = View.GONE
+                userEmailBlock_LoginBlock.visibility = View.GONE
                 isLogInMode = true
             }
 

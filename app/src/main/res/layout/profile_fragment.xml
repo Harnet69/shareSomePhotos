@@ -45,7 +45,7 @@
             app:layout_constraintTop_toBottomOf="@id/img_ItemUser">
 
             <include
-                layout="@layout/login_block"
+                layout="@layout/profile_login_block"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
