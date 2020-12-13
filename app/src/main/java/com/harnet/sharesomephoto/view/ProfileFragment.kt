@@ -137,13 +137,34 @@ class ProfileFragment : Fragment(), UserParsable, ImageParsable {
                 login_block.visibility = View.INVISIBLE
                 profile_details_block.visibility = View.VISIBLE
 
-                Toast.makeText(context, "Hello " + isLoggedGetUser()?.username, Toast.LENGTH_LONG)
-                    .show()
+//                Toast.makeText(context, "Hello " + isLoggedGetUser()?.username, Toast.LENGTH_LONG)
+//                    .show()
                 isLogInMode = false
             } else {
                 login_block.visibility = View.VISIBLE
                 profile_details_block.visibility = View.INVISIBLE
                 isLogInMode = true
+            }
+        })
+
+        viewModel.errUserName.observe(viewLifecycleOwner, Observer { errorMessage ->
+            errorMessage?.let {
+                //TODO Implement response to view
+                userNameBlock_LoginBlock.error = it
+            }
+        })
+
+        viewModel.errUserPassword.observe(viewLifecycleOwner, Observer { errorMessage ->
+            errorMessage?.let {
+                userPasswordBlock_LoginBlock.error = it
+            }
+        })
+
+        viewModel.isUserEmailValid.observe(viewLifecycleOwner, Observer { isEmailValid ->
+            isEmailValid?.let {
+                if(!it){
+                    userEmailBlock_LoginBlock.error = "Wrong email format"
+                }
             }
         })
     }

@@ -5,12 +5,17 @@ import android.text.TextUtils
 import android.util.Patterns
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
+import com.harnet.sharesomephoto.R
 import com.harnet.sharesomephoto.model.User
 import com.parse.LogInCallback
 import com.parse.ParseUser
 
 class ProfileViewModel(application: Application) : BaseViewModel(application) {
     val mIsUserLogged = MutableLiveData<Boolean>()
+
+    val errUserName = MutableLiveData<String>()
+    val errUserPassword = MutableLiveData<String>()
+    val isUserEmailValid = MutableLiveData<Boolean>()
 
     // sign Up a new user
     fun signUp(newUser: User) {
@@ -29,6 +34,8 @@ class ProfileViewModel(application: Application) : BaseViewModel(application) {
                         .show()
                     getCurrentUserIfLogged()
                 } else {
+//                    errUserName.value = R.string.field_cant_be_empty.toString()
+//                    errUserPassword.value = R.string.field_cant_be_empty.toString()
                     Toast.makeText(getApplication(), e.message, Toast.LENGTH_SHORT).show()
                     e.printStackTrace()
                 }
@@ -43,6 +50,8 @@ class ProfileViewModel(application: Application) : BaseViewModel(application) {
                 if (e == null && user != null) {
                     mIsUserLogged.setValue(true)
                 } else {
+                    errUserName.value = getApplication<Application>().getString(R.string.field_cant_be_empty)
+                    errUserPassword.value = getApplication<Application>().getString(R.string.field_cant_be_empty)
                     Toast.makeText(getApplication(), e.message, Toast.LENGTH_SHORT).show()
                     e.printStackTrace()
                 }

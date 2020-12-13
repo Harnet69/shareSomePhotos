@@ -12,5 +12,6 @@
     <string name="user_profile_image">User profile image</string>
     <string name="btn_logout">Logout</string>
     <string name="msg_loading_error">Error occurred while loading data</string>
+    <string name="field_cant_be_empty">Field can\'t be empty</string>
 
 </resources>
