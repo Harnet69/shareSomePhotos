@@ -19,6 +19,7 @@ class ProfileViewModel(application: Application) : BaseViewModel(application) {
 
     // sign Up a new user
     fun signUp(newUser: User) {
+        clearErrors()
         // check if all fields not empty
         if (checkUserInputForEmpty(newUser) && checkUserInputForWhiteSpaces(newUser)) {
             //create a new user
@@ -43,6 +44,7 @@ class ProfileViewModel(application: Application) : BaseViewModel(application) {
 
     //log in
     fun logIn(userName: String, userPassword: String) {
+        clearErrors()
         if (userName != "") {
             if (userPassword != "") {
                 val user = User(userName, userPassword, "")
@@ -68,6 +70,8 @@ class ProfileViewModel(application: Application) : BaseViewModel(application) {
 
     //log out
     fun logOut() {
+        clearErrors()
+
         ParseUser.logOut()
         Toast.makeText(getApplication(), "Log out", Toast.LENGTH_SHORT).show()
         mIsUserLogged.setValue(false)
@@ -148,5 +152,12 @@ class ProfileViewModel(application: Application) : BaseViewModel(application) {
 
     private fun isValidEmail(target: CharSequence): Boolean {
         return !TextUtils.isEmpty(target) && Patterns.EMAIL_ADDRESS.matcher(target).matches()
+    }
+
+    // clear all errors
+    private fun clearErrors(){
+        mErrUserName.value = null
+        mErrUserPassword.value = null
+        mIsUserEmailValid.value = null
     }
 }

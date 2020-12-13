@@ -60,7 +60,8 @@ class ProfileFragment : Fragment(), UserParsable, ImageParsable {
             isLogInMode = true
 
         } else {
-            val thisUser = User(ParseUser.getCurrentUser().username, "", ParseUser.getCurrentUser().email)
+            val thisUser =
+                User(ParseUser.getCurrentUser().username, "", ParseUser.getCurrentUser().email)
             thisUser.profileImgUrl = ParseUser.getCurrentUser().get("profileImg").toString()
 
             dataBinding.user = thisUser
@@ -128,12 +129,13 @@ class ProfileFragment : Fragment(), UserParsable, ImageParsable {
             //switching between profile details and login blocks
             if (isLogged && ParseUser.getCurrentUser() != null) {
                 // bind the user to view
-                    val userForBinding = User(ParseUser.getCurrentUser().username, "", ParseUser.getCurrentUser().email)
-                    userForBinding.profileImgUrl =
-                        ParseUser.getCurrentUser().get("profileImg").toString()
+                val userForBinding =
+                    User(ParseUser.getCurrentUser().username, "", ParseUser.getCurrentUser().email)
+                userForBinding.profileImgUrl =
+                    ParseUser.getCurrentUser().get("profileImg").toString()
 
-                    // get and bind user Profile image
-                    dataBinding.user = userForBinding
+                // get and bind user Profile image
+                dataBinding.user = userForBinding
 
                 login_block.visibility = View.INVISIBLE
                 profile_details_block.visibility = View.VISIBLE
@@ -149,23 +151,26 @@ class ProfileFragment : Fragment(), UserParsable, ImageParsable {
         })
 
         viewModel.mErrUserName.observe(viewLifecycleOwner, Observer { errorMessage ->
-            errorMessage?.let {
-                Log.i("ClearError", it)
-                userName_LoginBlock.error = it
+            if (errorMessage != null) {
+                userName_LoginBlock.error = errorMessage
+            }else{
+                userName_LoginBlock.error = null
             }
         })
 
         viewModel.mErrUserPassword.observe(viewLifecycleOwner, Observer { errorMessage ->
-            errorMessage?.let {
-                Log.i("ClearError", it)
-                userPassword_LoginBlock.error = it
+            if (errorMessage != null) {
+                userPassword_LoginBlock.error = errorMessage
+            }else{
+                userPassword_LoginBlock.error = null
             }
         })
 
         viewModel.mIsUserEmailValid.observe(viewLifecycleOwner, Observer { errorMessage ->
-            errorMessage?.let {
-                Log.i("ClearError", it)
-                userEmail_LoginBlock.error = it
+            if (errorMessage != null) {
+                userEmail_LoginBlock.error = errorMessage
+            }else{
+                userEmail_LoginBlock.error = null
             }
         })
     }
