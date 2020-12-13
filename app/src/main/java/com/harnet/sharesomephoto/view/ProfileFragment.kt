@@ -4,6 +4,7 @@ import android.Manifest
 import android.app.Activity
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.util.Log
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
@@ -147,24 +148,24 @@ class ProfileFragment : Fragment(), UserParsable, ImageParsable {
             }
         })
 
-        viewModel.errUserName.observe(viewLifecycleOwner, Observer { errorMessage ->
+        viewModel.mErrUserName.observe(viewLifecycleOwner, Observer { errorMessage ->
             errorMessage?.let {
-                //TODO Implement response to view
+                Log.i("ClearError", it)
                 userName_LoginBlock.error = it
             }
         })
 
-        viewModel.errUserPassword.observe(viewLifecycleOwner, Observer { errorMessage ->
+        viewModel.mErrUserPassword.observe(viewLifecycleOwner, Observer { errorMessage ->
             errorMessage?.let {
+                Log.i("ClearError", it)
                 userPassword_LoginBlock.error = it
             }
         })
 
-        viewModel.isUserEmailValid.observe(viewLifecycleOwner, Observer { isEmailValid ->
-            isEmailValid?.let {
-                if(!it){
-                    userEmail_LoginBlock.error = "Wrong email format"
-                }
+        viewModel.mIsUserEmailValid.observe(viewLifecycleOwner, Observer { errorMessage ->
+            errorMessage?.let {
+                Log.i("ClearError", it)
+                userEmail_LoginBlock.error = it
             }
         })
     }

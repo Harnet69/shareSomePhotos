@@ -13,9 +13,9 @@ import com.parse.ParseUser
 class ProfileViewModel(application: Application) : BaseViewModel(application) {
     val mIsUserLogged = MutableLiveData<Boolean>()
 
-    val errUserName = MutableLiveData<String>()
-    val errUserPassword = MutableLiveData<String>()
-    val isUserEmailValid = MutableLiveData<Boolean>()
+    val mErrUserName = MutableLiveData<String>()
+    val mErrUserPassword = MutableLiveData<String>()
+    val mIsUserEmailValid = MutableLiveData<String>()
 
     // sign Up a new user
     fun signUp(newUser: User) {
@@ -34,7 +34,6 @@ class ProfileViewModel(application: Application) : BaseViewModel(application) {
                         .show()
                     getCurrentUserIfLogged()
                 } else {
-//                    errUserName.value = context
                     Toast.makeText(getApplication(), e.message, Toast.LENGTH_SHORT).show()
                     e.printStackTrace()
                 }
@@ -44,17 +43,26 @@ class ProfileViewModel(application: Application) : BaseViewModel(application) {
 
     //log in
     fun logIn(userName: String, userPassword: String) {
-        if (checkUserInputForWhiteSpaces(User(userName, userPassword, ""))) {
-            ParseUser.logInInBackground(userName, userPassword, LogInCallback { user, e ->
-                if (e == null && user != null) {
-                    mIsUserLogged.setValue(true)
-                } else {
-//                    errUserName.value = getApplication<Application>().getString(R.string.field_cant_be_empty)
-//                    errUserPassword.value = getApplication<Application>().getString(R.string.field_cant_be_empty)
-                    Toast.makeText(getApplication(), e.message, Toast.LENGTH_SHORT).show()
-                    e.printStackTrace()
+        if (userName != "") {
+            if (userPassword != "") {
+                val user = User(userName, userPassword, "")
+                if (checkUserInputForWhiteSpaces(user)) {
+                    ParseUser.logInInBackground(userName, userPassword, LogInCallback { user, e ->
+                        if (e == null && user != null) {
+                            mIsUserLogged.setValue(true)
+                        } else {
+                            Toast.makeText(getApplication(), e.message, Toast.LENGTH_SHORT).show()
+                            e.printStackTrace()
+                        }
+                    })
                 }
-            })
+            } else {
+                mErrUserPassword.value =
+                    getApplication<Application>().getString(R.string.field_cant_be_empty)
+            }
+        } else {
+            mErrUserName.value =
+                getApplication<Application>().getString(R.string.field_cant_be_empty)
         }
     }
 
@@ -83,18 +91,30 @@ class ProfileViewModel(application: Application) : BaseViewModel(application) {
                     if (isValidEmail(newUser.email)) {
                         return true
                     } else {
-                        Toast.makeText(getApplication(), "Wrong e-mail format", Toast.LENGTH_SHORT)
+                        mIsUserEmailValid.value =
+                            getApplication<Application>().getString(R.string.wrong_email_format)
+                        Toast.makeText(
+                            getApplication(),
+                            "Wrong e-mail format",
+                            Toast.LENGTH_SHORT
+                        )
                             .show()
                     }
                 } else {
+                    mIsUserEmailValid.value =
+                        getApplication<Application>().getString(R.string.field_cant_be_empty)
                     Toast.makeText(getApplication(), "E-mail is required", Toast.LENGTH_SHORT)
                         .show()
                 }
             } else {
+                mErrUserPassword.value =
+                    getApplication<Application>().getString(R.string.field_cant_be_empty)
                 Toast.makeText(getApplication(), "Password can't be empty", Toast.LENGTH_SHORT)
                     .show()
             }
         } else {
+            mErrUserName.value =
+                getApplication<Application>().getString(R.string.field_cant_be_empty)
             Toast.makeText(getApplication(), "Name can't be empty", Toast.LENGTH_SHORT).show()
         }
         return false
@@ -105,6 +125,8 @@ class ProfileViewModel(application: Application) : BaseViewModel(application) {
             if (!newUser.password.contains(" ")) {
                 return true
             } else {
+                mErrUserPassword.value =
+                    getApplication<Application>().getString(R.string.whiteSpaces_not_allowed)
                 Toast.makeText(
                     getApplication(),
                     "Whitespaces not allowed in password",
@@ -112,7 +134,13 @@ class ProfileViewModel(application: Application) : BaseViewModel(application) {
                 ).show()
             }
         } else {
-            Toast.makeText(getApplication(), "Whitespaces not allowed in name", Toast.LENGTH_SHORT)
+            mErrUserName.value =
+                getApplication<Application>().getString(R.string.whiteSpaces_not_allowed)
+            Toast.makeText(
+                getApplication(),
+                "Whitespaces not allowed in name",
+                Toast.LENGTH_SHORT
+            )
                 .show()
         }
         return false

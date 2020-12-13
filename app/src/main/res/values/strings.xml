@@ -13,5 +13,7 @@
     <string name="btn_logout">Logout</string>
     <string name="msg_loading_error">Error occurred while loading data</string>
     <string name="field_cant_be_empty">Field can\'t be empty</string>
+    <string name="wrong_email_format">Wrong Email format</string>
+    <string name="whiteSpaces_not_allowed">Whitespaces not allowed</string>
 
 </resources>
