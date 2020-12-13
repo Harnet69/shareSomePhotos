@@ -20,8 +20,9 @@ class ProfileViewModel(application: Application) : BaseViewModel(application) {
     // sign Up a new user
     fun signUp(newUser: User) {
         clearErrors()
-        // check if all fields not empty
-        if (checkUserInputForEmpty(newUser) && checkUserInputForWhiteSpaces(newUser)) {
+
+        // are fields valid
+        if (checkUserInputForEmpty(newUser) && checkUserNameAndPassForWhiteSpaces(newUser)) {
             //create a new user
             val parseUser = ParseUser()
             parseUser.username = newUser.name.trim()
@@ -45,10 +46,11 @@ class ProfileViewModel(application: Application) : BaseViewModel(application) {
     //log in
     fun logIn(userName: String, userPassword: String) {
         clearErrors()
+
         if (userName != "") {
             if (userPassword != "") {
                 val user = User(userName, userPassword, "")
-                if (checkUserInputForWhiteSpaces(user)) {
+                if (checkUserNameAndPassForWhiteSpaces(user)) {
                     ParseUser.logInInBackground(userName, userPassword, LogInCallback { user, e ->
                         if (e == null && user != null) {
                             mIsUserLogged.setValue(true)
@@ -73,7 +75,6 @@ class ProfileViewModel(application: Application) : BaseViewModel(application) {
         clearErrors()
 
         ParseUser.logOut()
-        Toast.makeText(getApplication(), "Log out", Toast.LENGTH_SHORT).show()
         mIsUserLogged.setValue(false)
     }
 
@@ -87,6 +88,7 @@ class ProfileViewModel(application: Application) : BaseViewModel(application) {
         return ParseUser.getCurrentUser()
     }
 
+    // check if user fields empty
     private fun checkUserInputForEmpty(newUser: User): Boolean {
         // check if fields not empty
         if (newUser.name != "") {
@@ -97,64 +99,44 @@ class ProfileViewModel(application: Application) : BaseViewModel(application) {
                     } else {
                         mIsUserEmailValid.value =
                             getApplication<Application>().getString(R.string.wrong_email_format)
-                        Toast.makeText(
-                            getApplication(),
-                            "Wrong e-mail format",
-                            Toast.LENGTH_SHORT
-                        )
-                            .show()
                     }
                 } else {
                     mIsUserEmailValid.value =
                         getApplication<Application>().getString(R.string.field_cant_be_empty)
-                    Toast.makeText(getApplication(), "E-mail is required", Toast.LENGTH_SHORT)
-                        .show()
                 }
             } else {
                 mErrUserPassword.value =
                     getApplication<Application>().getString(R.string.field_cant_be_empty)
-                Toast.makeText(getApplication(), "Password can't be empty", Toast.LENGTH_SHORT)
-                    .show()
             }
         } else {
             mErrUserName.value =
                 getApplication<Application>().getString(R.string.field_cant_be_empty)
-            Toast.makeText(getApplication(), "Name can't be empty", Toast.LENGTH_SHORT).show()
         }
         return false
     }
 
-    private fun checkUserInputForWhiteSpaces(newUser: User): Boolean {
+    //check if user fields has a whitespace
+    private fun checkUserNameAndPassForWhiteSpaces(newUser: User): Boolean {
         if (!newUser.name.contains(" ")) {
             if (!newUser.password.contains(" ")) {
                 return true
             } else {
                 mErrUserPassword.value =
                     getApplication<Application>().getString(R.string.whiteSpaces_not_allowed)
-                Toast.makeText(
-                    getApplication(),
-                    "Whitespaces not allowed in password",
-                    Toast.LENGTH_SHORT
-                ).show()
             }
         } else {
             mErrUserName.value =
                 getApplication<Application>().getString(R.string.whiteSpaces_not_allowed)
-            Toast.makeText(
-                getApplication(),
-                "Whitespaces not allowed in name",
-                Toast.LENGTH_SHORT
-            )
-                .show()
         }
         return false
     }
 
+    // check if email valid
     private fun isValidEmail(target: CharSequence): Boolean {
         return !TextUtils.isEmpty(target) && Patterns.EMAIL_ADDRESS.matcher(target).matches()
     }
 
-    // clear all errors
+    // clear input fields errors
     private fun clearErrors(){
         mErrUserName.value = null
         mErrUserPassword.value = null
