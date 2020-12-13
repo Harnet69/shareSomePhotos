@@ -37,7 +37,6 @@ class ImagePreviewViewModel(application: Application) : BaseViewModel(applicatio
     }
 
     // send chosen image to Parse server
-    // TODO think about move to a separate User interface
     fun sendImgToParseServer(
         sendErrorImagePreview: View,
         loadingProgressBar: ProgressBar,

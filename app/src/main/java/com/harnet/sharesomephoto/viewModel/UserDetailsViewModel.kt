@@ -47,7 +47,6 @@ class UserDetailsViewModel(application: Application) : BaseViewModel(application
         mIsImagesLoading.postValue(false)
     }
 
-    // TODO think about move to a separate User interface
     private fun getUserById(userId: String) {
         val query: ParseQuery<ParseUser> = ParseUser.getQuery()
         query.whereEqualTo("objectId", userId)
@@ -73,7 +72,6 @@ class UserDetailsViewModel(application: Application) : BaseViewModel(application
     }
 
     // get user images from server
-    // TODO think about move to a separate User interface
     private fun getUserImages(authorId: String) {
         // clean previous version of feeds
         mUserImages.postValue(arrayListOf())

@@ -92,13 +92,11 @@ class UserDetailsFragment : Fragment() {
     }
 
     // user images observe
-    //TODO implement RecyclerView adapter for user images
     private fun userImagesObserve(){
         // update the layout using values of mutable variables from a ViewModel
         viewModel.mUserImages.observe(viewLifecycleOwner, Observer { userImages ->
             userImages?.let {
 //                dataBinding.user = it
-                // TODO implement adapter of recycler view
                 userDetaildAdapter.updateFeedsList(userImages as ArrayList<Image>)
                 userGallery_userDescrFragment.visibility = View.VISIBLE
             }
