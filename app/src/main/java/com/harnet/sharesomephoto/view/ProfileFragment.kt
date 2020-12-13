@@ -51,7 +51,7 @@ class ProfileFragment : Fragment(), UserParsable, ImageParsable {
         currentUser = viewModel.getCurrentUserIfLogged()
 
         //set focus to user name edit field
-        userName_LoginBlock.requestFocus()
+//        userName_LoginBlock.requestFocus()
         // if user have been logged already !!! Should be in a separate block
         if (currentUser == null) {
             login_block.visibility = View.VISIBLE
@@ -74,12 +74,12 @@ class ProfileFragment : Fragment(), UserParsable, ImageParsable {
             if (isLogInMode) {
                 login_signUp_btn_LoginBlock.text = getString(R.string.btn_signUp)
                 logIn_signUp_TextView_LoginBlock.text = getString(R.string.label_orLogIn)
-                userEmailBlock_LoginBlock.visibility = View.VISIBLE
+                userEmail_LoginBlock.visibility = View.VISIBLE
                 isLogInMode = false
             } else {
                 login_signUp_btn_LoginBlock.text = getString(R.string.btn_logIn)
                 logIn_signUp_TextView_LoginBlock.text = getString(R.string.label_orSignUp)
-                userEmailBlock_LoginBlock.visibility = View.GONE
+                userEmail_LoginBlock.visibility = View.GONE
                 isLogInMode = true
             }
 
@@ -91,16 +91,16 @@ class ProfileFragment : Fragment(), UserParsable, ImageParsable {
         }
 
         // push on DONE btn of keyboard submit data
-        submitUserData(userPassword_LoginBlock)
-        submitUserData(userEmail_LoginBlock)
+        userPassword_LoginBlock.editText?.let { submitUserData(it) }
+        userEmail_LoginBlock.editText?.let { submitUserData(it) }
 
         // logout button
         logOut_btn_DetailsBlock.setOnClickListener {
             isLogInMode = true
-            userName_LoginBlock.text?.clear()
-            userPassword_LoginBlock.text?.clear()
-            userEmail_LoginBlock.text?.clear()
-            userEmailBlock_LoginBlock.visibility = View.GONE
+            userName_LoginBlock.editText?.text?.clear()
+            userPassword_LoginBlock.editText?.text?.clear()
+            userEmail_LoginBlock.editText?.text?.clear()
+            userEmail_LoginBlock.visibility = View.GONE
             img_ItemUser.setImageResource(R.drawable.ic_user_photo)
             viewModel.logOut()
 
@@ -150,20 +150,20 @@ class ProfileFragment : Fragment(), UserParsable, ImageParsable {
         viewModel.errUserName.observe(viewLifecycleOwner, Observer { errorMessage ->
             errorMessage?.let {
                 //TODO Implement response to view
-                userNameBlock_LoginBlock.error = it
+                userName_LoginBlock.error = it
             }
         })
 
         viewModel.errUserPassword.observe(viewLifecycleOwner, Observer { errorMessage ->
             errorMessage?.let {
-                userPasswordBlock_LoginBlock.error = it
+                userPassword_LoginBlock.error = it
             }
         })
 
         viewModel.isUserEmailValid.observe(viewLifecycleOwner, Observer { isEmailValid ->
             isEmailValid?.let {
                 if(!it){
-                    userEmailBlock_LoginBlock.error = "Wrong email format"
+                    userEmail_LoginBlock.error = "Wrong email format"
                 }
             }
         })
@@ -173,15 +173,15 @@ class ProfileFragment : Fragment(), UserParsable, ImageParsable {
     private fun logInSignUp() {
         if (isLogInMode) {
             viewModel.logIn(
-                userName_LoginBlock.text.toString(),
-                userPassword_LoginBlock.text.toString()
+                userName_LoginBlock.editText?.text.toString(),
+                userPassword_LoginBlock.editText?.text.toString()
             )
         } else {
             viewModel.signUp(
                 User(
-                    userName_LoginBlock.text.toString(),
-                    userPassword_LoginBlock.text.toString(),
-                    userEmail_LoginBlock.text.toString()
+                    userName_LoginBlock.editText?.text.toString(),
+                    userPassword_LoginBlock.editText?.text.toString(),
+                    userEmail_LoginBlock.editText?.text.toString()
                 )
             )
         }

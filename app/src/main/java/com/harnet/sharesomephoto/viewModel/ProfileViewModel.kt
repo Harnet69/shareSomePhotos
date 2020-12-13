@@ -34,8 +34,7 @@ class ProfileViewModel(application: Application) : BaseViewModel(application) {
                         .show()
                     getCurrentUserIfLogged()
                 } else {
-//                    errUserName.value = R.string.field_cant_be_empty.toString()
-//                    errUserPassword.value = R.string.field_cant_be_empty.toString()
+//                    errUserName.value = context
                     Toast.makeText(getApplication(), e.message, Toast.LENGTH_SHORT).show()
                     e.printStackTrace()
                 }
@@ -50,8 +49,8 @@ class ProfileViewModel(application: Application) : BaseViewModel(application) {
                 if (e == null && user != null) {
                     mIsUserLogged.setValue(true)
                 } else {
-                    errUserName.value = getApplication<Application>().getString(R.string.field_cant_be_empty)
-                    errUserPassword.value = getApplication<Application>().getString(R.string.field_cant_be_empty)
+//                    errUserName.value = getApplication<Application>().getString(R.string.field_cant_be_empty)
+//                    errUserPassword.value = getApplication<Application>().getString(R.string.field_cant_be_empty)
                     Toast.makeText(getApplication(), e.message, Toast.LENGTH_SHORT).show()
                     e.printStackTrace()
                 }
