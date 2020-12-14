@@ -16,6 +16,7 @@ class ProfileViewModel(application: Application) : BaseViewModel(application) {
     val mErrUserName = MutableLiveData<String>()
     val mErrUserPassword = MutableLiveData<String>()
     val mIsUserEmailValid = MutableLiveData<String>()
+    val mIsUserExists = MutableLiveData<String>()
 
     // sign Up a new user
     fun signUp(newUser: User) {
@@ -32,12 +33,9 @@ class ProfileViewModel(application: Application) : BaseViewModel(application) {
             // sign in user
             parseUser.signUpInBackground { e ->
                 if (e == null) {
-                    Toast.makeText(getApplication(), "Signed Up Successfully", Toast.LENGTH_SHORT)
-                        .show()
                     getCurrentUserIfLogged()
                 } else {
-                    Toast.makeText(getApplication(), e.message, Toast.LENGTH_SHORT).show()
-                    e.printStackTrace()
+                    mIsUserExists.value = e.message
                 }
             }
         }
@@ -137,7 +135,7 @@ class ProfileViewModel(application: Application) : BaseViewModel(application) {
     }
 
     // clear input fields errors
-    private fun clearErrors(){
+    private fun clearErrors() {
         mErrUserName.value = null
         mErrUserPassword.value = null
         mIsUserEmailValid.value = null

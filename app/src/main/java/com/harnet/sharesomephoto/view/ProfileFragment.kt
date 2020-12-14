@@ -128,6 +128,8 @@ class ProfileFragment : Fragment(), UserParsable, ImageParsable {
         viewModel.mIsUserLogged.observe(viewLifecycleOwner, Observer { isLogged ->
             //switching between profile details and login blocks
             if (isLogged && ParseUser.getCurrentUser() != null) {
+                viewModel.mIsUserExists.value = null
+
                 // bind the user to view
                 val userForBinding =
                     User(ParseUser.getCurrentUser().username, "", ParseUser.getCurrentUser().email)
@@ -139,9 +141,6 @@ class ProfileFragment : Fragment(), UserParsable, ImageParsable {
 
                 login_block.visibility = View.INVISIBLE
                 profile_details_block.visibility = View.VISIBLE
-
-//                Toast.makeText(context, "Hello " + isLoggedGetUser()?.username, Toast.LENGTH_LONG)
-//                    .show()
                 isLogInMode = false
             } else {
                 login_block.visibility = View.VISIBLE
@@ -169,6 +168,14 @@ class ProfileFragment : Fragment(), UserParsable, ImageParsable {
         viewModel.mIsUserEmailValid.observe(viewLifecycleOwner, Observer { errorMessage ->
             if (errorMessage != null) {
                 userEmail_LoginBlock.error = errorMessage
+            }else{
+                userEmail_LoginBlock.error = null
+            }
+        })
+
+        viewModel.mIsUserExists.observe(viewLifecycleOwner, Observer { errorMessage ->
+            if (errorMessage != null) {
+                userName_LoginBlock.error = errorMessage
             }else{
                 userEmail_LoginBlock.error = null
             }

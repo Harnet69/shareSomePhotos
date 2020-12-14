@@ -23,7 +23,10 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="@string/hint_username"
-            app:errorEnabled="true">
+            app:errorEnabled="true"
+            app:counterMaxLength="5"
+            app:counterEnabled="true"
+            >
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
