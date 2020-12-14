@@ -3,7 +3,6 @@ package com.harnet.sharesomephoto.viewModel
 import android.app.Application
 import android.text.TextUtils
 import android.util.Patterns
-import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import com.harnet.sharesomephoto.R
 import com.harnet.sharesomephoto.model.User
@@ -18,13 +17,16 @@ class ProfileViewModel(application: Application) : BaseViewModel(application) {
     val mErrIsUserEmailValid = MutableLiveData<String>()
     val mErrIsUserExists = MutableLiveData<String>()
     val mErrUserLoginOrPass = MutableLiveData<String>()
+    var mErrUserNameLength = MutableLiveData<String>()
 
     // sign Up a new user
     fun signUp(newUser: User) {
         clearErrors()
 
         // are fields valid
-        if (checkUserInputForEmpty(newUser) && checkUserNameAndPassForWhiteSpaces(newUser)) {
+        if (checkUserInputForEmpty(newUser) && checkUserNameAndPassForWhiteSpaces(newUser)
+            && isUsernameLength(newUser.name)
+        ) {
             //create a new user
             val parseUser = ParseUser()
             parseUser.username = newUser.name.trim()
@@ -60,11 +62,11 @@ class ProfileViewModel(application: Application) : BaseViewModel(application) {
                 }
             } else {
                 mErrUserPassword.value =
-                    getApplication<Application>().getString(R.string.field_cant_be_empty)
+                    getApplication<Application>().getString(R.string.err_msg_field_cant_be_empty)
             }
         } else {
             mErrUserName.value =
-                getApplication<Application>().getString(R.string.field_cant_be_empty)
+                getApplication<Application>().getString(R.string.err_msg_field_cant_be_empty)
         }
     }
 
@@ -96,19 +98,19 @@ class ProfileViewModel(application: Application) : BaseViewModel(application) {
                         return true
                     } else {
                         mErrIsUserEmailValid.value =
-                            getApplication<Application>().getString(R.string.wrong_email_format)
+                            getApplication<Application>().getString(R.string.err_msg_wrong_email_format)
                     }
                 } else {
                     mErrIsUserEmailValid.value =
-                        getApplication<Application>().getString(R.string.field_cant_be_empty)
+                        getApplication<Application>().getString(R.string.err_msg_field_cant_be_empty)
                 }
             } else {
                 mErrUserPassword.value =
-                    getApplication<Application>().getString(R.string.field_cant_be_empty)
+                    getApplication<Application>().getString(R.string.err_msg_field_cant_be_empty)
             }
         } else {
             mErrUserName.value =
-                getApplication<Application>().getString(R.string.field_cant_be_empty)
+                getApplication<Application>().getString(R.string.err_msg_field_cant_be_empty)
         }
         return false
     }
@@ -120,13 +122,21 @@ class ProfileViewModel(application: Application) : BaseViewModel(application) {
                 return true
             } else {
                 mErrUserPassword.value =
-                    getApplication<Application>().getString(R.string.whiteSpaces_not_allowed)
+                    getApplication<Application>().getString(R.string.err_msg_whiteSpaces_not_allowed)
             }
         } else {
             mErrUserName.value =
-                getApplication<Application>().getString(R.string.whiteSpaces_not_allowed)
+                getApplication<Application>().getString(R.string.err_msg_whiteSpaces_not_allowed)
         }
         return false
+    }
+
+    private fun isUsernameLength(username: String): Boolean {
+        val userNameLength = 10
+
+        mErrUserNameLength.value =
+            getApplication<Application>().getString(R.string.err_msg_username_too_long)
+        return username.length <= userNameLength
     }
 
     // check if email valid

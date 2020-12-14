@@ -11,9 +11,10 @@
     <string name="hint_eMail">Email</string>
     <string name="user_profile_image">User profile image</string>
     <string name="btn_logout">Logout</string>
-    <string name="msg_loading_error">Error occurred while loading data</string>
-    <string name="field_cant_be_empty">Field can\'t be empty</string>
-    <string name="wrong_email_format">Wrong Email format</string>
-    <string name="whiteSpaces_not_allowed">Whitespaces not allowed</string>
+    <string name="err_msg_data_loading">Error occurred while loading data</string>
+    <string name="err_msg_field_cant_be_empty">Field can\'t be empty</string>
+    <string name="err_msg_wrong_email_format">Wrong Email format</string>
+    <string name="err_msg_whiteSpaces_not_allowed">Whitespaces not allowed</string>
+    <string name="err_msg_username_too_long">Username is too long</string>
 
 </resources>

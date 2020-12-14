@@ -50,9 +50,7 @@ class ProfileFragment : Fragment(), UserParsable, ImageParsable {
 
         currentUser = viewModel.getCurrentUserIfLogged()
 
-        //set focus to user name edit field
-//        userName_LoginBlock.requestFocus()
-        // if user have been logged already !!! Should be in a separate block
+        // if user have been logged already
         if (currentUser == null) {
             login_block.visibility = View.VISIBLE
             profile_details_block.visibility = View.INVISIBLE
@@ -182,7 +180,7 @@ class ProfileFragment : Fragment(), UserParsable, ImageParsable {
             if (errorMessage != null) {
                 userName_LoginBlock.error = errorMessage
             } else {
-                userEmail_LoginBlock.error = null
+                userName_LoginBlock.error = null
             }
         })
 
@@ -193,6 +191,14 @@ class ProfileFragment : Fragment(), UserParsable, ImageParsable {
             } else {
                 userName_LoginBlock.error = null
                 userPassword_LoginBlock.error = null
+            }
+        })
+
+        viewModel.mErrUserNameLength.observe(viewLifecycleOwner, Observer { errorMessage ->
+            if (errorMessage != null) {
+                userName_LoginBlock.error = errorMessage
+            } else {
+                userEmail_LoginBlock.error = null
             }
         })
     }
