@@ -15,8 +15,9 @@ class ProfileViewModel(application: Application) : BaseViewModel(application) {
 
     val mErrUserName = MutableLiveData<String>()
     val mErrUserPassword = MutableLiveData<String>()
-    val mIsUserEmailValid = MutableLiveData<String>()
-    val mIsUserExists = MutableLiveData<String>()
+    val mErrIsUserEmailValid = MutableLiveData<String>()
+    val mErrIsUserExists = MutableLiveData<String>()
+    val mErrUserLoginOrPass = MutableLiveData<String>()
 
     // sign Up a new user
     fun signUp(newUser: User) {
@@ -35,7 +36,7 @@ class ProfileViewModel(application: Application) : BaseViewModel(application) {
                 if (e == null) {
                     getCurrentUserIfLogged()
                 } else {
-                    mIsUserExists.value = e.message
+                    mErrIsUserExists.value = e.message
                 }
             }
         }
@@ -53,8 +54,7 @@ class ProfileViewModel(application: Application) : BaseViewModel(application) {
                         if (e == null && user != null) {
                             mIsUserLogged.setValue(true)
                         } else {
-                            Toast.makeText(getApplication(), e.message, Toast.LENGTH_SHORT).show()
-                            e.printStackTrace()
+                            mErrUserLoginOrPass.value = e.message
                         }
                     })
                 }
@@ -95,11 +95,11 @@ class ProfileViewModel(application: Application) : BaseViewModel(application) {
                     if (isValidEmail(newUser.email)) {
                         return true
                     } else {
-                        mIsUserEmailValid.value =
+                        mErrIsUserEmailValid.value =
                             getApplication<Application>().getString(R.string.wrong_email_format)
                     }
                 } else {
-                    mIsUserEmailValid.value =
+                    mErrIsUserEmailValid.value =
                         getApplication<Application>().getString(R.string.field_cant_be_empty)
                 }
             } else {
@@ -138,6 +138,6 @@ class ProfileViewModel(application: Application) : BaseViewModel(application) {
     private fun clearErrors() {
         mErrUserName.value = null
         mErrUserPassword.value = null
-        mIsUserEmailValid.value = null
+        mErrIsUserEmailValid.value = null
     }
 }

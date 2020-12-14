@@ -24,7 +24,7 @@
             android:ems="10"
             android:hint="@string/hint_username"
             app:errorEnabled="true"
-            app:counterMaxLength="5"
+            app:counterMaxLength="10"
             app:counterEnabled="true"
             >
 

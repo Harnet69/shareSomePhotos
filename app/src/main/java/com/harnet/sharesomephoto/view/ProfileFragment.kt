@@ -4,7 +4,6 @@ import android.Manifest
 import android.app.Activity
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.util.Log
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
@@ -127,21 +126,27 @@ class ProfileFragment : Fragment(), UserParsable, ImageParsable {
     private fun observeModel() {
         viewModel.mIsUserLogged.observe(viewLifecycleOwner, Observer { isLogged ->
             //switching between profile details and login blocks
-            if (isLogged && ParseUser.getCurrentUser() != null) {
-                viewModel.mIsUserExists.value = null
+            if (isLogged) {
+                if (ParseUser.getCurrentUser() != null) {
+                    viewModel.mErrIsUserExists.value = null
 
-                // bind the user to view
-                val userForBinding =
-                    User(ParseUser.getCurrentUser().username, "", ParseUser.getCurrentUser().email)
-                userForBinding.profileImgUrl =
-                    ParseUser.getCurrentUser().get("profileImg").toString()
+                    // bind the user to view
+                    val userForBinding =
+                        User(
+                            ParseUser.getCurrentUser().username,
+                            "",
+                            ParseUser.getCurrentUser().email
+                        )
+                    userForBinding.profileImgUrl =
+                        ParseUser.getCurrentUser().get("profileImg").toString()
 
-                // get and bind user Profile image
-                dataBinding.user = userForBinding
+                    // get and bind user Profile image
+                    dataBinding.user = userForBinding
 
-                login_block.visibility = View.INVISIBLE
-                profile_details_block.visibility = View.VISIBLE
-                isLogInMode = false
+                    login_block.visibility = View.INVISIBLE
+                    profile_details_block.visibility = View.VISIBLE
+                    isLogInMode = false
+                }
             } else {
                 login_block.visibility = View.VISIBLE
                 profile_details_block.visibility = View.INVISIBLE
@@ -152,7 +157,7 @@ class ProfileFragment : Fragment(), UserParsable, ImageParsable {
         viewModel.mErrUserName.observe(viewLifecycleOwner, Observer { errorMessage ->
             if (errorMessage != null) {
                 userName_LoginBlock.error = errorMessage
-            }else{
+            } else {
                 userName_LoginBlock.error = null
             }
         })
@@ -160,24 +165,34 @@ class ProfileFragment : Fragment(), UserParsable, ImageParsable {
         viewModel.mErrUserPassword.observe(viewLifecycleOwner, Observer { errorMessage ->
             if (errorMessage != null) {
                 userPassword_LoginBlock.error = errorMessage
-            }else{
+            } else {
                 userPassword_LoginBlock.error = null
             }
         })
 
-        viewModel.mIsUserEmailValid.observe(viewLifecycleOwner, Observer { errorMessage ->
+        viewModel.mErrIsUserEmailValid.observe(viewLifecycleOwner, Observer { errorMessage ->
             if (errorMessage != null) {
                 userEmail_LoginBlock.error = errorMessage
-            }else{
+            } else {
                 userEmail_LoginBlock.error = null
             }
         })
 
-        viewModel.mIsUserExists.observe(viewLifecycleOwner, Observer { errorMessage ->
+        viewModel.mErrIsUserExists.observe(viewLifecycleOwner, Observer { errorMessage ->
             if (errorMessage != null) {
                 userName_LoginBlock.error = errorMessage
-            }else{
+            } else {
                 userEmail_LoginBlock.error = null
+            }
+        })
+
+        viewModel.mErrUserLoginOrPass.observe(viewLifecycleOwner, Observer { errorMessage ->
+            if (errorMessage != null) {
+                userName_LoginBlock.error = errorMessage
+                userPassword_LoginBlock.error = " "
+            } else {
+                userName_LoginBlock.error = null
+                userPassword_LoginBlock.error = null
             }
         })
     }
