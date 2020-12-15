@@ -5,6 +5,7 @@ import android.app.Activity
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.*
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -64,7 +65,21 @@ class FeedsFragment : Fragment() {
         }
 
         // switch on a menu
-        setHasOptionsMenu(true)
+//        setHasOptionsMenu(true)
+
+        topAppBar.setNavigationOnClickListener {
+            Toast.makeText(context, "Press to navigation", Toast.LENGTH_LONG).show()
+        }
+
+        topAppBar.setOnMenuItemClickListener {
+            when(it.itemId){
+                R.id.users_menu_item ->{
+                    Toast.makeText(context, "Press to navigation", Toast.LENGTH_LONG).show()
+                    true
+                }
+                else -> false
+            }
+        }
 
         // Add/change user image
         addImage_btn.setOnClickListener {
@@ -88,26 +103,26 @@ class FeedsFragment : Fragment() {
     }
 
     // options menu
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        super.onCreateOptionsMenu(menu, inflater)
-        inflater.inflate(R.menu.main_menu, menu)
-        //set image to profile menu item
-        val profileImg = ParseUser.getCurrentUser().get("profileImg").toString()
-        context?.let { loadImageToMenuItem(it, menu.findItem(R.id.profile_menu_item), profileImg) }
-    }
-
-    // click listener for menu items
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.users_menu_item -> {
-                goToUsers()
-            }
-            R.id.profile_menu_item -> {
-                goToProfile()
-            }
-        }
-        return super.onOptionsItemSelected(item)
-    }
+//    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+//        super.onCreateOptionsMenu(menu, inflater)
+//        inflater.inflate(R.menu.main_menu, menu)
+//        //set image to profile menu item
+//        val profileImg = ParseUser.getCurrentUser().get("profileImg").toString()
+//        context?.let { loadImageToMenuItem(it, menu.findItem(R.id.profile_menu_item), profileImg) }
+//    }
+//
+//    // click listener for menu items
+//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+//        when (item.itemId) {
+//            R.id.users_menu_item -> {
+//                goToUsers()
+//            }
+//            R.id.profile_menu_item -> {
+//                goToProfile()
+//            }
+//        }
+//        return super.onOptionsItemSelected(item)
+//    }
 
     private fun observeViewModel() {
         // update the layout using values of mutable variables from a ViewModel

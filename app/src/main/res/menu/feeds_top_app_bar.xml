@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/users"
+        android:icon="@drawable/ic_users"
+        android:title="Users_menu_item"
+        android:contentDescription="List of users"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/profile"
+        android:icon="@drawable/ic_account"
+        android:title="Profile_menu_item"
+        android:contentDescription="My profile"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/more"
+        android:title="More_menu_item"
+        android:contentDescription="Need more"
+        app:showAsAction="never" />
+</menu>
