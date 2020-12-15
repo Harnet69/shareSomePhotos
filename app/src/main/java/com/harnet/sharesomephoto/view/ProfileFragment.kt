@@ -237,4 +237,9 @@ class ProfileFragment : Fragment(), UserParsable, ImageParsable {
             openImageChooser(activity as Activity)
         }
     }
+
+    override fun onStop() {
+        super.onStop()
+        viewModel.clearErrors()
+    }
 }

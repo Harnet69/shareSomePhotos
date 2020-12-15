@@ -145,9 +145,11 @@ class ProfileViewModel(application: Application) : BaseViewModel(application) {
     }
 
     // clear input fields errors
-    private fun clearErrors() {
+    fun clearErrors() {
         mErrUserName.value = null
         mErrUserPassword.value = null
         mErrIsUserEmailValid.value = null
+        mErrUserNameLength.value = null
+        mErrUserLoginOrPass.value = null
     }
 }
