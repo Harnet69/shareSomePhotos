@@ -4,6 +4,7 @@ import android.Manifest
 import android.app.Activity
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
@@ -16,12 +17,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.harnet.sharesomephoto.R
 import com.harnet.sharesomephoto.adapter.FeedsAdapter
 import com.harnet.sharesomephoto.databinding.FeedsFragmentBinding
-import com.harnet.sharesomephoto.util.loadImageToMenuItem
 import com.harnet.sharesomephoto.util.openImageChooser
 import com.harnet.sharesomephoto.util.setActivityTitle
 import com.harnet.sharesomephoto.viewModel.FeedsViewModel
 import com.parse.ParseUser
 import kotlinx.android.synthetic.main.feeds_fragment.*
+
 
 class FeedsFragment : Fragment() {
     private lateinit var feedsAdapter: FeedsAdapter
@@ -39,6 +40,7 @@ class FeedsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         this.setActivityTitle("Users feed")
+
         feedsAdapter = FeedsAdapter(arrayListOf())
         viewModel = ViewModelProvider(this).get(FeedsViewModel::class.java)
 
@@ -67,14 +69,21 @@ class FeedsFragment : Fragment() {
         // switch on a menu
 //        setHasOptionsMenu(true)
 
+//        this.activity?.actionBar?.hide()
+//
         topAppBar.setNavigationOnClickListener {
             Toast.makeText(context, "Press to navigation", Toast.LENGTH_LONG).show()
         }
 
-        topAppBar.setOnMenuItemClickListener {
-            when(it.itemId){
-                R.id.users_menu_item ->{
-                    Toast.makeText(context, "Press to navigation", Toast.LENGTH_LONG).show()
+        topAppBar.setOnMenuItemClickListener {menuItem ->
+//            Toast.makeText(context, "Press some menu item", Toast.LENGTH_LONG).show()
+            when(menuItem.itemId){
+                R.id.users_top_appbar_menu -> {
+                    Toast.makeText(context, "Go to users list", Toast.LENGTH_LONG).show()
+                    true
+                }
+                R.id.profile_top_appbar_menu ->{
+                    Toast.makeText(context, "Go to profile", Toast.LENGTH_LONG).show()
                     true
                 }
                 else -> false
