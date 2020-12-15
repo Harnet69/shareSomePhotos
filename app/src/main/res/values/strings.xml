@@ -16,5 +16,6 @@
     <string name="err_msg_wrong_email_format">Wrong Email format</string>
     <string name="err_msg_whiteSpaces_not_allowed">Whitespaces not allowed</string>
     <string name="err_msg_username_too_long">Username is too long</string>
+    <string name="feed_image">Feed image</string>
 
 </resources>

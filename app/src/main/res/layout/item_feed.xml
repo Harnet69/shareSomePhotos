@@ -35,8 +35,9 @@
             android:layout_marginEnd="5dp"
             android:bindImageUrl="@{image.imageURL}"
             android:goToImagePage="@{image.imageURL}"
-            android:scaleType="fitCenter"
-            android:tag="imageFragment" />
+            android:scaleType="centerCrop"
+            android:tag="imageFragment"
+            android:contentDescription="@string/feed_image" />
 
     </LinearLayout>
 </layout>
