@@ -62,7 +62,7 @@ class UserDetailsFragment : Fragment() {
         viewModel.mUser.observe(viewLifecycleOwner, Observer { user ->
             user?.let {
                 dataBinding.user = user
-                user_detail_block_userDeskrFragment.visibility = View.VISIBLE
+                user_detail_block_userDescrFragment.visibility = View.VISIBLE
             }
         })
 
@@ -84,7 +84,7 @@ class UserDetailsFragment : Fragment() {
                 if (it) {
                     //hide all views when progress bar is visible
                     listError_TextView_UserDescr.visibility = View.GONE
-                    user_detail_block_userDeskrFragment.visibility = View.GONE
+                    user_detail_block_userDescrFragment.visibility = View.GONE
                 }
             }
         })

@@ -32,15 +32,16 @@
                 android:id="@+id/topAppBar"
                 style="@style/Widget.MaterialComponents.Toolbar.Primary"
                 android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
                 app:menu="@menu/user_details_menu"
-                android:loadImageToMaterialToolbar="@{user.profileImgUrl}"
-                app:title="@{user.name}" />
+                android:layout_height="?attr/actionBarSize"
+                app:title="@{user.name}"
+                app:navigationIcon="@drawable/ic_user_photo"
+                android:loadImageToMaterialToolbar="@{user.profileImgUrl}"/>
 
         </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/user_detail_block_userDeskrFragment"
+            android:id="@+id/user_detail_block_userDescrFragment"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
@@ -51,43 +52,43 @@
             app:layout_constraintTop_toBottomOf="@id/topAppBarBlock"
             tools:context=".view.UserDetailsFragment">
 
-            <LinearLayout
-                android:id="@+id/linearLayout"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+<!--            <LinearLayout-->
+<!--                android:id="@+id/linearLayout"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:orientation="horizontal"-->
+<!--                app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toTopOf="parent">-->
 
-                <ImageView
-                    android:id="@+id/userImage_UserDescr"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:bindImageUrl="@{user.profileImgUrl}"
-                    android:contentDescription="@string/user_profile_image"
-                    android:focusable="true"
-                    android:goToImagePage="@{user.profileImgUrl}"
-                    android:paddingStart="3dp"
-                    android:paddingEnd="3dp"
-                    android:scaleType="fitCenter"
-                    android:tag="userDetailsFragment" />
+<!--                <ImageView-->
+<!--                    android:id="@+id/userImage_UserDescr"-->
+<!--                    android:layout_width="50dp"-->
+<!--                    android:layout_height="50dp"-->
+<!--                    android:bindImageUrl="@{user.profileImgUrl}"-->
+<!--                    android:contentDescription="@string/user_profile_image"-->
+<!--                    android:focusable="true"-->
+<!--                    android:goToImagePage="@{user.profileImgUrl}"-->
+<!--                    android:paddingStart="3dp"-->
+<!--                    android:paddingEnd="3dp"-->
+<!--                    android:scaleType="fitCenter"-->
+<!--                    android:tag="userDetailsFragment" />-->
 
-                <TextView
-                    android:id="@+id/userName_UserDescr"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_margin="3dp"
-                    android:layout_marginTop="5dp"
-                    android:ems="10"
-                    android:fontFamily="@font/jolly_lodger"
-                    android:gravity="center_vertical"
-                    android:paddingStart="5dp"
-                    android:paddingEnd="5dp"
-                    android:text="@{user.name}"
-                    android:textSize="40sp" />
-            </LinearLayout>
+<!--                <TextView-->
+<!--                    android:id="@+id/userName_UserDescr"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:layout_margin="3dp"-->
+<!--                    android:layout_marginTop="5dp"-->
+<!--                    android:ems="10"-->
+<!--                    android:fontFamily="@font/jolly_lodger"-->
+<!--                    android:gravity="center_vertical"-->
+<!--                    android:paddingStart="5dp"-->
+<!--                    android:paddingEnd="5dp"-->
+<!--                    android:text="@{user.name}"-->
+<!--                    android:textSize="40sp" />-->
+<!--            </LinearLayout>-->
 
             <TextView
                 android:id="@+id/listError_TextView_UserDescr"
@@ -117,12 +118,11 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginStart="5dp"
-            android:layout_marginTop="5dp"
             android:layout_marginEnd="5dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/user_detail_block_userDeskrFragment">
+            app:layout_constraintTop_toBottomOf="@+id/user_detail_block_userDescrFragment">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/userGallery_userDescrFragment"
