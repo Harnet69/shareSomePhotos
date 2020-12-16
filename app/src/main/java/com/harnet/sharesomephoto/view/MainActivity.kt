@@ -52,45 +52,45 @@ class MainActivity : AppCompatActivity() {
 //        return NavigationUI.navigateUp(navController, null)
 
 
-        //set image to profile menu item
-        val profileMenuItem =
-            topAppBar.findViewById(R.id.profileFragment) as ActionMenuItemView
-        ParseUser.getCurrentUser()?.let { parseUser ->
-            loadImageToMenuItem(
-                this,
-                profileMenuItem,
-                parseUser.get("profileImg").toString()
-            )
-        }
-
-        // top appbar menu
-        topAppBar.setNavigationOnClickListener {
-            Toast.makeText(this, "Press to navigation", Toast.LENGTH_LONG).show()
-        }
-
-        topAppBar.setOnMenuItemClickListener { menuItem ->
-            when (menuItem.itemId) {
-                R.id.usersFragment -> {
-//                    Toast.makeText(this, "Go to users list", Toast.LENGTH_LONG).show()
-                    goToUsers()
-                    true
-                }
-                R.id.profileFragment -> {
-//                    Toast.makeText(this, "Go to profile", Toast.LENGTH_LONG).show()
-                    goToProfile()
-                    true
-                }
-                else -> false
-            }
-        }
-    }
-
-    // redirect to the Profile page
-    private fun goToProfile() {
-        fragments.view?.let {
-            Navigation.findNavController(it)
-                .navigate(FeedsFragmentDirections.actionFeedsFragmentToProfileFragment())
-        }
+//        //set image to profile menu item
+//        val profileMenuItem =
+//            topAppBar.findViewById(R.id.profileFragment) as ActionMenuItemView
+//        ParseUser.getCurrentUser()?.let { parseUser ->
+//            loadImageToMenuItem(
+//                this,
+//                profileMenuItem,
+//                parseUser.get("profileImg").toString()
+//            )
+//        }
+//
+//        // top appbar menu
+//        topAppBar.setNavigationOnClickListener {
+//            Toast.makeText(this, "Press to navigation", Toast.LENGTH_LONG).show()
+//        }
+//
+//        topAppBar.setOnMenuItemClickListener { menuItem ->
+//            when (menuItem.itemId) {
+//                R.id.usersFragment -> {
+////                    Toast.makeText(this, "Go to users list", Toast.LENGTH_LONG).show()
+//                    goToUsers()
+//                    true
+//                }
+//                R.id.profileFragment -> {
+////                    Toast.makeText(this, "Go to profile", Toast.LENGTH_LONG).show()
+//                    goToProfile()
+//                    true
+//                }
+//                else -> false
+//            }
+//        }
+//    }
+//
+//    // redirect to the Profile page
+//    private fun goToProfile() {
+//        fragments.view?.let {
+//            Navigation.findNavController(it)
+//                .navigate(FeedsFragmentDirections.actionFeedsFragmentToProfileFragment())
+//        }
     }
 
     private fun setUpNavigation() {
