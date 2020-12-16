@@ -83,7 +83,6 @@ class MainActivity : AppCompatActivity() {
                 else -> false
             }
         }
-
     }
 
     // redirect to the Profile page
@@ -94,10 +93,16 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun setUpNavigation() {
+    private fun setUpNavigation() {
         bottomNavigationView = findViewById<BottomNavigationView>(R.id.bttm_nav)
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragments) as NavHostFragment?
-        navHostFragment?.let { NavigationUI.setupWithNavController(bottomNavigationView, it.navController) }
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.fragments) as NavHostFragment?
+        navHostFragment?.let {
+            NavigationUI.setupWithNavController(
+                bottomNavigationView,
+                it.navController
+            )
+        }
 
     }
 
@@ -108,7 +113,6 @@ class MainActivity : AppCompatActivity() {
                 .navigate(FeedsFragmentDirections.actionFeedsFragmentToUsersFragment())
         }
     }
-
 
     // make keyboard hides by clicking outside an EditView
     override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {

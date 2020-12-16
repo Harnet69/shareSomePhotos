@@ -17,5 +17,10 @@
     <string name="err_msg_whiteSpaces_not_allowed">Whitespaces not allowed</string>
     <string name="err_msg_username_too_long">Username is too long</string>
     <string name="feed_image">Feed image</string>
+    <string name="profile_menu_item">Profile</string>
+    <string name="users_list_descr_menu_item">Users</string>
+    <string name="users_feeds_descr_menu_item">Feeds</string>
+    <string name="users_list_menu_item">Users list</string>
+    <string name="my_profile_descr_menu_item">My profile</string>
 
 </resources>
