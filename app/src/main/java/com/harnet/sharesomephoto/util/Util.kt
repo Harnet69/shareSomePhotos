@@ -14,6 +14,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.view.menu.ActionMenuItemView
 import androidx.databinding.BindingAdapter
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
@@ -85,7 +86,7 @@ fun ImageView.loadImage(uri: String?, progressDrawable: CircularProgressDrawable
 }
 
 // set an image to a menu item
-fun loadImageToMenuItem(context: Context, profileMenuItem: MenuItem, imageUrl: String){
+fun loadImageToMenuItem(context: Context, profileMenuItem: ActionMenuItemView, imageUrl: String){
     val options = RequestOptions()
         .placeholder(getProgressDrawable(context))
         .error(R.drawable.profile_ico)
@@ -101,7 +102,8 @@ fun loadImageToMenuItem(context: Context, profileMenuItem: MenuItem, imageUrl: S
                 transition: Transition<in Bitmap>?
             ) {
                 val imgBitmap = BitmapDrawable(Resources.getSystem(), bitmapImg)
-                profileMenuItem.icon = imgBitmap
+//                profileMenuItem.icon = imgBitmap
+                profileMenuItem.setIcon(imgBitmap)
             }
 
             override fun onLoadCleared(placeholder: Drawable?) {

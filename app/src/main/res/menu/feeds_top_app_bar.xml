@@ -15,9 +15,9 @@
         android:contentDescription="My profile"
         app:showAsAction="ifRoom" />
 
-    <item
-        android:id="@+id/more_top_appbar_menu"
-        android:title="More_menu_item"
-        android:contentDescription="Need more"
-        app:showAsAction="never" />
+<!--    <item-->
+<!--        android:id="@+id/more_top_appbar_menu"-->
+<!--        android:title="More_menu_item"-->
+<!--        android:contentDescription="Need more"-->
+<!--        app:showAsAction="never" />-->
 </menu>
