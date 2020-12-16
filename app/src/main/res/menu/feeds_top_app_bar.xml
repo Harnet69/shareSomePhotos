@@ -2,14 +2,14 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/users_top_appbar_menu"
+        android:id="@+id/usersFragment"
         android:icon="@drawable/ic_users"
         android:title="Users_menu_item"
         android:contentDescription="List of users"
         app:showAsAction="ifRoom" />
 
     <item
-        android:id="@+id/profile_top_appbar_menu"
+        android:id="@+id/profileFragment"
         android:icon="@drawable/ic_account"
         android:title="Profile_menu_item"
         android:contentDescription="My profile"

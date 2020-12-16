@@ -3,7 +3,6 @@ package com.harnet.sharesomephoto.view
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.view.inputmethod.InputMethodManager
@@ -13,7 +12,9 @@ import androidx.appcompat.view.menu.ActionMenuItemView
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.harnet.sharesomephoto.R
 import com.harnet.sharesomephoto.model.AppPermissions
 import com.harnet.sharesomephoto.util.convertImageDataToBitmap
@@ -23,6 +24,8 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 
 class MainActivity : AppCompatActivity() {
+    private lateinit var bottomNavigationView: BottomNavigationView
+
     // permission service
     lateinit var appPermissions: AppPermissions
 
@@ -32,6 +35,9 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        // setup bottom bar
+        setUpNavigation()
 
         appPermissions = AppPermissions(this, fragments)
 
@@ -48,7 +54,7 @@ class MainActivity : AppCompatActivity() {
 
         //set image to profile menu item
         val profileMenuItem =
-            topAppBar.findViewById(R.id.profile_top_appbar_menu) as ActionMenuItemView
+            topAppBar.findViewById(R.id.profileFragment) as ActionMenuItemView
         ParseUser.getCurrentUser()?.let { parseUser ->
             loadImageToMenuItem(
                 this,
@@ -57,7 +63,6 @@ class MainActivity : AppCompatActivity() {
             )
         }
 
-
         // top appbar menu
         topAppBar.setNavigationOnClickListener {
             Toast.makeText(this, "Press to navigation", Toast.LENGTH_LONG).show()
@@ -65,12 +70,12 @@ class MainActivity : AppCompatActivity() {
 
         topAppBar.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
-                R.id.users_top_appbar_menu -> {
+                R.id.usersFragment -> {
 //                    Toast.makeText(this, "Go to users list", Toast.LENGTH_LONG).show()
                     goToUsers()
                     true
                 }
-                R.id.profile_top_appbar_menu -> {
+                R.id.profileFragment -> {
 //                    Toast.makeText(this, "Go to profile", Toast.LENGTH_LONG).show()
                     goToProfile()
                     true
@@ -87,6 +92,13 @@ class MainActivity : AppCompatActivity() {
             Navigation.findNavController(it)
                 .navigate(FeedsFragmentDirections.actionFeedsFragmentToProfileFragment())
         }
+    }
+
+    fun setUpNavigation() {
+        bottomNavigationView = findViewById<BottomNavigationView>(R.id.bttm_nav)
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragments) as NavHostFragment?
+        navHostFragment?.let { NavigationUI.setupWithNavController(bottomNavigationView, it.navController) }
+
     }
 
     // redirect to the Users list
