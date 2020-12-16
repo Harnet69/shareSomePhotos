@@ -8,13 +8,12 @@ import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.provider.MediaStore
-import android.view.MenuItem
+import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.view.menu.ActionMenuItemView
 import androidx.databinding.BindingAdapter
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
@@ -27,6 +26,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.target.Target
 import com.bumptech.glide.request.transition.Transition
+import com.google.android.material.appbar.MaterialToolbar
 import com.harnet.sharesomephoto.R
 import com.harnet.sharesomephoto.service.OnSingleClickListenerService
 import com.harnet.sharesomephoto.view.FeedsFragmentDirections
@@ -86,12 +86,14 @@ fun ImageView.loadImage(uri: String?, progressDrawable: CircularProgressDrawable
 }
 
 // set an image to a menu item
-fun loadImageToMenuItem(context: Context, profileMenuItem: ActionMenuItemView, imageUrl: String){
+@BindingAdapter("android:loadImageToMaterialToolbar")
+fun loadImageToMaterialToolbar(materialToolbar: MaterialToolbar, imageUrl: String?) {
+    Log.i("LoadImage", "loadImageToMaterialToolbar: $imageUrl")
     val options = RequestOptions()
-        .placeholder(getProgressDrawable(context))
+        .placeholder(getProgressDrawable(materialToolbar.context))
         .error(R.drawable.profile_ico)
 
-    Glide.with(context)
+    Glide.with(materialToolbar.context)
         .setDefaultRequestOptions(options)
         .asBitmap()
         .load(imageUrl)
@@ -102,8 +104,7 @@ fun loadImageToMenuItem(context: Context, profileMenuItem: ActionMenuItemView, i
                 transition: Transition<in Bitmap>?
             ) {
                 val imgBitmap = BitmapDrawable(Resources.getSystem(), bitmapImg)
-//                profileMenuItem.icon = imgBitmap
-                profileMenuItem.setIcon(imgBitmap)
+                materialToolbar.navigationIcon = imgBitmap
             }
 
             override fun onLoadCleared(placeholder: Drawable?) {
@@ -136,21 +137,21 @@ fun goToImagePage(view: ImageView, imageUrl: String?) {
     }
 
     view.setOnSingleClickListener { imageView ->
-        imageUrl?.let {url ->
-                when (imageView.tag.toString()) {
-                    "profileFragment" -> {
-                        val action = ProfileFragmentDirections.actionProfileFragmentToImageFragment(url)
-                        Navigation.findNavController(imageView).navigate(action)
-                    }
-                    "imageFragment" -> {
-                        val action = FeedsFragmentDirections.actionFeedsFragmentToImageFragment(url)
-                        Navigation.findNavController(imageView).navigate(action)
-                    }
-                    "userDetailsFragment" -> {
-                        val action =
+        imageUrl?.let { url ->
+            when (imageView.tag.toString()) {
+                "profileFragment" -> {
+                    val action = ProfileFragmentDirections.actionProfileFragmentToImageFragment(url)
+                    Navigation.findNavController(imageView).navigate(action)
+                }
+                "imageFragment" -> {
+                    val action = FeedsFragmentDirections.actionFeedsFragmentToImageFragment(url)
+                    Navigation.findNavController(imageView).navigate(action)
+                }
+                "userDetailsFragment" -> {
+                    val action =
                         UserDetailsFragmentDirections.actionUserDetailsFragmentToImageFragment(url)
-                        Navigation.findNavController(imageView).navigate(action)
-                    }
+                    Navigation.findNavController(imageView).navigate(action)
+                }
             }
         }
     }
@@ -196,7 +197,7 @@ fun convertImageDataToBitmap(activity: Activity, data: Intent?): Bitmap? {
 }
 
 @BindingAdapter("android:bindUserName")
-fun loadUserNameById(textView: TextView, userId: String){
+fun loadUserNameById(textView: TextView, userId: String) {
     val query: ParseQuery<ParseUser> = ParseUser.getQuery()
     // exclude user of this device
     query.whereEqualTo("objectId", userId)

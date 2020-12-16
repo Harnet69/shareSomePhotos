@@ -22,5 +22,7 @@
     <string name="users_feeds_descr_menu_item">Feeds</string>
     <string name="users_list_menu_item">Users list</string>
     <string name="my_profile_descr_menu_item">My profile</string>
+    <string name="follow_user">Follow</string>
+    <string name="send_message_to_user">Send message</string>
 
 </resources>

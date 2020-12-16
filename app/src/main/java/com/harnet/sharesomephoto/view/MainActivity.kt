@@ -18,8 +18,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.harnet.sharesomephoto.R
 import com.harnet.sharesomephoto.model.AppPermissions
 import com.harnet.sharesomephoto.util.convertImageDataToBitmap
-import com.harnet.sharesomephoto.util.loadImageToMenuItem
-import com.parse.ParseUser
 import kotlinx.android.synthetic.main.activity_main.*
 
 

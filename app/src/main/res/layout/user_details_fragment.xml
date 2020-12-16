@@ -33,8 +33,9 @@
                 style="@style/Widget.MaterialComponents.Toolbar.Primary"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                app:menu="@menu/bottom_navbar_menu"
-                app:title="Uses feeds" />
+                app:menu="@menu/user_details_menu"
+                android:loadImageToMaterialToolbar="@{user.profileImgUrl}"
+                app:title="@{user.name}" />
 
         </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
