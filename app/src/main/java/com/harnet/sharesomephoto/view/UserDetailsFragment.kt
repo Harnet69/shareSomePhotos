@@ -15,7 +15,6 @@ import com.harnet.sharesomephoto.databinding.UserDetailsFragmentBinding
 import com.harnet.sharesomephoto.model.Image
 import com.harnet.sharesomephoto.util.setActivityTitle
 import com.harnet.sharesomephoto.viewModel.UserDetailsViewModel
-import kotlinx.android.synthetic.main.feeds_fragment.*
 import kotlinx.android.synthetic.main.user_details_fragment.*
 
 class UserDetailsFragment : Fragment() {

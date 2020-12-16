@@ -22,7 +22,7 @@
             android:layout_weight="1"
             android:bindImageUrl="@{image.imageURL}"
             android:goToImagePage="@{image.imageURL}"
-            android:scaleType="fitCenter"
+            android:scaleType="centerCrop"
             android:tag="userDetailsFragment" />
 
     </LinearLayout>

@@ -12,16 +12,42 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="5dp">
+        android:layout_height="match_parent">
+
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
+            android:id="@+id/topAppBarBlock"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.appbar.AppBarLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </com.google.android.material.appbar.AppBarLayout>
+
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/topAppBar"
+                style="@style/Widget.MaterialComponents.Toolbar.Primary"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:menu="@menu/bottom_navbar_menu"
+                app:title="Uses feeds" />
+
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/user_detail_block_userDeskrFragment"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="5dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/topAppBarBlock"
             tools:context=".view.UserDetailsFragment">
 
             <LinearLayout
@@ -38,14 +64,14 @@
                     android:id="@+id/userImage_UserDescr"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
-                    android:paddingStart="3dp"
-                    android:paddingEnd="3dp"
                     android:bindImageUrl="@{user.profileImgUrl}"
+                    android:contentDescription="@string/user_profile_image"
                     android:focusable="true"
                     android:goToImagePage="@{user.profileImgUrl}"
+                    android:paddingStart="3dp"
+                    android:paddingEnd="3dp"
                     android:scaleType="fitCenter"
-                    android:tag="userDetailsFragment"
-                    android:contentDescription="@string/user_profile_image" />
+                    android:tag="userDetailsFragment" />
 
                 <TextView
                     android:id="@+id/userName_UserDescr"
@@ -55,11 +81,11 @@
                     android:layout_marginTop="5dp"
                     android:ems="10"
                     android:fontFamily="@font/jolly_lodger"
-                    android:text="@{user.name}"
                     android:gravity="center_vertical"
                     android:paddingStart="5dp"
                     android:paddingEnd="5dp"
-                    android:textSize="40sp"/>
+                    android:text="@{user.name}"
+                    android:textSize="40sp" />
             </LinearLayout>
 
             <TextView
@@ -89,6 +115,9 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="5dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
