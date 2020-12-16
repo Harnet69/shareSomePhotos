@@ -15,6 +15,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.harnet.sharesomephoto.R
 import com.harnet.sharesomephoto.databinding.ProfileFragmentBinding
 import com.harnet.sharesomephoto.model.ImageParsable
@@ -66,7 +67,6 @@ class ProfileFragment : Fragment(), UserParsable, ImageParsable {
             dataBinding.user = thisUser
             login_block.visibility = View.INVISIBLE
             profile_details_block.visibility = View.VISIBLE
-
         }
 
         // LogIn signUp switcher
@@ -81,6 +81,7 @@ class ProfileFragment : Fragment(), UserParsable, ImageParsable {
                 login_signUp_btn_LoginBlock.text = getString(R.string.btn_logIn)
                 logIn_signUp_TextView_LoginBlock.text = getString(R.string.label_orSignUp)
                 userEmail_LoginBlock.visibility = View.GONE
+
                 isLogInMode = true
             }
 
@@ -127,6 +128,9 @@ class ProfileFragment : Fragment(), UserParsable, ImageParsable {
         viewModel.mIsUserLogged.observe(viewLifecycleOwner, Observer { isLogged ->
             //switching between profile details and login blocks
             if (isLogged) {
+                // make bottom navigation bar visible
+                activity?.findViewById<BottomNavigationView>(R.id.bottom_nav_bar)?.visibility = View.VISIBLE
+
                 if (ParseUser.getCurrentUser() != null) {
                     viewModel.mErrIsUserExists.value = null
 
@@ -148,6 +152,8 @@ class ProfileFragment : Fragment(), UserParsable, ImageParsable {
                     isLogInMode = false
                 }
             } else {
+                // make bottom navigation bar invisible
+                activity?.findViewById<BottomNavigationView>(R.id.bottom_nav_bar)?.visibility = View.INVISIBLE
                 login_block.visibility = View.VISIBLE
                 profile_details_block.visibility = View.INVISIBLE
                 isLogInMode = true

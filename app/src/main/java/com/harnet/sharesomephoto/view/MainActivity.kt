@@ -4,11 +4,8 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.MotionEvent
-import android.view.View
 import android.view.inputmethod.InputMethodManager
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.view.menu.ActionMenuItemView
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
@@ -92,7 +89,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setUpNavigation() {
-        bottomNavigationView = findViewById<BottomNavigationView>(R.id.bttm_nav)
+        bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_nav_bar)
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.fragments) as NavHostFragment?
         navHostFragment?.let {
