@@ -48,7 +48,7 @@ class MainActivity : AppCompatActivity() {
 
         //set image to profile menu item
         val profileMenuItem =
-            topAppBar.findViewById<View>(R.id.profile_top_appbar_menu) as ActionMenuItemView
+            topAppBar.findViewById(R.id.profile_top_appbar_menu) as ActionMenuItemView
         ParseUser.getCurrentUser()?.let { parseUser ->
             loadImageToMenuItem(
                 this,
