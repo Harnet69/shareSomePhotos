@@ -5,8 +5,11 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.MotionEvent
+import android.view.View
 import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.view.menu.ActionMenuItemView
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
@@ -14,6 +17,8 @@ import androidx.navigation.ui.NavigationUI
 import com.harnet.sharesomephoto.R
 import com.harnet.sharesomephoto.model.AppPermissions
 import com.harnet.sharesomephoto.util.convertImageDataToBitmap
+import com.harnet.sharesomephoto.util.loadImageToMenuItem
+import com.parse.ParseUser
 import kotlinx.android.synthetic.main.activity_main.*
 
 
@@ -30,16 +35,68 @@ class MainActivity : AppCompatActivity() {
 
         appPermissions = AppPermissions(this, fragments)
 
-        //for back arrow
-        navController = Navigation.findNavController(this, R.id.fragments)
-        NavigationUI.setupActionBarWithNavController(this, navController)
+//        //for back arrow
+//        navController = Navigation.findNavController(this, R.id.fragments)
+//        NavigationUI.setupActionBarWithNavController(this, navController)
+//
+//    }
+//
+//    //for back arrow
+//    override fun onSupportNavigateUp(): Boolean {
+//        return NavigationUI.navigateUp(navController, null)
+
+
+        //set image to profile menu item
+        val profileMenuItem =
+            topAppBar.findViewById<View>(R.id.profile_top_appbar_menu) as ActionMenuItemView
+        ParseUser.getCurrentUser()?.let { parseUser ->
+            loadImageToMenuItem(
+                this,
+                profileMenuItem,
+                parseUser.get("profileImg").toString()
+            )
+        }
+
+
+        // top appbar menu
+        topAppBar.setNavigationOnClickListener {
+            Toast.makeText(this, "Press to navigation", Toast.LENGTH_LONG).show()
+        }
+
+        topAppBar.setOnMenuItemClickListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.users_top_appbar_menu -> {
+//                    Toast.makeText(this, "Go to users list", Toast.LENGTH_LONG).show()
+                    goToUsers()
+                    true
+                }
+                R.id.profile_top_appbar_menu -> {
+//                    Toast.makeText(this, "Go to profile", Toast.LENGTH_LONG).show()
+                    goToProfile()
+                    true
+                }
+                else -> false
+            }
+        }
 
     }
 
-    //for back arrow
-    override fun onSupportNavigateUp(): Boolean {
-        return NavigationUI.navigateUp(navController, null)
+    // redirect to the Profile page
+    private fun goToProfile() {
+        fragments.view?.let {
+            Navigation.findNavController(it)
+                .navigate(FeedsFragmentDirections.actionFeedsFragmentToProfileFragment())
+        }
     }
+
+    // redirect to the Users list
+    private fun goToUsers() {
+        fragments.view?.let {
+            Navigation.findNavController(it)
+                .navigate(FeedsFragmentDirections.actionFeedsFragmentToUsersFragment())
+        }
+    }
+
 
     // make keyboard hides by clicking outside an EditView
     override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
@@ -58,7 +115,7 @@ class MainActivity : AppCompatActivity() {
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         //switcher of different kinds of permissions
-        if(permissions.isNotEmpty()){
+        if (permissions.isNotEmpty()) {
             when (permissions[0]) {
                 android.Manifest.permission.READ_EXTERNAL_STORAGE -> {
                     appPermissions.imagesService.onRequestPermissionsResult(
@@ -84,15 +141,27 @@ class MainActivity : AppCompatActivity() {
                 when (val activeFragment: Fragment? =
                     fragments.childFragmentManager.primaryNavigationFragment) {
                     is ProfileFragment -> {
-                        imageBtm?.let {image ->
-                            val action = ProfileFragmentDirections.actionProfileFragmentToImagePreviewFragment(image, "profile")
-                            activeFragment.view?.let { Navigation.findNavController(it).navigate(action) }
+                        imageBtm?.let { image ->
+                            val action =
+                                ProfileFragmentDirections.actionProfileFragmentToImagePreviewFragment(
+                                    image,
+                                    "profile"
+                                )
+                            activeFragment.view?.let {
+                                Navigation.findNavController(it).navigate(action)
+                            }
                         }
                     }
                     is FeedsFragment -> {
-                        imageBtm?.let {image ->
-                        val action = FeedsFragmentDirections.actionFeedsFragmentToImagePreviewFragment(image, "feeds")
-                        activeFragment.view?.let { Navigation.findNavController(it).navigate(action) }
+                        imageBtm?.let { image ->
+                            val action =
+                                FeedsFragmentDirections.actionFeedsFragmentToImagePreviewFragment(
+                                    image,
+                                    "feeds"
+                                )
+                            activeFragment.view?.let {
+                                Navigation.findNavController(it).navigate(action)
+                            }
                         }
                     }
                 }

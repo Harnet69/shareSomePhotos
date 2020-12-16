@@ -42,7 +42,8 @@ class FeedsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        (activity as AppCompatActivity).supportActionBar?.hide()
+        // hide action bar
+//        (activity as AppCompatActivity).supportActionBar?.hide()
 
 //        this.setActivityTitle("Users feed")
 
@@ -75,37 +76,38 @@ class FeedsFragment : Fragment() {
 //        setHasOptionsMenu(true)
 
         //set image to profile menu item
-        val profileMenuItem =
-            topAppBar.findViewById<View>(R.id.profile_top_appbar_menu) as ActionMenuItemView
-        context?.let { context ->
-            ParseUser.getCurrentUser()?.let { parseUser ->
-                loadImageToMenuItem(
-                    context,
-                    profileMenuItem,
-                    parseUser.get("profileImg").toString()
-                )
-            }
-        }
+//        val profileMenuItem =
+//            topAppBar.findViewById<View>(R.id.profile_top_appbar_menu) as ActionMenuItemView
+//        context?.let { context ->
+//            ParseUser.getCurrentUser()?.let { parseUser ->
+//                loadImageToMenuItem(
+//                    context,
+//                    profileMenuItem,
+//                    parseUser.get("profileImg").toString()
+//                )
+//            }
+//        }
 
-        topAppBar.setNavigationOnClickListener {
-            Toast.makeText(context, "Press to navigation", Toast.LENGTH_LONG).show()
-        }
-
-        topAppBar.setOnMenuItemClickListener { menuItem ->
-            when (menuItem.itemId) {
-                R.id.users_top_appbar_menu -> {
-                    Toast.makeText(context, "Go to users list", Toast.LENGTH_LONG).show()
-                    goToUsers()
-                    true
-                }
-                R.id.profile_top_appbar_menu -> {
-                    Toast.makeText(context, "Go to profile", Toast.LENGTH_LONG).show()
-                    goToProfile()
-                    true
-                }
-                else -> false
-            }
-        }
+//        // top appbar menu
+//        topAppBar.setNavigationOnClickListener {
+//            Toast.makeText(context, "Press to navigation", Toast.LENGTH_LONG).show()
+//        }
+//
+//        topAppBar.setOnMenuItemClickListener { menuItem ->
+//            when (menuItem.itemId) {
+//                R.id.users_top_appbar_menu -> {
+//                    Toast.makeText(context, "Go to users list", Toast.LENGTH_LONG).show()
+//                    goToUsers()
+//                    true
+//                }
+//                R.id.profile_top_appbar_menu -> {
+//                    Toast.makeText(context, "Go to profile", Toast.LENGTH_LONG).show()
+//                    goToProfile()
+//                    true
+//                }
+//                else -> false
+//            }
+//        }
 
         // Add/change user image
         addImage_btn.setOnClickListener {
