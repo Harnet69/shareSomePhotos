@@ -1,16 +1,15 @@
 package com.harnet.sharesomephoto.view
 
 import android.Manifest
+import android.app.ActionBar
 import android.app.Activity
 import android.content.pm.PackageManager
-import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.*
-import android.widget.ImageView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.view.menu.ActionMenuItemView
-import androidx.core.view.get
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -42,7 +41,10 @@ class FeedsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        this.setActivityTitle("Users feed")
+
+        (activity as AppCompatActivity).supportActionBar?.hide()
+
+//        this.setActivityTitle("Users feed")
 
         feedsAdapter = FeedsAdapter(arrayListOf())
         viewModel = ViewModelProvider(this).get(FeedsViewModel::class.java)
@@ -69,31 +71,34 @@ class FeedsFragment : Fragment() {
             goToProfile()
         }
 
-        // switch on a menu
+        // switch on optional menu
 //        setHasOptionsMenu(true)
 
-        //TODO set image to profile menu item
-//        context?.let { loadImageToMenuItem(it, topAppBar.get(1), profileImg) }
-
-//        val profileImg = ParseUser.getCurrentUser().get("profileImg").toString()
-        val profileMenuItem = topAppBar.findViewById<View>(R.id.profile_top_appbar_menu) as ActionMenuItemView
-        context?.let {context ->
+        //set image to profile menu item
+        val profileMenuItem =
+            topAppBar.findViewById<View>(R.id.profile_top_appbar_menu) as ActionMenuItemView
+        context?.let { context ->
             ParseUser.getCurrentUser()?.let { parseUser ->
-                loadImageToMenuItem(context, profileMenuItem, parseUser.get("profileImg").toString()) }
+                loadImageToMenuItem(
+                    context,
+                    profileMenuItem,
+                    parseUser.get("profileImg").toString()
+                )
             }
+        }
 
         topAppBar.setNavigationOnClickListener {
             Toast.makeText(context, "Press to navigation", Toast.LENGTH_LONG).show()
         }
 
-        topAppBar.setOnMenuItemClickListener {menuItem ->
-            when(menuItem.itemId){
+        topAppBar.setOnMenuItemClickListener { menuItem ->
+            when (menuItem.itemId) {
                 R.id.users_top_appbar_menu -> {
                     Toast.makeText(context, "Go to users list", Toast.LENGTH_LONG).show()
                     goToUsers()
                     true
                 }
-                R.id.profile_top_appbar_menu ->{
+                R.id.profile_top_appbar_menu -> {
                     Toast.makeText(context, "Go to profile", Toast.LENGTH_LONG).show()
                     goToProfile()
                     true
