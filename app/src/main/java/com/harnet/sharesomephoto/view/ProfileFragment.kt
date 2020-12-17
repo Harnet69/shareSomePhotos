@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.widget.*
 import androidx.appcompat.view.menu.ActionMenuItemView
+import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -130,6 +131,7 @@ class ProfileFragment : Fragment(), UserParsable, ImageParsable {
             if (isLogged) {
                 // make bottom navigation bar visible
                 activity?.findViewById<BottomNavigationView>(R.id.bottom_nav_bar)?.visibility = View.VISIBLE
+                activity?.findViewById<CoordinatorLayout>(R.id.topAppBarBlock)?.visibility = View.VISIBLE
 
                 if (ParseUser.getCurrentUser() != null) {
                     viewModel.mErrIsUserExists.value = null
@@ -154,6 +156,7 @@ class ProfileFragment : Fragment(), UserParsable, ImageParsable {
             } else {
                 // make bottom navigation bar invisible
                 activity?.findViewById<BottomNavigationView>(R.id.bottom_nav_bar)?.visibility = View.INVISIBLE
+                activity?.findViewById<CoordinatorLayout>(R.id.topAppBarBlock)?.visibility = View.INVISIBLE
                 login_block.visibility = View.VISIBLE
                 profile_details_block.visibility = View.INVISIBLE
                 isLogInMode = true
