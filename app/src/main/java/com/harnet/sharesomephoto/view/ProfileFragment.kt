@@ -67,8 +67,6 @@ class ProfileFragment : Fragment(), UserParsable, ImageParsable {
                 thisUser.profileImgUrl = ParseUser.getCurrentUser().get("profileImg").toString()
 
             dataBinding.user = thisUser
-            //TODO refresh user statistics
-            viewModel.refreshUserStats()
 
             login_block.visibility = View.INVISIBLE
             profile_details_block.visibility = View.VISIBLE
@@ -137,6 +135,7 @@ class ProfileFragment : Fragment(), UserParsable, ImageParsable {
                 activity?.findViewById<BottomNavigationView>(R.id.bottom_nav_bar)?.visibility = View.VISIBLE
                 activity?.findViewById<CoordinatorLayout>(R.id.topAppBarBlock)?.visibility = View.VISIBLE
 
+                // update user statistics
                 viewModel.refreshUserStats()
 
                 if (ParseUser.getCurrentUser() != null) {

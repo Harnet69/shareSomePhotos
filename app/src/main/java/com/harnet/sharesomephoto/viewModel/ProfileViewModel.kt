@@ -8,11 +8,7 @@ import androidx.lifecycle.MutableLiveData
 import com.harnet.sharesomephoto.R
 import com.harnet.sharesomephoto.model.Image
 import com.harnet.sharesomephoto.model.User
-import com.parse.FindCallback
-import com.parse.LogInCallback
-import com.parse.ParseObject
-import com.parse.ParseQuery
-import com.parse.ParseUser
+import com.parse.*
 
 class ProfileViewModel(application: Application) : BaseViewModel(application) {
     val mIsUserLogged = MutableLiveData<Boolean>()
@@ -170,12 +166,9 @@ class ProfileViewModel(application: Application) : BaseViewModel(application) {
         val query = ParseQuery<ParseObject>("Image")
         query.whereEqualTo("authorId", ParseUser.getCurrentUser().objectId)
 
-        //TODO think about another way to count feeds
-        query.findInBackground(FindCallback { objects, parseObjectError ->
-            if (parseObjectError == null) {
-                if (objects.isNotEmpty()) {
-                    mUserFeedsCount.value = objects.size
-                }
+        query.countInBackground(CountCallback { count, e ->
+            if(e == null){
+                mUserFeedsCount.value = count
             }
         })
     }
