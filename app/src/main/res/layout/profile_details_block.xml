@@ -25,7 +25,8 @@
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent"
+            android:baselineAligned="false">
 
 
             <LinearLayout
@@ -35,19 +36,17 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/userEmail_UserDescr"
+                    android:id="@+id/feeds_UserDescr"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="10"
-                    android:textAlignment="center"
-                    android:textSize="20sp" />
+                    style="@style/Theme.ShareSomePhoto.userStatisticField" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/feeds"
-                    android:textAlignment="center"
-                    android:textSize="15sp" />
+                    style="@style/Theme.ShareSomePhoto.userStatisticLabel" />
 
             </LinearLayout>
 
@@ -58,19 +57,17 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/userName_UserDescr"
+                    android:id="@+id/followers_UserDescr"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="5"
-                    android:textAlignment="center"
-                    android:textSize="20sp" />
+                    style="@style/Theme.ShareSomePhoto.userStatisticField" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/followers"
-                    android:textAlignment="center"
-                    android:textSize="15sp" />
+                    style="@style/Theme.ShareSomePhoto.userStatisticLabel" />
 
             </LinearLayout>
 
@@ -84,16 +81,14 @@
                     android:id="@+id/following_UserDescr"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="10"
-                    android:textAlignment="center"
-                    android:textSize="20sp" />
+                    android:text="7"
+                    style="@style/Theme.ShareSomePhoto.userStatisticField" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/following"
-                    android:textAlignment="center"
-                    android:textSize="15sp" />
+                    style="@style/Theme.ShareSomePhoto.userStatisticLabel" />
 
             </LinearLayout>
 
