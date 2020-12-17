@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -34,7 +35,6 @@ class UserDetailsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        this.setActivityTitle("User details")
         userDetaildAdapter = UserDetailsAdapter(arrayListOf())
 
         userGallery_userDescrFragment.apply {
@@ -48,8 +48,30 @@ class UserDetailsFragment : Fragment() {
             val userId: String = UserDetailsFragmentArgs.fromBundle(it).userId
             viewModel.refresh(userId)
         }
+
+        // app bar
+        topAppBar.setNavigationOnClickListener {
+            Toast.makeText(context, "Click on navigation", Toast.LENGTH_SHORT).show()
+        }
+
+        topAppBar.setOnMenuItemClickListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.follow_user-> {
+                    // Handle favorite icon press
+                    Toast.makeText(context, "Follow user", Toast.LENGTH_SHORT).show()
+                    true
+                }
+                R.id.send_message -> {
+                    // Handle search icon press
+                    Toast.makeText(context, "Send message", Toast.LENGTH_SHORT).show()
+                    true
+                }
+                else -> false
+            }
+        }
         observeViewModel()
     }
+
 
     private fun observeViewModel() {
         userObserve()

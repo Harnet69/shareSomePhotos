@@ -212,3 +212,7 @@ fun loadUserNameById(textView: TextView, userId: String) {
         }
     })
 }
+
+fun followUser(){
+
+}
