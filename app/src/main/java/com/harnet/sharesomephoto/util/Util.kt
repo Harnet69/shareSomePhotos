@@ -97,7 +97,7 @@ fun loadImageToMaterialToolbar(materialToolbar: MaterialToolbar, imageUrl: Strin
         .setDefaultRequestOptions(options)
         .asBitmap()
         .load(imageUrl)
-        .apply(RequestOptions().override(100, 100))
+        .apply(RequestOptions().override(120, 120))
         .circleCrop()
         .into(object : CustomTarget<Bitmap>() {
             override fun onResourceReady(
