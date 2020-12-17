@@ -4,6 +4,7 @@ import android.Manifest
 import android.app.Activity
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.util.Log
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
@@ -63,9 +64,12 @@ class ProfileFragment : Fragment(), UserParsable, ImageParsable {
         } else {
             val thisUser =
                 User(ParseUser.getCurrentUser().username, "", ParseUser.getCurrentUser().email)
-            thisUser.profileImgUrl = ParseUser.getCurrentUser().get("profileImg").toString()
+                thisUser.profileImgUrl = ParseUser.getCurrentUser().get("profileImg").toString()
 
             dataBinding.user = thisUser
+            //TODO refresh user statistics
+            viewModel.refreshUserStats()
+
             login_block.visibility = View.INVISIBLE
             profile_details_block.visibility = View.VISIBLE
         }
@@ -132,6 +136,8 @@ class ProfileFragment : Fragment(), UserParsable, ImageParsable {
                 // make bottom navigation bar visible
                 activity?.findViewById<BottomNavigationView>(R.id.bottom_nav_bar)?.visibility = View.VISIBLE
                 activity?.findViewById<CoordinatorLayout>(R.id.topAppBarBlock)?.visibility = View.VISIBLE
+
+                viewModel.refreshUserStats()
 
                 if (ParseUser.getCurrentUser() != null) {
                     viewModel.mErrIsUserExists.value = null
@@ -211,6 +217,10 @@ class ProfileFragment : Fragment(), UserParsable, ImageParsable {
             } else {
                 userEmail_LoginBlock.error = null
             }
+        })
+
+        viewModel.mUserFeedsCount.observe(viewLifecycleOwner, Observer { feedsQtt ->
+            feeds_UserDescr.text = feedsQtt.toString()
         })
     }
 

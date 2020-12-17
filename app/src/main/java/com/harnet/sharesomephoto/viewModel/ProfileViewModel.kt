@@ -2,11 +2,16 @@ package com.harnet.sharesomephoto.viewModel
 
 import android.app.Application
 import android.text.TextUtils
+import android.util.Log
 import android.util.Patterns
 import androidx.lifecycle.MutableLiveData
 import com.harnet.sharesomephoto.R
+import com.harnet.sharesomephoto.model.Image
 import com.harnet.sharesomephoto.model.User
+import com.parse.FindCallback
 import com.parse.LogInCallback
+import com.parse.ParseObject
+import com.parse.ParseQuery
 import com.parse.ParseUser
 
 class ProfileViewModel(application: Application) : BaseViewModel(application) {
@@ -18,6 +23,13 @@ class ProfileViewModel(application: Application) : BaseViewModel(application) {
     val mErrIsUserExists = MutableLiveData<String>()
     val mErrUserLoginOrPass = MutableLiveData<String>()
     var mErrUserNameLength = MutableLiveData<String>()
+
+    var mUserFeedsCount = MutableLiveData<Int>()
+
+    // refresh user statistic
+    fun refreshUserStats(){
+        getQttUserFeeds()
+    }
 
     // sign Up a new user
     fun signUp(newUser: User) {
@@ -151,5 +163,20 @@ class ProfileViewModel(application: Application) : BaseViewModel(application) {
         mErrIsUserEmailValid.value = null
         mErrUserNameLength.value = null
         mErrUserLoginOrPass.value = null
+    }
+
+    // get quantity of user images from server
+    private fun getQttUserFeeds() {
+        val query = ParseQuery<ParseObject>("Image")
+        query.whereEqualTo("authorId", ParseUser.getCurrentUser().objectId)
+
+        //TODO think about another way to count feeds
+        query.findInBackground(FindCallback { objects, parseObjectError ->
+            if (parseObjectError == null) {
+                if (objects.isNotEmpty()) {
+                    mUserFeedsCount.value = objects.size
+                }
+            }
+        })
     }
 }

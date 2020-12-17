@@ -39,7 +39,6 @@
                     android:id="@+id/feeds_UserDescr"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="10"
                     style="@style/Theme.ShareSomePhoto.userStatisticField" />
 
                 <TextView
@@ -60,7 +59,6 @@
                     android:id="@+id/followers_UserDescr"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="5"
                     style="@style/Theme.ShareSomePhoto.userStatisticField" />
 
                 <TextView
@@ -81,7 +79,6 @@
                     android:id="@+id/following_UserDescr"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="7"
                     style="@style/Theme.ShareSomePhoto.userStatisticField" />
 
                 <TextView
