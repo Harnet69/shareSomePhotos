@@ -156,7 +156,7 @@ class ProfileFragment : Fragment(), UserParsable, ImageParsable {
             } else {
                 // make bottom navigation bar invisible
                 activity?.findViewById<BottomNavigationView>(R.id.bottom_nav_bar)?.visibility = View.INVISIBLE
-                activity?.findViewById<CoordinatorLayout>(R.id.topAppBarBlock)?.visibility = View.INVISIBLE
+                activity?.findViewById<CoordinatorLayout>(R.id.topAppBarBlock)?.visibility = View.GONE
                 login_block.visibility = View.VISIBLE
                 profile_details_block.visibility = View.INVISIBLE
                 isLogInMode = true
