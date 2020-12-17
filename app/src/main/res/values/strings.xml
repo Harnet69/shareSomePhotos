@@ -27,5 +27,8 @@
     <string name="add_feed">Add feed</string>
     <string name="profile_actions">Profile actions</string>
     <string name="another_profile_actions">Another profile actions</string>
+    <string name="following">Following</string>
+    <string name="followers">Followers</string>
+    <string name="feeds">Feeds</string>
 
 </resources>
