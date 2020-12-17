@@ -24,5 +24,8 @@
     <string name="my_profile_descr_menu_item">My profile</string>
     <string name="follow_user">Follow</string>
     <string name="send_message_to_user">Send message</string>
+    <string name="add_feed">Add feed</string>
+    <string name="profile_actions">Profile actions</string>
+    <string name="another_profile_actions">Another profile actions</string>
 
 </resources>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/profile_add_feed"
+        android:icon="@drawable/ic_add"
+        android:title="@string/add_feed"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/profile_submenu"
+        android:title="@string/profile_actions"
+        android:contentDescription="@string/another_profile_actions"
+        app:showAsAction="never" />
+</menu>
