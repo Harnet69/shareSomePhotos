@@ -10,6 +10,7 @@ import com.parse.FindCallback
 import com.parse.ParseObject
 import com.parse.ParseQuery
 import com.parse.ParseUser
+import org.json.JSONArray
 import java.lang.Error
 
 class UserDetailsViewModel(application: Application) : BaseViewModel(application) {
@@ -162,15 +163,14 @@ class UserDetailsViewModel(application: Application) : BaseViewModel(application
             if (e == null && objects.isNotEmpty()) {
                 if (objects.isNotEmpty()) {
                     val followingUsers = objects[0].getJSONArray("following")
-                    val followingUsersLength = followingUsers.length()
-                    for (i in 0 until followingUsersLength) {
-                        Log.i("followingUser", "removeFromFollowing: " + followingUsers[i])
-                        //TODO doesn't remove the last user
-                        if (followingUsers[i].toString() == userId) {
-                            followingUsers.remove(i)
+                    val newJsonArray = JSONArray()
+
+                    for (i in 0 until followingUsers.length()) {
+                        if (followingUsers[i].toString() != userId) {
+                            newJsonArray.put(followingUsers[i].toString())
                         }
                     }
-                    currentUser.put("following", followingUsers)
+                    currentUser.put("following", newJsonArray)
                     currentUser.saveInBackground()
                 }
             } else {
