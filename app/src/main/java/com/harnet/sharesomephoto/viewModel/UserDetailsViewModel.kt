@@ -143,7 +143,7 @@ class UserDetailsViewModel(application: Application) : BaseViewModel(application
 
     private fun isUserFollowing(userId: String){
         val query: ParseQuery<ParseUser> = ParseUser.getQuery()
-
+        query.whereContains("objectId", ParseUser.getCurrentUser().objectId)
         query.whereContains("following", userId)
         query.findInBackground(FindCallback { objects, e ->
             if (e == null) {
