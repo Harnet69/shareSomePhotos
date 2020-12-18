@@ -14,7 +14,6 @@ import com.harnet.sharesomephoto.R
 import com.harnet.sharesomephoto.adapter.UserDetailsAdapter
 import com.harnet.sharesomephoto.databinding.UserDetailsFragmentBinding
 import com.harnet.sharesomephoto.model.Image
-import com.harnet.sharesomephoto.util.setActivityTitle
 import com.harnet.sharesomephoto.viewModel.UserDetailsViewModel
 import kotlinx.android.synthetic.main.user_details_fragment.*
 
@@ -35,6 +34,8 @@ class UserDetailsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        var userId: String? = null
+
         userDetaildAdapter = UserDetailsAdapter(arrayListOf())
 
         userGallery_userDescrFragment.apply {
@@ -45,8 +46,10 @@ class UserDetailsFragment : Fragment() {
         viewModel = ViewModelProvider(this).get(UserDetailsViewModel::class.java)
 
         arguments?.let {
-            val userId: String = UserDetailsFragmentArgs.fromBundle(it).userId
-            viewModel.refresh(userId)
+            userId = UserDetailsFragmentArgs.fromBundle(it).userId
+            if(userId != null){
+                viewModel.refresh(userId!!)
+            }
         }
 
         // app bar
@@ -57,12 +60,14 @@ class UserDetailsFragment : Fragment() {
         topAppBar.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.follow_user-> {
-                    // Handle favorite icon press
+                    // Handle follow icon press
                     Toast.makeText(context, "Follow user", Toast.LENGTH_SHORT).show()
+                    // follow an user
+                    userId?.let { viewModel.followUser(it) }
                     true
                 }
                 R.id.send_message -> {
-                    // Handle search icon press
+                    // Handle send message press
                     Toast.makeText(context, "Send message", Toast.LENGTH_SHORT).show()
                     true
                 }

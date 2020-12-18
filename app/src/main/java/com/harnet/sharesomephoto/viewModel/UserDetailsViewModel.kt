@@ -106,4 +106,44 @@ class UserDetailsViewModel(application: Application) : BaseViewModel(application
             }
         })
     }
+
+    // follow user
+    fun followUser(userId: String) {
+        addUserToFollowing(userId)
+        addCurrentUserAsFollower(userId)
+    }
+
+    // add to current user a user which is following
+    private fun addUserToFollowing(userId: String) {
+        val query: ParseQuery<ParseUser> = ParseUser.getQuery()
+
+        query.whereEqualTo("objectId", ParseUser.getCurrentUser().objectId)
+        query.findInBackground(FindCallback { objects, e ->
+            if (e == null && objects.isNotEmpty()) {
+                if (objects.isNotEmpty()) {
+                    objects[0].addUnique("following", userId)
+                    objects[0].saveEventually()
+                }
+            } else {
+                e.printStackTrace()
+            }
+        })
+    }
+
+    // add current user as follower to a user which is following
+    private fun addCurrentUserAsFollower(userId: String) {
+        val query: ParseQuery<ParseUser> = ParseUser.getQuery()
+
+        query.whereEqualTo("objectId", userId)
+        query.findInBackground(FindCallback { objects, e ->
+            if (e == null && objects.isNotEmpty()) {
+                if (objects.isNotEmpty()) {
+                    objects[0].addUnique("followers", ParseUser.getCurrentUser().objectId)
+                    objects[0].saveEventually()
+                }
+            } else {
+                e.printStackTrace()
+            }
+        })
+    }
 }
