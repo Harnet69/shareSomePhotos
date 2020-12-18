@@ -162,7 +162,8 @@ class UserDetailsViewModel(application: Application) : BaseViewModel(application
             if (e == null && objects.isNotEmpty()) {
                 if (objects.isNotEmpty()) {
                     val followingUsers = objects[0].getJSONArray("following")
-                    for (i in 0 until followingUsers.length()-1) {
+                    val followingUsersLength = followingUsers.length()
+                    for (i in 0 until followingUsersLength) {
                         Log.i("followingUser", "removeFromFollowing: " + followingUsers[i])
                         //TODO doesn't remove the last user
                         if (followingUsers[i].toString() == userId) {
