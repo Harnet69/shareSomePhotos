@@ -129,13 +129,12 @@ class UserDetailsViewModel(application: Application) : BaseViewModel(application
         })
     }
 
-    fun isUserFollowing(userId: String){
+    private fun isUserFollowing(userId: String){
         val query: ParseQuery<ParseUser> = ParseUser.getQuery()
 
         query.whereContains("following", userId)
         query.findInBackground(FindCallback { objects, e ->
             if (e == null) {
-                Log.i("followingUser", "isUserFollowing: ${objects.size}")
                 mIsUserFollowing.value = objects.isNotEmpty()
             } else {
                 e.printStackTrace()

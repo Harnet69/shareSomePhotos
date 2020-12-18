@@ -16,7 +16,6 @@ import com.harnet.sharesomephoto.adapter.UserDetailsAdapter
 import com.harnet.sharesomephoto.databinding.UserDetailsFragmentBinding
 import com.harnet.sharesomephoto.model.Image
 import com.harnet.sharesomephoto.viewModel.UserDetailsViewModel
-import com.parse.ParseUser
 import kotlinx.android.synthetic.main.user_details_fragment.*
 
 class UserDetailsFragment : Fragment() {
@@ -61,14 +60,14 @@ class UserDetailsFragment : Fragment() {
 
         topAppBar.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
-                R.id.follow_user-> {
+                R.id.follow_user_menuItem-> {
                     // Handle follow icon press
                     Toast.makeText(context, "Follow user", Toast.LENGTH_SHORT).show()
                     // follow an user
                     userId?.let { viewModel.followUser(it) }
                     true
                 }
-                R.id.send_message -> {
+                R.id.send_message_menuItem -> {
                     // Handle send message press
                     Toast.makeText(context, "Send message", Toast.LENGTH_SHORT).show()
                     true
@@ -119,12 +118,12 @@ class UserDetailsFragment : Fragment() {
         })
 
         viewModel.mIsUserFollowing.observe(viewLifecycleOwner, Observer { isUserFollowing ->
-            if(isUserFollowing){
+            if (isUserFollowing) {
                 Toast.makeText(context, "Following", Toast.LENGTH_SHORT).show()
-//                menuItem.setIcon(R.drawable.ic_unfollow)
-            }else{
-                Toast.makeText(context, "Not following", Toast.LENGTH_SHORT).show()
-//                menuItem.setIcon(R.drawable.ic_follow)
+                //TODO Implement changing following image
+                topAppBar.menu.getItem(0).setIcon(R.drawable.ic_unfollow)
+            } else {
+                topAppBar.menu.getItem(0).setIcon(R.drawable.ic_follow)
             }
         })
     }
