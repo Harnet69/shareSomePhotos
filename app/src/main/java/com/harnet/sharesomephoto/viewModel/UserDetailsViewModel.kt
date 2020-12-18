@@ -112,8 +112,19 @@ class UserDetailsViewModel(application: Application) : BaseViewModel(application
         })
     }
 
+    // follow user
+    fun follow(userId: String){
+        if(mIsUserFollowing.value == true){
+
+            mIsUserFollowing.value = false
+        }else{
+            addToFollowing(userId)
+            mIsUserFollowing.value = true
+        }
+    }
+
     // add to current user a user which is following
-    fun followUser(userId: String) {
+    fun addToFollowing(userId: String) {
         val query: ParseQuery<ParseUser> = ParseUser.getQuery()
 
         query.whereEqualTo("objectId", ParseUser.getCurrentUser().objectId)

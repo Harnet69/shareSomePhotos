@@ -1,7 +1,6 @@
 package com.harnet.sharesomephoto.view
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -62,9 +61,9 @@ class UserDetailsFragment : Fragment() {
             when (menuItem.itemId) {
                 R.id.follow_user_menuItem-> {
                     // Handle follow icon press
-                    Toast.makeText(context, "Follow user", Toast.LENGTH_SHORT).show()
+//                    Toast.makeText(context, "Follow user", Toast.LENGTH_SHORT).show()
                     // follow an user
-                    userId?.let { viewModel.followUser(it) }
+                    userId?.let { viewModel.follow(it) }
                     true
                 }
                 R.id.send_message_menuItem -> {
@@ -119,11 +118,12 @@ class UserDetailsFragment : Fragment() {
 
         viewModel.mIsUserFollowing.observe(viewLifecycleOwner, Observer { isUserFollowing ->
             if (isUserFollowing) {
-                Toast.makeText(context, "Following", Toast.LENGTH_SHORT).show()
-                //TODO Implement changing following image
+                //TODO think about another way of an access to the menuItem
                 topAppBar.menu.getItem(0).setIcon(R.drawable.ic_unfollow)
+                Toast.makeText(context, "User following", Toast.LENGTH_SHORT).show()
             } else {
                 topAppBar.menu.getItem(0).setIcon(R.drawable.ic_follow)
+                Toast.makeText(context, "User not following", Toast.LENGTH_SHORT).show()
             }
         })
     }
