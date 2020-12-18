@@ -115,7 +115,7 @@ class UserDetailsViewModel(application: Application) : BaseViewModel(application
     // follow user
     fun follow(userId: String){
         if(mIsUserFollowing.value == true){
-
+            removeFromFollowing(userId)
             mIsUserFollowing.value = false
         }else{
             addToFollowing(userId)
@@ -124,7 +124,7 @@ class UserDetailsViewModel(application: Application) : BaseViewModel(application
     }
 
     // add to current user a user which is following
-    fun addToFollowing(userId: String) {
+    private fun addToFollowing(userId: String) {
         val query: ParseQuery<ParseUser> = ParseUser.getQuery()
 
         query.whereEqualTo("objectId", ParseUser.getCurrentUser().objectId)
@@ -147,6 +147,31 @@ class UserDetailsViewModel(application: Application) : BaseViewModel(application
         query.findInBackground(FindCallback { objects, e ->
             if (e == null) {
                 mIsUserFollowing.value = objects.isNotEmpty()
+            } else {
+                e.printStackTrace()
+            }
+        })
+    }
+
+    // remove from following
+    private fun removeFromFollowing(userId: String){
+        val query: ParseQuery<ParseUser> = ParseUser.getQuery()
+        val currentUser = ParseUser.getCurrentUser()
+        query.whereEqualTo("objectId", currentUser.objectId)
+        query.findInBackground(FindCallback { objects, e ->
+            if (e == null && objects.isNotEmpty()) {
+                if (objects.isNotEmpty()) {
+                    val followingUsers = objects[0].getJSONArray("following")
+                    for (i in 0 until followingUsers.length()-1) {
+                        Log.i("followingUser", "removeFromFollowing: " + followingUsers[i])
+                        //TODO doesn't remove the last user
+                        if (followingUsers[i].toString() == userId) {
+                            followingUsers.remove(i)
+                        }
+                    }
+                    currentUser.put("following", followingUsers)
+                    currentUser.saveInBackground()
+                }
             } else {
                 e.printStackTrace()
             }

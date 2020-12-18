@@ -60,9 +60,7 @@ class UserDetailsFragment : Fragment() {
         topAppBar.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.follow_user_menuItem-> {
-                    // Handle follow icon press
-//                    Toast.makeText(context, "Follow user", Toast.LENGTH_SHORT).show()
-                    // follow an user
+                    // follow/unfollow an user
                     userId?.let { viewModel.follow(it) }
                     true
                 }
@@ -76,7 +74,6 @@ class UserDetailsFragment : Fragment() {
         }
         observeViewModel()
     }
-
 
     private fun observeViewModel() {
         userObserve()
