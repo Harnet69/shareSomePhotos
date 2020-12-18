@@ -1,6 +1,7 @@
 package com.harnet.sharesomephoto.view
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,6 +16,7 @@ import com.harnet.sharesomephoto.adapter.UserDetailsAdapter
 import com.harnet.sharesomephoto.databinding.UserDetailsFragmentBinding
 import com.harnet.sharesomephoto.model.Image
 import com.harnet.sharesomephoto.viewModel.UserDetailsViewModel
+import com.parse.ParseUser
 import kotlinx.android.synthetic.main.user_details_fragment.*
 
 class UserDetailsFragment : Fragment() {
@@ -113,6 +115,16 @@ class UserDetailsFragment : Fragment() {
                     listError_TextView_UserDescr.visibility = View.GONE
                     user_detail_block_userDescrFragment.visibility = View.GONE
                 }
+            }
+        })
+
+        viewModel.mIsUserFollowing.observe(viewLifecycleOwner, Observer { isUserFollowing ->
+            if(isUserFollowing){
+                Toast.makeText(context, "Following", Toast.LENGTH_SHORT).show()
+//                menuItem.setIcon(R.drawable.ic_unfollow)
+            }else{
+                Toast.makeText(context, "Not following", Toast.LENGTH_SHORT).show()
+//                menuItem.setIcon(R.drawable.ic_follow)
             }
         })
     }

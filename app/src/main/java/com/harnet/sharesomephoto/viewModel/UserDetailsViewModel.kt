@@ -10,6 +10,7 @@ import com.parse.FindCallback
 import com.parse.ParseObject
 import com.parse.ParseQuery
 import com.parse.ParseUser
+import java.lang.Error
 
 class UserDetailsViewModel(application: Application) : BaseViewModel(application) {
     // user block
@@ -22,9 +23,13 @@ class UserDetailsViewModel(application: Application) : BaseViewModel(application
     val mIsImagesLoadError = MutableLiveData<Boolean>()
     val mIsImagesLoading = MutableLiveData<Boolean>()
 
+    //appbar
+    val mIsUserFollowing = MutableLiveData<Boolean>()
+
     fun refresh(userId: String) {
         getUserById(userId)
         getUserImages(userId)
+        isUserFollowing(userId)
     }
 
     // retrieve a user
@@ -107,14 +112,8 @@ class UserDetailsViewModel(application: Application) : BaseViewModel(application
         })
     }
 
-    // follow user
-    fun followUser(userId: String) {
-        addUserToFollowing(userId)
-        addCurrentUserAsFollower(userId)
-    }
-
     // add to current user a user which is following
-    private fun addUserToFollowing(userId: String) {
+    fun followUser(userId: String) {
         val query: ParseQuery<ParseUser> = ParseUser.getQuery()
 
         query.whereEqualTo("objectId", ParseUser.getCurrentUser().objectId)
@@ -130,17 +129,14 @@ class UserDetailsViewModel(application: Application) : BaseViewModel(application
         })
     }
 
-    // add current user as follower to a user which is following
-    private fun addCurrentUserAsFollower(userId: String) {
+    fun isUserFollowing(userId: String){
         val query: ParseQuery<ParseUser> = ParseUser.getQuery()
 
-        query.whereEqualTo("objectId", userId)
+        query.whereContains("following", userId)
         query.findInBackground(FindCallback { objects, e ->
-            if (e == null && objects.isNotEmpty()) {
-                if (objects.isNotEmpty()) {
-                    objects[0].addUnique("followers", ParseUser.getCurrentUser().objectId)
-                    objects[0].saveEventually()
-                }
+            if (e == null) {
+                Log.i("followingUser", "isUserFollowing: ${objects.size}")
+                mIsUserFollowing.value = objects.isNotEmpty()
             } else {
                 e.printStackTrace()
             }
