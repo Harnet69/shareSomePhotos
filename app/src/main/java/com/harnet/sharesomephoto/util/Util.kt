@@ -17,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.BindingAdapter
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.findFragment
+import androidx.navigation.NavDirections
 import androidx.navigation.Navigation
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.bumptech.glide.Glide
@@ -40,7 +41,6 @@ import com.parse.ParseQuery
 import com.parse.ParseUser
 import org.json.JSONArray
 import org.json.JSONObject
-
 
 fun openImageChooser(activity: Activity) {
     val intent = Intent()
@@ -172,18 +172,21 @@ fun goToUserDetails(view: View, username: String?) {
 
     view.setOnSingleClickListener {
         username?.let {
+            var action: NavDirections? = null
+
             when (view.tag.toString()) {
                 "usersFragment" -> {
-                    val action =
+                    action =
                         UsersFragmentDirections.actionUsersFragmentToUserDetailsFragment(username)
-                    Navigation.findNavController(view).navigate(action)
+//                    Navigation.findNavController(view).navigate(action)
                 }
                 "feedsFragment" -> {
-                    val action2 =
+                    action =
                         FeedsFragmentDirections.actionFeedsFragmentToUserDetailsFragment(username)
-                    Navigation.findNavController(view).navigate(action2)
                 }
             }
+
+            action?.let { Navigation.findNavController(view).navigate(action)}
         }
     }
 }
@@ -191,7 +194,12 @@ fun goToUserDetails(view: View, username: String?) {
 // go to Users page with users list
 @BindingAdapter("android:goToUsers")
 fun goToUsers(view: View, following: ArrayList<String>?){
-    view.setOnClickListener {
+    // prevent a crash when two items were clicked in the same time
+    fun View.setOnSingleClickListener(l: (View) -> Unit) {
+        setOnClickListener(OnSingleClickListenerService(l))
+    }
+
+    view.setOnSingleClickListener {
         when(view.tag.toString()){
             "profileDetailsFragment" ->{
                 val action = ProfileFragmentDirections.actionProfileFragmentToUsersFragment(
