@@ -4,6 +4,7 @@ import android.app.Application
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import com.harnet.sharesomephoto.model.User
+import com.harnet.sharesomephoto.util.jsonToArray
 import com.parse.FindCallback
 import com.parse.ParseQuery
 import com.parse.ParseUser
@@ -14,7 +15,11 @@ class UsersViewModel(application: Application) : BaseViewModel(application) {
     val mIsLoading = MutableLiveData<Boolean>()
 
     fun refresh(followingUsersList: List<String>?) {
-        getUsersFromParseServer(followingUsersList)
+        if(followingUsersList != null){
+            getFollowingUsers()
+        }else {
+            getUsersFromParseServer(followingUsersList)
+        }
     }
 
     // retrieve users
@@ -66,6 +71,21 @@ class UsersViewModel(application: Application) : BaseViewModel(application) {
                 // switch off error message
                 mIsArticleLoadError.postValue(true)
                 Toast.makeText(getApplication(), e.message, Toast.LENGTH_SHORT).show()
+            }
+        })
+    }
+
+    // get quantity of following users from server
+    private fun getFollowingUsers(){
+        val query: ParseQuery<ParseUser> = ParseUser.getQuery()
+
+        query.whereEqualTo("objectId", ParseUser.getCurrentUser().objectId)
+        query.findInBackground(FindCallback { objects, e ->
+            if (e == null) {
+                if (objects.isNotEmpty()) {
+                    val followingUsers = objects[0].getJSONArray("following")
+                    getUsersFromParseServer(jsonToArray(followingUsers))
+                }
             }
         })
     }
