@@ -93,7 +93,6 @@ fun ImageView.loadImage(uri: String?, progressDrawable: CircularProgressDrawable
 // set an image to a menu item
 @BindingAdapter("android:loadImageToMaterialToolbar")
 fun loadImageToMaterialToolbar(materialToolbar: MaterialToolbar, imageUrl: String?) {
-    Log.i("LoadImage", "loadImageToMaterialToolbar: $imageUrl")
     val options = RequestOptions()
         .placeholder(getProgressDrawable(materialToolbar.context))
         .error(R.drawable.profile_ico)
@@ -191,7 +190,7 @@ fun goToUserDetails(view: View, username: String?) {
 
 // go to Users page with users list
 @BindingAdapter("android:goToUsers")
-fun goToUsers(view: View, userName: String){
+fun goToUsers(view: View, following: ArrayList<String>?){
     view.setOnClickListener {
         when(view.tag.toString()){
             "profileDetailsFragment" ->{

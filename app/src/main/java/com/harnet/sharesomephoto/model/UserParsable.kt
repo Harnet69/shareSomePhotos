@@ -25,10 +25,8 @@ interface UserParsable {
         // sign in user automatically, till login functionality will be implemented
         parseUser.signUpInBackground { e ->
             if (e == null) {
-                Log.i("tweet", "addUser: add and sign up successfully")
                 return@signUpInBackground
             } else {
-                Log.i("tweet", "addUser: smth wrong with sign in" + e.printStackTrace())
                 return@signUpInBackground
             }
         }

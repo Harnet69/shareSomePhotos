@@ -222,8 +222,7 @@ class ProfileFragment : Fragment(), UserParsable, ImageParsable {
         })
 
         viewModel.mUserListFollowingUsers.observe(viewLifecycleOwner, Observer { followingUsers ->
-            Log.i("followingUsersList", "observeModel: $followingUsers")
-            dataBinding.followingUsers = followingUsers
+            dataBinding.following = followingUsers as ArrayList<String>
             //TODO send List to view with dataBinding for passing it to make a following user list
         })
     }
