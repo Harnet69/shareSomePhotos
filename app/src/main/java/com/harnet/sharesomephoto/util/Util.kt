@@ -16,7 +16,6 @@ import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.BindingAdapter
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.findFragment
 import androidx.navigation.NavDirections
 import androidx.navigation.Navigation
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
@@ -30,7 +29,6 @@ import com.bumptech.glide.request.target.Target
 import com.bumptech.glide.request.transition.Transition
 import com.google.android.material.appbar.MaterialToolbar
 import com.harnet.sharesomephoto.R
-import com.harnet.sharesomephoto.databinding.ProfileDetailsBlockBinding
 import com.harnet.sharesomephoto.service.OnSingleClickListenerService
 import com.harnet.sharesomephoto.view.FeedsFragmentDirections
 import com.harnet.sharesomephoto.view.ProfileFragmentDirections
@@ -40,7 +38,6 @@ import com.parse.FindCallback
 import com.parse.ParseQuery
 import com.parse.ParseUser
 import org.json.JSONArray
-import org.json.JSONObject
 
 fun openImageChooser(activity: Activity) {
     val intent = Intent()
@@ -164,44 +161,50 @@ fun goToImagePage(view: ImageView, imageUrl: String?) {
 
 // go to user details page
 @BindingAdapter("android:goToUserDetails")
-fun goToUserDetails(view: View, username: String?) {
+fun goToUserDetails(view: View, userId: String?) {
     // prevent a crash when two items were clicked in the same time
     fun View.setOnSingleClickListener(l: (View) -> Unit) {
         setOnClickListener(OnSingleClickListenerService(l))
     }
 
     view.setOnSingleClickListener {
-        username?.let {
+        val isUserProfile = userId == ParseUser.getCurrentUser().objectId
+        userId?.let {
             var action: NavDirections? = null
 
             when (view.tag.toString()) {
                 "usersFragment" -> {
-                    action =
-                        UsersFragmentDirections.actionUsersFragmentToUserDetailsFragment(username)
-//                    Navigation.findNavController(view).navigate(action)
+                    action = if (!isUserProfile) {
+                        UsersFragmentDirections.actionUsersFragmentToUserDetailsFragment(userId)
+                    }else{
+                        UsersFragmentDirections.actionUsersFragmentToProfileFragment()
+                    }
                 }
                 "feedsFragment" -> {
-                    action =
-                        FeedsFragmentDirections.actionFeedsFragmentToUserDetailsFragment(username)
+                    action = if (!isUserProfile) {
+                        FeedsFragmentDirections.actionFeedsFragmentToUserDetailsFragment(userId)
+                    }else{
+                        FeedsFragmentDirections.actionFeedsFragmentToProfileFragment()
+                    }
                 }
             }
 
-            action?.let { Navigation.findNavController(view).navigate(action)}
+            action?.let { Navigation.findNavController(view).navigate(action) }
         }
     }
 }
 
 // go to Users page with users list
 @BindingAdapter("android:goToUsers")
-fun goToUsers(view: View, following: ArrayList<String>?){
+fun goToUsers(view: View, following: ArrayList<String>?) {
     // prevent a crash when two items were clicked in the same time
     fun View.setOnSingleClickListener(l: (View) -> Unit) {
         setOnClickListener(OnSingleClickListenerService(l))
     }
 
     view.setOnSingleClickListener {
-        when(view.tag.toString()){
-            "profileDetailsFragment" ->{
+        when (view.tag.toString()) {
+            "profileDetailsFragment" -> {
                 val action = ProfileFragmentDirections.actionProfileFragmentToUsersFragment(
                     following?.toTypedArray()
                 )
@@ -241,7 +244,7 @@ fun loadUserNameById(textView: TextView, userId: String) {
 }
 
 // convert json to array
-fun <T> jsonToArray(jArray: JSONArray?): MutableList<T>{
+fun <T> jsonToArray(jArray: JSONArray?): MutableList<T> {
     val convertedArray = mutableListOf<T>()
 
     if (jArray != null) {
