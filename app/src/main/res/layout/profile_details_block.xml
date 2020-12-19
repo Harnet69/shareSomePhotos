@@ -82,7 +82,7 @@
                     android:id="@+id/following_UserDescr"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@{followingUsers.size()}"
+                    android:text="@{Integer.toString(followingUsers.size())}"
                     style="@style/Theme.ShareSomePhoto.userStatisticField" />
 
                 <TextView
