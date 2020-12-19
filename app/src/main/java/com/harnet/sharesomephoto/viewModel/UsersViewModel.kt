@@ -13,8 +13,8 @@ class UsersViewModel(application: Application) : BaseViewModel(application) {
     val mIsArticleLoadError = MutableLiveData<Boolean>()
     val mIsLoading = MutableLiveData<Boolean>()
 
-    fun refresh() {
-        getUsersFromParseServer()
+    fun refresh(followingUsersList: List<String>?) {
+        getUsersFromParseServer(followingUsersList)
     }
 
     // retrieve users
@@ -28,10 +28,19 @@ class UsersViewModel(application: Application) : BaseViewModel(application) {
     }
 
     //get users from server
-    private fun getUsersFromParseServer() {
+    private fun getUsersFromParseServer(followingUsersList: List<String>?) {
         val query: ParseQuery<ParseUser> = ParseUser.getQuery()
         // exclude user of this device
         query.whereNotEqualTo("username", ParseUser.getCurrentUser().username)
+
+        // if followed users
+        if (followingUsersList != null) {
+            //TODO think about implementing a list of matched users
+            for (userId in followingUsersList) {
+                query.whereEqualTo("objectId", userId)
+            }
+        }
+
         // sort by name anciently
         query.addAscendingOrder("username")
         query.findInBackground(FindCallback { objects, e ->
@@ -52,7 +61,6 @@ class UsersViewModel(application: Application) : BaseViewModel(application) {
                 } else {
                     mIsLoading.postValue(false)
                     mIsArticleLoadError.postValue(false)
-//                    Toast.makeText(getApplication(), "No users here yet", Toast.LENGTH_LONG).show()
                 }
             } else {
                 // switch off waiting spinner and inform user is smth wrong

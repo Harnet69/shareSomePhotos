@@ -47,7 +47,7 @@ class UsersFragment : Fragment() {
             Log.i("followingUsersList", "onViewCreated: $followedUsersList")
         }
 
-        viewModel.refresh()
+        viewModel.refresh(followedUsersList)
 
         users_list_usersFragment.apply {
             layoutManager = LinearLayoutManager(context)
@@ -69,7 +69,7 @@ class UsersFragment : Fragment() {
             users_list_usersFragment.visibility = View.GONE
             listError_TextView_usersFragment.visibility = View.GONE
             loadingView_ProgressBar_usersFragment.visibility = View.VISIBLE
-            viewModel.refresh()
+            viewModel.refresh(followedUsersList)
             refreshLayout_usersFragment.isRefreshing = false // disappears little spinner on the top
         }
 
