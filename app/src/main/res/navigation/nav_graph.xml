@@ -49,6 +49,11 @@
         <action
             android:id="@+id/action_usersFragment_to_userDetailsFragment"
             app:destination="@id/userDetailsFragment" />
+        <argument
+            android:name="usersList"
+            app:argType="string[]"
+            app:nullable="true"
+            android:defaultValue="@null" />
     </fragment>
     <fragment
         android:id="@+id/imageFragment"
