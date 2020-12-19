@@ -11,7 +11,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.widget.*
-import androidx.appcompat.view.menu.ActionMenuItemView
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -224,6 +223,7 @@ class ProfileFragment : Fragment(), UserParsable, ImageParsable {
 
         viewModel.mUserListFollowingUsers.observe(viewLifecycleOwner, Observer { followingUsers ->
             Log.i("followingUsersList", "observeModel: $followingUsers")
+            dataBinding.followingUsers = followingUsers
             //TODO send List to view with dataBinding for passing it to make a following user list
         })
     }

@@ -8,6 +8,9 @@
         <variable
             name="user"
             type="com.harnet.sharesomephoto.model.User" />
+        <variable
+            name="followingUsers"
+            type="java.util.List" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -79,6 +82,7 @@
                     android:id="@+id/following_UserDescr"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:text="@{followingUsers.size()}"
                     style="@style/Theme.ShareSomePhoto.userStatisticField" />
 
                 <TextView
