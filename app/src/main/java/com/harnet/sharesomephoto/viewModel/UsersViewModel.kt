@@ -14,11 +14,11 @@ class UsersViewModel(application: Application) : BaseViewModel(application) {
     val mIsArticleLoadError = MutableLiveData<Boolean>()
     val mIsLoading = MutableLiveData<Boolean>()
 
-    fun refresh(followingUsersList: List<String>?) {
-        if(followingUsersList != null){
+    fun refresh(isFollowing: Boolean) {
+        if(isFollowing){
             getFollowingUsers()
         }else {
-            getUsersFromParseServer(followingUsersList)
+            getUsersFromParseServer()
         }
     }
 
@@ -33,7 +33,7 @@ class UsersViewModel(application: Application) : BaseViewModel(application) {
     }
 
     //get users from server
-    private fun getUsersFromParseServer(followingUsersList: List<String>?) {
+    private fun getUsersFromParseServer(followingUsersList: List<String>? = null) {
         val query: ParseQuery<ParseUser> = ParseUser.getQuery()
         // exclude user of this device
         query.whereNotEqualTo("username", ParseUser.getCurrentUser().username)

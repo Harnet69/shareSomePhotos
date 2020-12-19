@@ -1,7 +1,6 @@
 package com.harnet.sharesomephoto.view
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -24,7 +23,7 @@ class UsersFragment : Fragment() {
 
     private lateinit var viewModel: UsersViewModel
 
-    private var followedUsersList: List<String>? = null
+    private var isFollowing: Boolean = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -43,11 +42,10 @@ class UsersFragment : Fragment() {
         // get arguments if user came from Profile with users following list
         //TODO!!!!
         arguments?.let {
-            followedUsersList = UsersFragmentArgs.fromBundle(it).usersList?.toList()
-            Log.i("followingUsersList", "onViewCreated: $followedUsersList")
+            isFollowing = UsersFragmentArgs.fromBundle(it).isFollowing
         }
 
-        viewModel.refresh(followedUsersList)
+        viewModel.refresh(isFollowing)
 
         users_list_usersFragment.apply {
             layoutManager = LinearLayoutManager(context)
@@ -69,7 +67,7 @@ class UsersFragment : Fragment() {
             users_list_usersFragment.visibility = View.GONE
             listError_TextView_usersFragment.visibility = View.GONE
             loadingView_ProgressBar_usersFragment.visibility = View.VISIBLE
-            viewModel.refresh(followedUsersList)
+            viewModel.refresh(isFollowing)
             refreshLayout_usersFragment.isRefreshing = false // disappears little spinner on the top
         }
 

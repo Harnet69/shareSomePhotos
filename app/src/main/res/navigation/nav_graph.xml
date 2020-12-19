@@ -50,10 +50,9 @@
             android:id="@+id/action_usersFragment_to_userDetailsFragment"
             app:destination="@id/userDetailsFragment" />
         <argument
-            android:name="usersList"
-            app:argType="string[]"
-            app:nullable="true"
-            android:defaultValue="@null" />
+            android:name="isFollowing"
+            app:argType="boolean"
+            android:defaultValue="false" />
         <action
             android:id="@+id/action_usersFragment_to_profileFragment"
             app:destination="@id/profileFragment" />

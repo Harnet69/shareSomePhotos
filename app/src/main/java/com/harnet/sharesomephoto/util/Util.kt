@@ -206,7 +206,7 @@ fun goToUsers(view: View, following: ArrayList<String>?) {
         when (view.tag.toString()) {
             "profileDetailsFragment" -> {
                 val action = ProfileFragmentDirections.actionProfileFragmentToUsersFragment(
-                    following?.toTypedArray()
+                    true
                 )
                 Navigation.findNavController(view).navigate(action)
             }
