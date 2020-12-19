@@ -36,9 +36,7 @@ class UsersViewModel(application: Application) : BaseViewModel(application) {
         // if followed users
         if (followingUsersList != null) {
             //TODO think about implementing a list of matched users
-            for (userId in followingUsersList) {
-                query.whereEqualTo("objectId", userId)
-            }
+            query.whereContainedIn("objectId", followingUsersList)
         }
 
         // sort by name anciently
