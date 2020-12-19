@@ -8,6 +8,7 @@
         <variable
             name="user"
             type="com.harnet.sharesomephoto.model.User" />
+
         <variable
             name="followingUsers"
             type="java.util.List" />
@@ -25,11 +26,11 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
+            android:baselineAligned="false"
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:baselineAligned="false">
+            app:layout_constraintTop_toTopOf="parent">
 
 
             <LinearLayout
@@ -40,15 +41,15 @@
 
                 <TextView
                     android:id="@+id/feeds_UserDescr"
+                    style="@style/Theme.ShareSomePhoto.userStatisticField"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    style="@style/Theme.ShareSomePhoto.userStatisticField" />
+                    android:layout_height="wrap_content" />
 
                 <TextView
+                    style="@style/Theme.ShareSomePhoto.userStatisticLabel"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/feeds"
-                    style="@style/Theme.ShareSomePhoto.userStatisticLabel" />
+                    android:text="@string/feeds" />
 
             </LinearLayout>
 
@@ -60,15 +61,15 @@
 
                 <TextView
                     android:id="@+id/followers_UserDescr"
+                    style="@style/Theme.ShareSomePhoto.userStatisticField"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    style="@style/Theme.ShareSomePhoto.userStatisticField" />
+                    android:layout_height="wrap_content" />
 
                 <TextView
+                    style="@style/Theme.ShareSomePhoto.userStatisticLabel"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/followers"
-                    style="@style/Theme.ShareSomePhoto.userStatisticLabel" />
+                    android:text="@string/followers" />
 
             </LinearLayout>
 
@@ -80,16 +81,18 @@
 
                 <TextView
                     android:id="@+id/following_UserDescr"
+                    android:tag="profileDetailsFragment"
+                    style="@style/Theme.ShareSomePhoto.userStatisticField"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@{Integer.toString(followingUsers.size())}"
-                    style="@style/Theme.ShareSomePhoto.userStatisticField" />
+                    android:goToUsers="@{user.name}"/>
 
                 <TextView
+                    style="@style/Theme.ShareSomePhoto.userStatisticLabel"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/following"
-                    style="@style/Theme.ShareSomePhoto.userStatisticLabel" />
+                    android:text="@string/following" />
 
             </LinearLayout>
 

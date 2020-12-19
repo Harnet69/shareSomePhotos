@@ -16,6 +16,7 @@ import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.BindingAdapter
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.findFragment
 import androidx.navigation.Navigation
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.bumptech.glide.Glide
@@ -28,6 +29,7 @@ import com.bumptech.glide.request.target.Target
 import com.bumptech.glide.request.transition.Transition
 import com.google.android.material.appbar.MaterialToolbar
 import com.harnet.sharesomephoto.R
+import com.harnet.sharesomephoto.databinding.ProfileDetailsBlockBinding
 import com.harnet.sharesomephoto.service.OnSingleClickListenerService
 import com.harnet.sharesomephoto.view.FeedsFragmentDirections
 import com.harnet.sharesomephoto.view.ProfileFragmentDirections
@@ -182,6 +184,19 @@ fun goToUserDetails(view: View, username: String?) {
                         FeedsFragmentDirections.actionFeedsFragmentToUserDetailsFragment(username)
                     Navigation.findNavController(view).navigate(action2)
                 }
+            }
+        }
+    }
+}
+
+// go to Users page with users list
+@BindingAdapter("android:goToUsers")
+fun goToUsers(view: View, userName: String){
+    view.setOnClickListener {
+        when(view.tag.toString()){
+            "profileDetailsFragment" ->{
+                val action = ProfileFragmentDirections.actionProfileFragmentToUsersFragment()
+                Navigation.findNavController(view).navigate(action)
             }
         }
     }
