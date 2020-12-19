@@ -15,9 +15,9 @@ class UsersViewModel(application: Application) : BaseViewModel(application) {
     val mIsLoading = MutableLiveData<Boolean>()
 
     fun refresh(isFollowing: Boolean) {
-        if(isFollowing){
+        if (isFollowing) {
             getFollowingUsers()
-        }else {
+        } else {
             getUsersFromParseServer()
         }
     }
@@ -59,12 +59,14 @@ class UsersViewModel(application: Application) : BaseViewModel(application) {
 
                         usersFromParse.add(userToSend)
                     }
+//                    retrieveUsers(usersFromParse)
 
-                    retrieveUsers(usersFromParse)
                 } else {
                     mIsLoading.postValue(false)
                     mIsArticleLoadError.postValue(false)
                 }
+
+                retrieveUsers(usersFromParse)
             } else {
                 // switch off waiting spinner and inform user is smth wrong
                 mIsLoading.postValue(false)
@@ -76,7 +78,7 @@ class UsersViewModel(application: Application) : BaseViewModel(application) {
     }
 
     // get quantity of following users from server
-    private fun getFollowingUsers(){
+    private fun getFollowingUsers() {
         val query: ParseQuery<ParseUser> = ParseUser.getQuery()
 
         query.whereEqualTo("objectId", ParseUser.getCurrentUser().objectId)

@@ -1,5 +1,6 @@
 package com.harnet.sharesomephoto.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
@@ -13,14 +14,14 @@ class UsersAdapter(private var usersList: ArrayList<User>): RecyclerView.Adapter
     //for updating information from a backend
     fun updateUsersList(newUsersList: List<User>) {
         // get new parsed articles
-        if (newUsersList.isNotEmpty()) {
+//        if (newUsersList.isNotEmpty()) {
             val newCastedUsersList = newUsersList as ArrayList<User>
 
         usersList.clear()
         usersList.addAll(newCastedUsersList)
         //reset RecycleView and recreate a list
         notifyDataSetChanged()
-        }
+//        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UsersViewHolder {
