@@ -4,10 +4,12 @@ import android.app.Application
 import android.text.TextUtils
 import android.util.Log
 import android.util.Patterns
+import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import com.harnet.sharesomephoto.R
 import com.harnet.sharesomephoto.model.Image
 import com.harnet.sharesomephoto.model.User
+import com.harnet.sharesomephoto.util.jsonToArray
 import com.parse.*
 
 class ProfileViewModel(application: Application) : BaseViewModel(application) {
@@ -21,10 +23,12 @@ class ProfileViewModel(application: Application) : BaseViewModel(application) {
     var mErrUserNameLength = MutableLiveData<String>()
 
     var mUserFeedsCount = MutableLiveData<Int>()
+    var mUserListFollowingUsers = MutableLiveData<List<String>>()
 
     // refresh user statistic
-    fun refreshUserStats(){
+    fun refreshUserStats() {
         getQttUserFeeds()
+        getQttFollowingUsers()
     }
 
     // sign Up a new user
@@ -161,14 +165,29 @@ class ProfileViewModel(application: Application) : BaseViewModel(application) {
         mErrUserLoginOrPass.value = null
     }
 
-    // get quantity of user images from server
+    // get quantity of user feeds from server
     private fun getQttUserFeeds() {
         val query = ParseQuery<ParseObject>("Image")
         query.whereEqualTo("authorId", ParseUser.getCurrentUser().objectId)
 
         query.countInBackground(CountCallback { count, e ->
-            if(e == null){
+            if (e == null) {
                 mUserFeedsCount.value = count
+            }
+        })
+    }
+
+    // get quantity of following users from server
+    private fun getQttFollowingUsers() {
+
+        val query: ParseQuery<ParseUser> = ParseUser.getQuery()
+        query.whereEqualTo("objectId", ParseUser.getCurrentUser().objectId)
+        query.findInBackground(FindCallback { objects, e ->
+            if (e == null) {
+                if (objects.isNotEmpty()) {
+                    val followingUsers = objects[0].getJSONArray("following")
+                    mUserListFollowingUsers.value = jsonToArray(followingUsers)
+                }
             }
         })
     }

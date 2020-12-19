@@ -221,6 +221,11 @@ class ProfileFragment : Fragment(), UserParsable, ImageParsable {
         viewModel.mUserFeedsCount.observe(viewLifecycleOwner, Observer { feedsQtt ->
             feeds_UserDescr.text = feedsQtt.toString()
         })
+
+        viewModel.mUserListFollowingUsers.observe(viewLifecycleOwner, Observer { followingUsers ->
+            Log.i("followingUsersList", "observeModel: $followingUsers")
+            //TODO send List to view with dataBinding for passing it to make a following user list
+        })
     }
 
     // handle logIn signUp functionality
