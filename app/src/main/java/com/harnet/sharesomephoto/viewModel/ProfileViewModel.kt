@@ -2,12 +2,9 @@ package com.harnet.sharesomephoto.viewModel
 
 import android.app.Application
 import android.text.TextUtils
-import android.util.Log
 import android.util.Patterns
-import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import com.harnet.sharesomephoto.R
-import com.harnet.sharesomephoto.model.Image
 import com.harnet.sharesomephoto.model.User
 import com.harnet.sharesomephoto.util.jsonToArray
 import com.parse.*

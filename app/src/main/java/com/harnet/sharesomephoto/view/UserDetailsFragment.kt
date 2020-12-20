@@ -124,10 +124,8 @@ class UserDetailsFragment : Fragment() {
             if (isUserFollowing) {
                 //TODO think about another way of an access to the menuItem
                 topAppBar.menu.getItem(0).setIcon(R.drawable.ic_unfollow)
-                Toast.makeText(context, "User following", Toast.LENGTH_SHORT).show()
             } else {
                 topAppBar.menu.getItem(0).setIcon(R.drawable.ic_follow)
-                Toast.makeText(context, "User not following", Toast.LENGTH_SHORT).show()
             }
         })
     }
