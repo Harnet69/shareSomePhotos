@@ -48,9 +48,9 @@ Self-configured remote virtual machine with:
 - long click - change profile page through a preview screen (ask for the permission to access to an image library with rationale (explanation of reasons))
 - top app bar with user icon image and name
 - statistic block with counters:
-  = feeds by short click redirect to all user feeds
-  = followers --> to following users list
-  = following  --> to following users list 
+  - feeds by short click redirect to all user feeds
+  - followers --> to following users list
+  - following  --> to following users list 
 
 ### USERS LIST
 - displaying user image(or default if it haven't been added) and user name
