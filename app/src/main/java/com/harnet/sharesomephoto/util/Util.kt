@@ -110,6 +110,7 @@ fun loadImageToMaterialToolbar(materialToolbar: MaterialToolbar, imageUrl: Strin
             }
 
             override fun onLoadCleared(placeholder: Drawable?) {
+                // just for correct overriding
             }
 
         })
@@ -197,6 +198,8 @@ fun goToUserDetails(view: View, userId: String?) {
 // go to Users page with users list
 @BindingAdapter("android:goToUsers")
 fun goToUsers(view: View, following: ArrayList<String>?) {
+    // prevent from going to empty list of following
+    val isFollowing = following?.let { following.size > 0}
     // prevent a crash when two items were clicked in the same time
     fun View.setOnSingleClickListener(l: (View) -> Unit) {
         setOnClickListener(OnSingleClickListenerService(l))
@@ -205,16 +208,18 @@ fun goToUsers(view: View, following: ArrayList<String>?) {
     view.setOnSingleClickListener {
         when (view.tag.toString()) {
             "profileDetailsFragment" -> {
-                val action = ProfileFragmentDirections.actionProfileFragmentToUsersFragment(
-                    true
-                )
-                Navigation.findNavController(view).navigate(action)
+                if(isFollowing == true) {
+                    val action = ProfileFragmentDirections.actionProfileFragmentToUsersFragment(
+                        true
+                    )
+                    Navigation.findNavController(view).navigate(action)
+                }
             }
         }
     }
 }
 
-//get image from Image Library of device
+// get image from Image Library of device
 fun convertImageDataToBitmap(activity: Activity, data: Intent?): Bitmap? {
     val selectedImage = data?.data
     var bitmap: Bitmap? = null

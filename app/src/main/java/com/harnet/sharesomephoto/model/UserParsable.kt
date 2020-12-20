@@ -25,8 +25,10 @@ interface UserParsable {
         // sign in user automatically, till login functionality will be implemented
         parseUser.signUpInBackground { e ->
             if (e == null) {
+                Log.i("login", "addUser: correctly")
                 return@signUpInBackground
             } else {
+                Log.i("login", "addUser: error")
                 return@signUpInBackground
             }
         }
