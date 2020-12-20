@@ -12,6 +12,7 @@ import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.BindingAdapter
@@ -213,6 +214,8 @@ fun goToUsers(view: View, following: ArrayList<String>?) {
                         true
                     )
                     Navigation.findNavController(view).navigate(action)
+                }else{
+                    Toast.makeText(view.context, "No following yet", Toast.LENGTH_SHORT).show()
                 }
             }
         }
