@@ -15,6 +15,7 @@ import com.harnet.sharesomephoto.adapter.UserDetailsAdapter
 import com.harnet.sharesomephoto.databinding.UserDetailsFragmentBinding
 import com.harnet.sharesomephoto.model.Image
 import com.harnet.sharesomephoto.viewModel.UserDetailsViewModel
+import com.parse.ParseUser
 import kotlinx.android.synthetic.main.user_details_fragment.*
 
 class UserDetailsFragment : Fragment() {
@@ -72,6 +73,12 @@ class UserDetailsFragment : Fragment() {
                 else -> false
             }
         }
+
+        // if it's users profile - hide app bar
+        if(userId.equals(ParseUser.getCurrentUser().objectId.toString())){
+            topAppBarBlock.visibility = View.GONE
+        }
+
         observeViewModel()
     }
 
