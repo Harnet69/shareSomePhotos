@@ -2,6 +2,7 @@ package com.harnet.sharesomephoto.viewModel
 
 import android.app.Application
 import android.text.TextUtils
+import android.util.Log
 import android.util.Patterns
 import androidx.lifecycle.MutableLiveData
 import com.harnet.sharesomephoto.R
@@ -25,7 +26,8 @@ class ProfileViewModel(application: Application) : BaseViewModel(application) {
     // refresh user statistic
     fun refreshUserStats() {
         getQttUserFeeds()
-        getQttFollowingUsers()
+        getFollowingUsers()
+        getFollowers()
     }
 
     // sign Up a new user
@@ -174,8 +176,8 @@ class ProfileViewModel(application: Application) : BaseViewModel(application) {
         })
     }
 
-    // get quantity of following users from server
-    private fun getQttFollowingUsers() {
+    // get following users from server
+    private fun getFollowingUsers() {
 
         val query: ParseQuery<ParseUser> = ParseUser.getQuery()
         query.whereEqualTo("objectId", ParseUser.getCurrentUser().objectId)
@@ -185,6 +187,24 @@ class ProfileViewModel(application: Application) : BaseViewModel(application) {
                     val followingUsers = objects[0].getJSONArray("following")
                     mUserListFollowingUsers.value = jsonToArray(followingUsers)
                 }
+            }
+        })
+    }
+
+    // get followers from server
+    private fun getFollowers() {
+
+        val query: ParseQuery<ParseUser> = ParseUser.getQuery()
+        query.whereContains("following", ParseUser.getCurrentUser().objectId)
+        query.findInBackground(FindCallback { objects, e ->
+            if (e == null) {
+//                if (objects.isNotEmpty()) {
+                    for (user in objects) {
+                        Log.i("getFollowers:", "getFollowers: ${user.objectId}")
+                    }
+//                    val followers = objects[0].getJSONArray("following")
+//                    mUserListFollowingUsers.value = jsonToArray(followers)
+//                }
             }
         })
     }
