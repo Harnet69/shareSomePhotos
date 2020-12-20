@@ -22,6 +22,7 @@ class ProfileViewModel(application: Application) : BaseViewModel(application) {
 
     var mUserFeedsCount = MutableLiveData<Int>()
     var mUserListFollowingUsers = MutableLiveData<List<String>>()
+    val mFollowers = MutableLiveData<List<String>>()
 
     // refresh user statistic
     fun refreshUserStats() {
@@ -193,18 +194,20 @@ class ProfileViewModel(application: Application) : BaseViewModel(application) {
 
     // get followers from server
     private fun getFollowers() {
+        val followersId = mutableListOf<String>()
 
         val query: ParseQuery<ParseUser> = ParseUser.getQuery()
         query.whereContains("following", ParseUser.getCurrentUser().objectId)
         query.findInBackground(FindCallback { objects, e ->
             if (e == null) {
-//                if (objects.isNotEmpty()) {
+                if (objects.isNotEmpty()) {
                     for (user in objects) {
-                        Log.i("getFollowers:", "getFollowers: ${user.objectId}")
+//                        Log.i("getFollowers:", "getFollowers: ${user.objectId}")
+                        followersId.add(user.objectId)
                     }
-//                    val followers = objects[0].getJSONArray("following")
-//                    mUserListFollowingUsers.value = jsonToArray(followers)
-//                }
+
+                    mFollowers.value = followersId
+                }
             }
         })
     }

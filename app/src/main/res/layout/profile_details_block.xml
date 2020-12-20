@@ -10,6 +10,10 @@
             type="com.harnet.sharesomephoto.model.User" />
 
         <variable
+            name="followers"
+            type="java.util.ArrayList&lt;String>" />
+
+        <variable
             name="following"
             type="java.util.ArrayList&lt;String>" />
     </data>
@@ -66,7 +70,8 @@
                     android:id="@+id/followers_UserDescr"
                     style="@style/Theme.ShareSomePhoto.userStatisticField"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:text="@{Integer.toString(followers.size())}"/>
 
                 <TextView
                     style="@style/Theme.ShareSomePhoto.userStatisticLabel"

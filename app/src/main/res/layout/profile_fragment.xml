@@ -10,6 +10,10 @@
             type="com.harnet.sharesomephoto.model.User" />
 
         <variable
+            name="followers"
+            type="java.util.ArrayList&lt;String>" />
+
+        <variable
             name="following"
             type="java.util.ArrayList&lt;String>" />
     </data>
@@ -94,7 +98,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         app:user="@{user}"
-                        app:following="@{following}"/>
+                        app:following="@{following}"
+                        app:followers="@{followers}"/>
 
                 </FrameLayout>
 

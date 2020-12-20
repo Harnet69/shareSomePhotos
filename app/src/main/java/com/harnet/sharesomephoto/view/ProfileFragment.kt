@@ -30,6 +30,8 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.profile_details_block.*
 import kotlinx.android.synthetic.main.profile_fragment.*
 import kotlinx.android.synthetic.main.profile_login_block.*
+import java.util.*
+import kotlin.collections.ArrayList
 
 class ProfileFragment : Fragment(), UserParsable, ImageParsable {
     private lateinit var viewModel: ProfileViewModel
@@ -224,6 +226,11 @@ class ProfileFragment : Fragment(), UserParsable, ImageParsable {
 
         viewModel.mUserListFollowingUsers.observe(viewLifecycleOwner, Observer { followingUsers ->
             dataBinding.following = followingUsers as ArrayList<String>
+        })
+
+        viewModel.mFollowers.observe(viewLifecycleOwner, Observer { followersId ->
+            //TODO bind followers id list
+            dataBinding.followers = followersId as java.util.ArrayList<String>
         })
     }
 
