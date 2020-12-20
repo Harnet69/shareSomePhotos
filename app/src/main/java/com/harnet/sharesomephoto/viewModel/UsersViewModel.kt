@@ -17,6 +17,7 @@ class UsersViewModel(application: Application) : BaseViewModel(application) {
     fun refresh(isFollowing: Boolean) {
         if (isFollowing) {
             getFollowingUsers()
+//            getFollowers()
         } else {
             getUsersFromParseServer()
         }
@@ -77,7 +78,7 @@ class UsersViewModel(application: Application) : BaseViewModel(application) {
         })
     }
 
-    // get quantity of following users from server
+    // get following users from server
     private fun getFollowingUsers() {
         val query: ParseQuery<ParseUser> = ParseUser.getQuery()
 
@@ -87,6 +88,25 @@ class UsersViewModel(application: Application) : BaseViewModel(application) {
                 if (objects.isNotEmpty()) {
                     val followingUsers = objects[0].getJSONArray("following")
                     getUsersFromParseServer(jsonToArray(followingUsers))
+                }
+            }
+        })
+    }
+
+    // get followers from server
+    private fun getFollowers() {
+        val followersId = mutableListOf<String>()
+
+        val query: ParseQuery<ParseUser> = ParseUser.getQuery()
+        query.whereContains("following", ParseUser.getCurrentUser().objectId)
+        query.findInBackground(FindCallback { objects, e ->
+            if (e == null) {
+                if (objects.isNotEmpty()) {
+                    for (user in objects) {
+                        followersId.add(user.objectId)
+                    }
+
+                    getUsersFromParseServer(followersId)
                 }
             }
         })
