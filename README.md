@@ -8,6 +8,7 @@ Photo service for sharing and storing images. According to Google plans to make 
 
 ## TECHNOLOGIES
 - Kotlin
+- Google Material Design
 - Coroutines instead AsyncTask
 - Fragments
 - Navigation
@@ -26,39 +27,60 @@ Self-configured remote virtual machine with:
 
 ## ANOTHER APP FEATURES
 - works both in a portrait and a landscape orientation as well
+- bottom navigation pannel
+- all lists are prevented against crash by clicking to 2+ items at the same time
 
-### PROFILE SCREEN
-- Focus sets to user name field automatically 
-- Two modes switcher(Login and Signup)
+### SIGNUP/LOGIN SCREEN
+- Two modes switcher(SignUp an LoginIn)
+- Hiding Email field in Login mode
 - Click to a free screen place makes keyboard disappear
-- Prevention against empty or white spaces consisting data
-- Prevention against duplicated accounts
+- Animated floating hints for user inputs 
+- Switching between input fields by 'NEXT' keyboard button
+- more than 10 characters usernames validation
+- Prevention against empty or white spaces consisting user data
 - E-mail's format validation
-- When user filled the login form and push DONE button, a data is sending automatically without clicking on sending button
-- Email field hides in Login mode
-- Adding an image ask for the permission to access to an image library, with rationale (explanation of reasons)
-- preview Profile's image by a short click on it
-- redirecting to the saving image preview screen by a long click
+- User with the same username existence validation
+- Error validation messages under an error field
+- Keyboard 'DONE' button sends data without clicking on the sending button
+
+### PROFILE SCREEN 
+- short click to a Profile picture redirect to image preview screen 
+- long click - change profile page through a preview screen (ask for the permission to access to an image library with rationale (explanation of reasons))
+- top app bar with user icon image and name
+- statistic block with counters:
+  - feeds by short click redirect to all user feeds
+  - followers --> to following users list
+  - following  --> to following users list 
 
 ### USERS LIST
-- displaying user image(if it was added) and name
+- displaying user image(or default if it haven't been added) and user name
+- by a short click redirect to the user details screen 
 - owner of the device haven't shown in users list
 - separation line between users items
 - spinner for loading
 - list refreshes by swiping down
-- back arrow to return
+- error message is shown if something goes wrong
 
-### FEEDS LIST
-- displaying not a users profile pictures with the author name
-- floating button to adding new image to feeds
+### USER DETAILS
+- user images gallery
+- short click on image redirect to an image viewer page for full screen view
+- top app bar with 
+  = thumbnail icon of user profile image
+  = user's name
+  = follow/unfollow icon
+
+### FEEDS
+- displaying users feeds with an image and the author name
+- short click to an author name redirect to the user profile page
+- short click on an image redirect to an image viewer page
+- floating button add a new feed(with asking permission if it haven't been granted already)
 - images load dynamically
 - feeds sorted by descending order by its date of adding
 - waiting spinner for better UX
-- preventing against clicking to 2+ images at the same time
 
 ### IMAGE VIEWER PAGE
-- zooming image
-- share, comment and delete buttons
+- zooming image by tapping or pinching
+- share, comment and delete buttons(last two not implemented yet)
 - error message if something goes wrong with loading or saving
 
 ### IMAGE PAGE
