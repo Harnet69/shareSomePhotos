@@ -38,7 +38,9 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:tag="profileDetailsFragment"
+                android:goToUserDetails="@{user.userId}">
 
                 <TextView
                     android:id="@+id/feeds_UserDescr"
@@ -64,7 +66,7 @@
                     android:id="@+id/followers_UserDescr"
                     style="@style/Theme.ShareSomePhoto.userStatisticField"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"/>
 
                 <TextView
                     style="@style/Theme.ShareSomePhoto.userStatisticLabel"

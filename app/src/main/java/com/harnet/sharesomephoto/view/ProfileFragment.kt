@@ -149,6 +149,7 @@ class ProfileFragment : Fragment(), UserParsable, ImageParsable {
                         )
                     userForBinding.profileImgUrl =
                         ParseUser.getCurrentUser().get("profileImg").toString()
+                    userForBinding.userId = ParseUser.getCurrentUser().objectId
 
                     // get and bind user Profile image
                     dataBinding.user = userForBinding

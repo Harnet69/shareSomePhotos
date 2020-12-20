@@ -189,6 +189,10 @@ fun goToUserDetails(view: View, userId: String?) {
                         FeedsFragmentDirections.actionFeedsFragmentToProfileFragment()
                     }
                 }
+
+                "profileDetailsFragment" -> {
+                    action = ProfileFragmentDirections.actionProfileFragmentToUserDetailsFragment(userId)
+                }
             }
 
             action?.let { Navigation.findNavController(view).navigate(action) }
