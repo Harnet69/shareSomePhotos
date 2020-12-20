@@ -8,7 +8,6 @@ import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.provider.MediaStore
-import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -202,9 +201,9 @@ fun goToUserDetails(view: View, userId: String?) {
 
 // go to Users page with users list
 @BindingAdapter("android:goToUsers")
-fun goToUsers(view: View, following: ArrayList<String>?) {
+fun goToUsers(view: View, follow: ArrayList<String>?) {
     // prevent from going to empty list of following
-    val isFollowing = following?.let { following.size > 0}
+    val isFollow = follow?.let { follow.size > 0}
     // prevent a crash when two items were clicked in the same time
     fun View.setOnSingleClickListener(l: (View) -> Unit) {
         setOnClickListener(OnSingleClickListenerService(l))
@@ -212,14 +211,25 @@ fun goToUsers(view: View, following: ArrayList<String>?) {
 
     view.setOnSingleClickListener {
         when (view.tag.toString()) {
-            "profileDetailsFragment" -> {
-                if(isFollowing == true) {
+            "profileDetailsFragmentFollowing" -> {
+                if(isFollow == true) {
                     val action = ProfileFragmentDirections.actionProfileFragmentToUsersFragment(
-                        true
+                        "following"
                     )
                     Navigation.findNavController(view).navigate(action)
                 }else{
                     Toast.makeText(view.context, "No following yet", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            "profileDetailsFragmentFollowers" -> {
+                if(isFollow == true) {
+                    val action = ProfileFragmentDirections.actionProfileFragmentToUsersFragment(
+                        "followers"
+                    )
+                    Navigation.findNavController(view).navigate(action)
+                }else{
+                    Toast.makeText(view.context, "Any followers yet", Toast.LENGTH_SHORT).show()
                 }
             }
         }

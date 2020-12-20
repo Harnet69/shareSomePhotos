@@ -105,7 +105,7 @@ class MainActivity : AppCompatActivity() {
     private fun goToUsers() {
         fragments.view?.let {
             Navigation.findNavController(it)
-                .navigate(FeedsFragmentDirections.actionFeedsFragmentToUsersFragment())
+                .navigate(FeedsFragmentDirections.actionFeedsFragmentToUsersFragment(null))
         }
     }
 

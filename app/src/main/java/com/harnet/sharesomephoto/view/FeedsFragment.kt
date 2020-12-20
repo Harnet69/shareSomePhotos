@@ -197,7 +197,7 @@ class FeedsFragment : Fragment() {
     private fun goToUsers() {
         view?.let {
             Navigation.findNavController(it)
-                .navigate(FeedsFragmentDirections.actionFeedsFragmentToUsersFragment())
+                .navigate(FeedsFragmentDirections.actionFeedsFragmentToUsersFragment(null))
         }
     }
 

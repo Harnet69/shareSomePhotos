@@ -14,12 +14,16 @@ class UsersViewModel(application: Application) : BaseViewModel(application) {
     val mIsArticleLoadError = MutableLiveData<Boolean>()
     val mIsLoading = MutableLiveData<Boolean>()
 
-    fun refresh(isFollowing: Boolean) {
-        if (isFollowing) {
-            getFollowingUsers()
-//            getFollowers()
-        } else {
-            getUsersFromParseServer()
+    fun refresh(follow: String?) {
+        when (follow) {
+            "following" -> {
+                getFollowingUsers()
+            }
+            "followers" -> {
+                getFollowers()
+            }
+            else ->
+                getUsersFromParseServer()
         }
     }
 
@@ -105,7 +109,6 @@ class UsersViewModel(application: Application) : BaseViewModel(application) {
                     for (user in objects) {
                         followersId.add(user.objectId)
                     }
-
                     getUsersFromParseServer(followersId)
                 }
             }
