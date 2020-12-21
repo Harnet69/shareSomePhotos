@@ -45,8 +45,10 @@ Self-configured remote virtual machine with:
 - Click to a free screen place makes keyboard disappear
 - Animated floating hints for user inputs 
 - Switching between input fields by 'NEXT' keyboard button
-- more than 10 characters usernames validation
+- More than 10 characters usernames validation with signs counter
+- 'Clear a field' icon on an Username field
 - Prevention against empty or white spaces consisting user data
+- 'Hide/reveal' icon on an Password field
 - E-mail's format validation
 - User with the same username existence validation
 - Error validation messages under an error field
