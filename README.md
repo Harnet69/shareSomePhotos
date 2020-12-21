@@ -6,6 +6,15 @@ Photo service for sharing and storing images. According to Google plans to make 
 ## Application video:
 ![Game process](https://github.com/Harnet69/shareSomePhotos/blob/main/app/GitHubMediaFiles/video.gif)
 
+## Application installation:
+- download app from 
+![QR](https://github.com/Harnet69/shareSomePhotos/blob/master/app/GitHubMediaFile/apk_QR.png)
+- download .apk [ShareSomePhoto v.1.1 installer](https://drive.google.com/file/d/1Dc3stkSjsX5LR1Ptn5v1ssLiKGSRLIDm/view?usp=sharing) and run it on Android phone
+- clone a project code from this repo to your computer, and run it via Android studio or another Android emulator
+
+## Application pdf presentation: 
+[DevNewsRadar presentation]()
+
 ## TECHNOLOGIES
 - Kotlin
 - Google Material Design
