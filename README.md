@@ -13,7 +13,7 @@ Photo service for sharing and storing images. According to Google plans to make 
 - clone a project code from this repo to your computer and run it via Android studio or another Android emulator
 
 ## Application pdf presentation: 
-[ShareSomePhoto presentation]()
+[ShareSomePhoto presentation](https://drive.google.com/file/d/1gHoc-8aolJ_s9X5ewrcGCr2Rag0gSDAY/view?usp=sharing)
 
 ## TECHNOLOGIES
 - Kotlin
