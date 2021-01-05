@@ -5,9 +5,12 @@ import android.content.Context
 import android.content.Intent
 import android.content.res.Resources
 import android.graphics.Bitmap
+import android.graphics.ImageDecoder
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
+import android.os.Build
 import android.provider.MediaStore
+import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -29,12 +32,12 @@ import com.bumptech.glide.request.target.Target
 import com.bumptech.glide.request.transition.Transition
 import com.google.android.material.appbar.MaterialToolbar
 import com.harnet.sharesomephoto.R
+import com.harnet.sharesomephoto.model.Fragments
 import com.harnet.sharesomephoto.service.OnSingleClickListenerService
 import com.harnet.sharesomephoto.view.FeedsFragmentDirections
 import com.harnet.sharesomephoto.view.ProfileFragmentDirections
 import com.harnet.sharesomephoto.view.UserDetailsFragmentDirections
 import com.harnet.sharesomephoto.view.UsersFragmentDirections
-import com.parse.FindCallback
 import com.parse.ParseQuery
 import com.parse.ParseUser
 import org.json.JSONArray
@@ -140,17 +143,18 @@ fun goToImagePage(view: ImageView, imageUrl: String?) {
     }
 
     view.setOnSingleClickListener { imageView ->
+        Log.i("RedirectToImg", "goToImagePage: " + Fragments.PROFILE.name)
         imageUrl?.let { url ->
             when (imageView.tag.toString()) {
-                "profileFragment" -> {
+                Fragments.PROFILE.fragmentName -> {
                     val action = ProfileFragmentDirections.actionProfileFragmentToImageFragment(url)
                     Navigation.findNavController(imageView).navigate(action)
                 }
-                "imageFragment" -> {
+                Fragments.IMAGE.fragmentName-> {
                     val action = FeedsFragmentDirections.actionFeedsFragmentToImageFragment(url)
                     Navigation.findNavController(imageView).navigate(action)
                 }
-                "userDetailsFragment" -> {
+                Fragments.USER_DETAILS.fragmentName -> {
                     val action =
                         UserDetailsFragmentDirections.actionUserDetailsFragmentToImageFragment(url)
                     Navigation.findNavController(imageView).navigate(action)
@@ -174,14 +178,14 @@ fun goToUserDetails(view: View, userId: String?) {
             var action: NavDirections? = null
 
             when (view.tag.toString()) {
-                "usersFragment" -> {
+                Fragments.USERS.fragmentName-> {
                     action = if (!isUserProfile) {
                         UsersFragmentDirections.actionUsersFragmentToUserDetailsFragment(userId)
                     }else{
                         UsersFragmentDirections.actionUsersFragmentToProfileFragment()
                     }
                 }
-                "feedsFragment" -> {
+                Fragments.FEEDS.fragmentName-> {
                     action = if (!isUserProfile) {
                         FeedsFragmentDirections.actionFeedsFragmentToUserDetailsFragment(userId)
                     }else{
@@ -189,7 +193,7 @@ fun goToUserDetails(view: View, userId: String?) {
                     }
                 }
 
-                "profileDetailsFragment" -> {
+                Fragments.PROFILE_DETAILS.fragmentName -> {
                     action = ProfileFragmentDirections.actionProfileFragmentToUserDetailsFragment(userId)
                 }
             }
@@ -242,7 +246,18 @@ fun convertImageDataToBitmap(activity: Activity, data: Intent?): Bitmap? {
     var bitmap: Bitmap? = null
 
     try {
-        bitmap = MediaStore.Images.Media.getBitmap(activity.contentResolver, selectedImage)
+        bitmap = if(Build.VERSION.SDK_INT < 28){
+            @Suppress("DEPRECATION")
+            MediaStore.Images.Media.getBitmap(activity.contentResolver, selectedImage)
+        }else{
+            val source = selectedImage?.let {
+                ImageDecoder.createSource(activity.contentResolver,
+                    it
+                )
+            }
+            source?.let { ImageDecoder.decodeBitmap(it) }
+        }
+
     } catch (e: Exception) {
         e.printStackTrace()
     }
@@ -254,7 +269,7 @@ fun loadUserNameById(textView: TextView, userId: String) {
     val query: ParseQuery<ParseUser> = ParseUser.getQuery()
     // exclude user of this device
     query.whereEqualTo("objectId", userId)
-    query.findInBackground(FindCallback { objects, e ->
+    query.findInBackground{ objects, e ->
         if (e == null) {
             if (objects.isNotEmpty()) {
                 textView.text = objects[0].username
@@ -262,7 +277,7 @@ fun loadUserNameById(textView: TextView, userId: String) {
         } else {
             e.printStackTrace()
         }
-    })
+    }
 }
 
 // convert json to array
@@ -271,6 +286,7 @@ fun <T> jsonToArray(jArray: JSONArray?): MutableList<T> {
 
     if (jArray != null) {
         for (i in 0 until jArray.length()) {
+            @Suppress("UNCHECKED_CAST")
             convertedArray.add(jArray[i] as T)
         }
     }

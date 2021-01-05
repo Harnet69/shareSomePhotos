@@ -11,7 +11,7 @@ import com.harnet.sharesomephoto.view.ProfileFragment
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 
-abstract class PermissionService(val activity: Activity, val fragment: Fragment) {
+abstract class PermissionService(private val activity: Activity, val fragment: Fragment) {
     protected open val permissionCode: Int = 0
     protected open val permissionType = ""
     protected open val rationaleTitle = ""
@@ -84,12 +84,12 @@ abstract class PermissionService(val activity: Activity, val fragment: Fragment)
         when (val activeFragment: Fragment? =
             fragment.childFragmentManager.primaryNavigationFragment) {
             is ProfileFragment -> {
-                (activeFragment as ProfileFragment).onPermissionsResult(
+                (activeFragment).onPermissionsResult(
                     permissionGranted
                 )
             }
             is FeedsFragment -> {
-                (activeFragment as FeedsFragment).onPermissionsResult(
+                (activeFragment).onPermissionsResult(
                     permissionGranted
                 )
             }
@@ -98,7 +98,7 @@ abstract class PermissionService(val activity: Activity, val fragment: Fragment)
 
     //trim permission name by regex and return a permission message
     private fun showPermissionToast(context: Context, inputStr: String, permissionGranted: Boolean) {
-        var toastMsg = ""
+        val toastMsg: String
         var s: String? = ""
         val p: Pattern = Pattern.compile("android.permission.(.*)")
         val m: Matcher = p.matcher(inputStr)
@@ -106,10 +106,10 @@ abstract class PermissionService(val activity: Activity, val fragment: Fragment)
             s = m.group(1)
         }
 
-        if (permissionGranted) {
-            toastMsg = "Permission $s was granted"
+        toastMsg = if (permissionGranted) {
+            "Permission $s was granted"
         } else {
-            toastMsg = "Permission $s wasn't granted"
+            "Permission $s wasn't granted"
         }
 
         Toast.makeText(context, toastMsg, Toast.LENGTH_SHORT).show()
