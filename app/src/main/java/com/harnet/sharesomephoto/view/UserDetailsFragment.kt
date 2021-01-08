@@ -1,5 +1,6 @@
 package com.harnet.sharesomephoto.view
 
+import android.app.Activity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +10,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.harnet.sharesomephoto.R
 import com.harnet.sharesomephoto.adapter.UserDetailsAdapter
@@ -68,6 +70,10 @@ class UserDetailsFragment : Fragment() {
                 R.id.send_message_menuItem -> {
                     // Handle send message press
                     Toast.makeText(context, "Send message", Toast.LENGTH_SHORT).show()
+                    userId?.let {
+                        val action = UserDetailsFragmentDirections.actionUserDetailsFragmentToChatFragment(it)
+                        Navigation.findNavController(userGallery_userDescrFragment).navigate(action)
+                    }
                     true
                 }
                 else -> false

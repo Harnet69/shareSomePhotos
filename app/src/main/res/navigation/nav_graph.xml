@@ -80,6 +80,9 @@
         <action
             android:id="@+id/action_userDetailsFragment_to_imageFragment"
             app:destination="@id/imageFragment" />
+        <action
+            android:id="@+id/action_userDetailsFragment_to_chatFragment"
+            app:destination="@id/chatFragment" />
     </fragment>
     <fragment
         android:id="@+id/imagePreviewFragment"
@@ -98,5 +101,14 @@
         <action
             android:id="@+id/action_imagePreviewFragment_to_profileFragment"
             app:destination="@id/profileFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/chatFragment"
+        android:name="com.harnet.sharesomephoto.ChatFragment"
+        android:label="chat_fragment"
+        tools:layout="@layout/chat_fragment" >
+        <argument
+            android:name="userId"
+            app:argType="string" />
     </fragment>
 </navigation>
