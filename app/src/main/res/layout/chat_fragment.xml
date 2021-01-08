@@ -36,7 +36,7 @@
                 android:layout_width="match_parent"
                 app:menu="@menu/user_details_menu"
                 android:layout_height="?attr/actionBarSize"
-                app:title="@{user.name + `'s chat`}"
+                app:title="@{`Chat with ` + user.name}"
                 app:navigationIcon="@drawable/ic_user_photo"
                 android:loadImageToMaterialToolbar="@{user.profileImgUrl}"/>
 
