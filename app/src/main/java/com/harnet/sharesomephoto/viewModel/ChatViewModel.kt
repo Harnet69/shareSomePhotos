@@ -1,5 +1,6 @@
 package com.harnet.sharesomephoto.viewModel
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.harnet.sharesomephoto.model.User
@@ -12,11 +13,11 @@ class ChatViewModel : ViewModel() {
     val mUser = MutableLiveData<User>()
     val mIsUserLoadError = MutableLiveData<Boolean>()
 
-    fun refresh(userId: String){
-        getUserById(userId)
+    fun refresh(){
+        Log.i("RefreshChat", "refresh: ")
     }
 
-    private fun getUserById(userId: String) {
+    fun getUserById(userId: String) {
         val query: ParseQuery<ParseUser> = ParseUser.getQuery()
         query.whereEqualTo("objectId", userId)
         query.findInBackground(FindCallback { objects, e ->

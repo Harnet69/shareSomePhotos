@@ -12,6 +12,8 @@ import androidx.lifecycle.Observer
 import com.harnet.sharesomephoto.R
 import com.harnet.sharesomephoto.databinding.ChatFragmentBinding
 import com.harnet.sharesomephoto.viewModel.ChatViewModel
+import kotlinx.android.synthetic.main.chat_fragment.*
+import kotlinx.android.synthetic.main.users_fragment.*
 
 class ChatFragment : Fragment() {
     private lateinit var viewModel: ChatViewModel
@@ -39,7 +41,17 @@ class ChatFragment : Fragment() {
 
         observeModel()
 
-        viewModel.refresh(userId)
+        // Swiper refresh listener(screen refreshing process)
+        refreshLayout_chatFragment.setOnRefreshListener {
+            chat_list.visibility = View.GONE
+            listError_TextView_chatFragment.visibility = View.GONE
+            loadingView_ProgressBar_chatFragment.visibility = View.VISIBLE
+            viewModel.refresh()
+
+            refreshLayout_chatFragment.isRefreshing = false // disappears little spinner on the top
+        }
+
+        viewModel.getUserById(userId)
     }
 
     private fun observeModel() {
