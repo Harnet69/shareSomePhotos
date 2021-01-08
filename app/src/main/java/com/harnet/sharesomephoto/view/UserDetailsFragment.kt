@@ -69,7 +69,6 @@ class UserDetailsFragment : Fragment() {
                 }
                 R.id.send_message_menuItem -> {
                     // Handle send message press
-                    Toast.makeText(context, "Send message", Toast.LENGTH_SHORT).show()
                     userId?.let {
                         val action = UserDetailsFragmentDirections.actionUserDetailsFragmentToChatFragment(it)
                         Navigation.findNavController(userGallery_userDescrFragment).navigate(action)
