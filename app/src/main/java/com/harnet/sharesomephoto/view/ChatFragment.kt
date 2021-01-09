@@ -2,8 +2,6 @@ package com.harnet.sharesomephoto.view
 
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import android.os.Message
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -17,8 +15,6 @@ import com.harnet.sharesomephoto.databinding.ChatFragmentBinding
 import com.harnet.sharesomephoto.viewModel.ChatViewModel
 import com.parse.ParseUser
 import kotlinx.android.synthetic.main.chat_fragment.*
-import kotlinx.android.synthetic.main.users_fragment.*
-import java.util.stream.Collectors
 
 class ChatFragment : Fragment() {
     private lateinit var viewModel: ChatViewModel
@@ -73,10 +69,8 @@ class ChatFragment : Fragment() {
             if (!chatList.isNullOrEmpty()) {
                 loadingView_ProgressBar_chatFragment.visibility = View.INVISIBLE
                 chat_list.visibility = View.VISIBLE
+
                 //TODO update ListView Adapter
-//                for(msg in chatList){
-//
-//                }
                 val chatListMsgs = arrayListOf<String>()
 
                 for (msg in chatList) {
@@ -97,10 +91,14 @@ class ChatFragment : Fragment() {
             }
         })
 
-        viewModel.mIsUserLoadError.observe(viewLifecycleOwner, Observer { e ->
+        viewModel.mIsLoadingError.observe(viewLifecycleOwner, Observer { e ->
             if(e){
                 listError_TextView_chatFragment.visibility = View.VISIBLE
             }
+        })
+
+        viewModel.mIsMsgSentMsg.observe(viewLifecycleOwner, Observer {
+            Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
         })
     }
 }

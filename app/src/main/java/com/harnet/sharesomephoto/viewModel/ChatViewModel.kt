@@ -1,23 +1,24 @@
 package com.harnet.sharesomephoto.viewModel
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import com.harnet.sharesomephoto.model.Message
 import com.harnet.sharesomephoto.model.User
 import com.parse.FindCallback
+import com.parse.ParseObject
 import com.parse.ParseQuery
 import com.parse.ParseUser
+import com.parse.SaveCallback
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class ChatViewModel(application: Application) : BaseViewModel(application) {
 
     val mUser = MutableLiveData<User>()
-    val mIsUserLoadError = MutableLiveData<Boolean>()
+    val mIsLoadingError = MutableLiveData<Boolean>()
     val mIsLoading = MutableLiveData<Boolean>()
     val mChatList = MutableLiveData<List<Message>>()
+    val mIsMsgSentMsg = MutableLiveData<String>()
 
     fun refresh() {
         getChatList()
@@ -35,11 +36,27 @@ class ChatViewModel(application: Application) : BaseViewModel(application) {
                     mUser.value = userForBind
                 } else {
                     mIsLoading.value = false
-                    mIsUserLoadError.postValue(true)
+                    mIsLoadingError.postValue(true)
                 }
             } else {
                 mIsLoading.postValue(false)
-                mIsUserLoadError.postValue(true)
+                mIsLoadingError.postValue(true)
+            }
+        })
+    }
+
+    fun sendMessage(msg: Message, recipientId: String){
+        val message = ParseObject("Message")
+        message.put("sender", ParseUser.getCurrentUser().objectId)
+        message.put("recipient", recipientId)
+        message.put("text", msg)
+
+        message.saveInBackground(SaveCallback {e ->
+            if(e == null){
+                mIsMsgSentMsg.value = "Message sent"
+            }else{
+                //TODO something goes wrong
+                mIsMsgSentMsg.value = e.localizedMessage
             }
         })
     }
