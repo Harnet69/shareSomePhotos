@@ -1,4 +1,8 @@
 package com.harnet.sharesomephoto.model
 
-class Message {
-}
+data class Message(
+    val senderId: String,
+    val recipientId: String,
+    val text: String,
+    val createAt: String? = null
+)

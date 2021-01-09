@@ -48,8 +48,8 @@ class ChatViewModel(application: Application) : BaseViewModel(application) {
         launch {
             delay(3000L)
             mIsLoading.value = false
-            mChatList.value = listOf<Message>(Message())
-            Log.i("RefreshChat", "refresh: ")
+            mChatList.value = listOf<Message>(Message("123","123", "Hello", "1245"))
+
         }
     }
 }
