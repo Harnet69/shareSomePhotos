@@ -20,10 +20,6 @@ class ChatViewModel(application: Application) : BaseViewModel(application) {
     val mChatList = MutableLiveData<List<Message>>()
     val mIsMsgSentMsg = MutableLiveData<String>()
 
-    fun refresh() {
-        getChatList()
-    }
-
     fun getUserById(userId: String) {
         val query: ParseQuery<ParseUser> = ParseUser.getQuery()
         query.whereEqualTo("objectId", userId)
@@ -61,15 +57,51 @@ class ChatViewModel(application: Application) : BaseViewModel(application) {
         })
     }
 
-    private fun getChatList() {
+    fun getChatList(userId: String) {
         launch {
-            delay(2000L)
-            mIsLoading.value = false
-            mChatList.value = listOf<Message>(
-                Message("123", "123", "Hello", "1245"),
-                Message(ParseUser.getCurrentUser().objectId, "123", "Good bye!", "2345")
-            )
+//            delay(2000L)
+//            mIsLoading.value = false
+//            mChatList.value = listOf<Message>(
+//                Message("123", "123", "Hello"),
+//                Message(ParseUser.getCurrentUser().objectId, "123", "Good bye!")
+//            )
+            //TODO implement getting messages from server
+            val query1 = ParseQuery<ParseObject>("Message")
+            query1.whereEqualTo("sender", ParseUser.getCurrentUser().objectId)
+            query1.whereEqualTo("recipient", userId)
 
+            val query2 = ParseQuery<ParseObject>("Message")
+            query2.whereEqualTo("sender", userId)
+            query2.whereEqualTo("recipient", ParseUser.getCurrentUser().objectId)
+
+            val queries = arrayListOf<ParseQuery<ParseObject>>()
+            queries.add(query1)
+            queries.add(query2)
+
+            val query = ParseQuery.or(queries)
+            query.orderByAscending("createdAt")
+
+            query.findInBackground(FindCallback { objects, e ->
+                if(e == null){
+                    if(objects.isNotEmpty()){
+                        val msgsList = arrayListOf<Message>()
+
+                        for(i in objects.indices){
+                            val msg = objects[i]
+                            val msgSender = msg.get("sender").toString()
+                            val msgRecipient = msg.get("recipient").toString()
+                            val msgText = msg.get("text").toString()
+                            val msgCreatedAt = msg.get("createdAt")
+                            // TODO think about Date format
+                            msgsList.add(Message(msgSender, msgRecipient, msgText))
+                        }
+
+                        mChatList.value = msgsList
+                    }
+                }else{
+                    mIsLoadingError.value = true
+                }
+            })
         }
     }
 }

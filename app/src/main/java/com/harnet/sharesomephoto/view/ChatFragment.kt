@@ -50,7 +50,7 @@ class ChatFragment : Fragment() {
             chat_list.visibility = View.GONE
             listError_TextView_chatFragment.visibility = View.GONE
             loadingView_ProgressBar_chatFragment.visibility = View.VISIBLE
-            viewModel.refresh()
+            viewModel.getChatList(userId)
 
             refreshLayout_chatFragment.isRefreshing = false // disappears little spinner on the top
         }
@@ -59,7 +59,7 @@ class ChatFragment : Fragment() {
 
         //TODO Get text from Input text view
         sendingMsg(userId)
-        viewModel.refresh()
+        viewModel.getChatList(userId)
     }
 
     private fun observeModel() {
