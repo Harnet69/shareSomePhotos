@@ -59,13 +59,6 @@ class ChatViewModel(application: Application) : BaseViewModel(application) {
 
     fun getChatList(userId: String) {
         launch {
-//            delay(2000L)
-//            mIsLoading.value = false
-//            mChatList.value = listOf<Message>(
-//                Message("123", "123", "Hello"),
-//                Message(ParseUser.getCurrentUser().objectId, "123", "Good bye!")
-//            )
-            //TODO implement getting messages from server
             val query1 = ParseQuery<ParseObject>("Message")
             query1.whereEqualTo("sender", ParseUser.getCurrentUser().objectId)
             query1.whereEqualTo("recipient", userId)
@@ -97,6 +90,8 @@ class ChatViewModel(application: Application) : BaseViewModel(application) {
                         }
 
                         mChatList.value = msgsList
+                    }else{
+                        mIsLoading.value = false
                     }
                 }else{
                     mIsLoadingError.value = true

@@ -22,9 +22,6 @@ class ChatFragment : Fragment() {
 
     private lateinit var dataBinding: ChatFragmentBinding
 
-//    private lateinit var chatListAdapter: ArrayAdapter<String>
-
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -92,6 +89,14 @@ class ChatFragment : Fragment() {
                     )
                 }
                 chat_list.adapter = chatListAdapter
+            }
+        })
+
+        viewModel.mIsLoading.observe(viewLifecycleOwner, Observer {
+            if(it){
+                loadingView_ProgressBar_chatFragment.visibility = View.VISIBLE
+            }else{
+                loadingView_ProgressBar_chatFragment.visibility = View.INVISIBLE
             }
         })
 
