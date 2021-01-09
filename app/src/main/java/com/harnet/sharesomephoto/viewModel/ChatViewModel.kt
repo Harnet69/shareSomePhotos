@@ -19,7 +19,7 @@ class ChatViewModel(application: Application) : BaseViewModel(application) {
     val mIsLoading = MutableLiveData<Boolean>()
     val mChatList = MutableLiveData<List<Message>>()
 
-    fun refresh(){
+    fun refresh() {
         getChatList()
     }
 
@@ -44,11 +44,14 @@ class ChatViewModel(application: Application) : BaseViewModel(application) {
         })
     }
 
-    private fun getChatList(){
+    private fun getChatList() {
         launch {
-            delay(3000L)
+            delay(2000L)
             mIsLoading.value = false
-            mChatList.value = listOf<Message>(Message("123","123", "Hello", "1245"))
+            mChatList.value = listOf<Message>(
+                Message("123", "123", "Hello", "1245"),
+                Message(ParseUser.getCurrentUser().objectId, "123", "Good bye!", "2345")
+            )
 
         }
     }

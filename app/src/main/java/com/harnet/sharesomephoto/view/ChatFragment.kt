@@ -3,6 +3,7 @@ package com.harnet.sharesomephoto.view
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.os.Message
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -69,21 +70,30 @@ class ChatFragment : Fragment() {
         })
 
         viewModel.mChatList.observe(viewLifecycleOwner, Observer { chatList ->
-            if(!chatList.isNullOrEmpty()){
+            if (!chatList.isNullOrEmpty()) {
                 loadingView_ProgressBar_chatFragment.visibility = View.INVISIBLE
                 chat_list.visibility = View.VISIBLE
                 //TODO update ListView Adapter
 //                for(msg in chatList){
 //
 //                }
-                val chatListMsgs: List<String> = chatList.stream()
-                    .map {
-                            "> " + it.text
-                    }
-                    .collect(Collectors.toList())
+                val chatListMsgs = arrayListOf<String>()
 
-                    val chatListAdapter = context?.let { ArrayAdapter(it, android.R.layout.simple_list_item_1, chatListMsgs) }
-                    chat_list.adapter = chatListAdapter
+                for (msg in chatList) {
+                    if (msg.senderId == ParseUser.getCurrentUser().objectId.toString()) {
+                        chatListMsgs.add("> " + msg.text)
+                    } else {
+                        chatListMsgs.add(msg.text)
+                    }
+                }
+                val chatListAdapter = context?.let {
+                    ArrayAdapter(
+                        it,
+                        android.R.layout.simple_list_item_1,
+                        chatListMsgs
+                    )
+                }
+                chat_list.adapter = chatListAdapter
             }
         })
 
