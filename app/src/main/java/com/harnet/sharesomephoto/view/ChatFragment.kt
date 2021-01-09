@@ -109,14 +109,6 @@ class ChatFragment : Fragment() {
             }
         })
 
-        viewModel.mIsMsgSent.observe(viewLifecycleOwner, Observer {
-            if (it) {
-                //TODO make adapter reload its date
-                chatListAdapter?.notifyDataSetChanged()
-            Log.i("RefreshingAdapter", "observeModel: $it, $chatListAdapter")
-            }
-        })
-
         viewModel.mIsMsgSentErrorMsg.observe(viewLifecycleOwner, Observer {
             Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
         })
