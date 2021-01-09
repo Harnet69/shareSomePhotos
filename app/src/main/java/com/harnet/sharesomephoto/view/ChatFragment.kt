@@ -58,7 +58,7 @@ class ChatFragment : Fragment() {
         viewModel.getUserById(userId)
 
         //TODO Get text from Input text view
-        sendingMsg("Hello", userId)
+        sendingMsg(userId)
         viewModel.refresh()
     }
 
@@ -106,9 +106,15 @@ class ChatFragment : Fragment() {
         })
     }
 
-    private fun sendingMsg(msgTxt: String, recipientId: String){
+    private fun sendingMsg(recipientId: String){
         send_msg_btn.setOnClickListener {
-            viewModel.sendMessage(msgTxt, recipientId)
+            val userMsg = message_text_field.text.toString()
+            if(userMsg.isNotEmpty()){
+                viewModel.sendMessage(userMsg, recipientId)
+                message_text_field.text?.clear()
+            }else{
+                Toast.makeText(context, "Empty message!", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 }
