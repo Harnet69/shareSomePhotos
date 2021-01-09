@@ -1,22 +1,22 @@
 package com.harnet.sharesomephoto.view
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import android.os.Message
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AbsListView
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.harnet.sharesomephoto.R
 import com.harnet.sharesomephoto.databinding.ChatFragmentBinding
 import com.harnet.sharesomephoto.viewModel.ChatViewModel
 import com.parse.ParseUser
 import kotlinx.android.synthetic.main.chat_fragment.*
+
 
 class ChatFragment : Fragment() {
     private lateinit var viewModel: ChatViewModel
@@ -45,6 +45,9 @@ class ChatFragment : Fragment() {
 
         observeModel()
 
+        // fix problem with a swipe and listView bug
+        fixSwipe()
+
         // Swiper refresh listener(screen refreshing process)
         refreshLayout_chatFragment.setOnRefreshListener {
             chat_list.visibility = View.GONE
@@ -54,6 +57,7 @@ class ChatFragment : Fragment() {
 
             refreshLayout_chatFragment.isRefreshing = false // disappears little spinner on the top
         }
+
 
         viewModel.getUserById(userId)
 
@@ -96,15 +100,15 @@ class ChatFragment : Fragment() {
         })
 
         viewModel.mIsLoading.observe(viewLifecycleOwner, Observer {
-            if(it){
+            if (it) {
                 loadingView_ProgressBar_chatFragment.visibility = View.VISIBLE
-            }else{
+            } else {
                 loadingView_ProgressBar_chatFragment.visibility = View.INVISIBLE
             }
         })
 
         viewModel.mIsLoadingError.observe(viewLifecycleOwner, Observer { e ->
-            if(e){
+            if (e) {
                 listError_TextView_chatFragment.visibility = View.VISIBLE
             }
         })
@@ -124,5 +128,24 @@ class ChatFragment : Fragment() {
                 Toast.makeText(context, "Empty message!", Toast.LENGTH_SHORT).show()
             }
         }
+    }
+
+    // allows to correct work of a swiper
+    private fun fixSwipe(){
+        chat_list.setOnScrollListener(object : AbsListView.OnScrollListener {
+            override fun onScrollStateChanged(view: AbsListView, scrollState: Int) {}
+            override fun onScroll(
+                view: AbsListView,
+                firstVisibleItem: Int,
+                visibleItemCount: Int,
+                totalItemCount: Int
+            ) {
+                if (chat_list.getChildAt(0) != null) {
+                    refreshLayout_chatFragment.isEnabled = chat_list.firstVisiblePosition == 0 && chat_list.getChildAt(
+                        0
+                    ).top == 0
+                }
+            }
+        })
     }
 }
