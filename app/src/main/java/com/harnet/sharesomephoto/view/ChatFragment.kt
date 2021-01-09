@@ -2,6 +2,8 @@ package com.harnet.sharesomephoto.view
 
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
+import android.os.Message
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -12,7 +14,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import com.harnet.sharesomephoto.R
 import com.harnet.sharesomephoto.databinding.ChatFragmentBinding
-import com.harnet.sharesomephoto.model.Message
 import com.harnet.sharesomephoto.viewModel.ChatViewModel
 import com.parse.ParseUser
 import kotlinx.android.synthetic.main.chat_fragment.*
@@ -21,6 +22,8 @@ class ChatFragment : Fragment() {
     private lateinit var viewModel: ChatViewModel
 
     private lateinit var dataBinding: ChatFragmentBinding
+
+    private var chatListAdapter: ArrayAdapter<String>? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -81,7 +84,7 @@ class ChatFragment : Fragment() {
                         chatListMsgs.add(msg.text)
                     }
                 }
-                val chatListAdapter = context?.let {
+                chatListAdapter = context?.let {
                     ArrayAdapter(
                         it,
                         android.R.layout.simple_list_item_1,
@@ -106,7 +109,15 @@ class ChatFragment : Fragment() {
             }
         })
 
-        viewModel.mIsMsgSentMsg.observe(viewLifecycleOwner, Observer {
+        viewModel.mIsMsgSent.observe(viewLifecycleOwner, Observer {
+            if (it) {
+                //TODO make adapter reload its date
+                chatListAdapter?.notifyDataSetChanged()
+            Log.i("RefreshingAdapter", "observeModel: $it, $chatListAdapter")
+            }
+        })
+
+        viewModel.mIsMsgSentErrorMsg.observe(viewLifecycleOwner, Observer {
             Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
         })
     }

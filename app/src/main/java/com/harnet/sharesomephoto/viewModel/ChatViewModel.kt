@@ -18,7 +18,9 @@ class ChatViewModel(application: Application) : BaseViewModel(application) {
     val mIsLoadingError = MutableLiveData<Boolean>()
     val mIsLoading = MutableLiveData<Boolean>()
     val mChatList = MutableLiveData<List<Message>>()
-    val mIsMsgSentMsg = MutableLiveData<String>()
+
+    val mIsMsgSent = MutableLiveData<Boolean>()
+    val mIsMsgSentErrorMsg = MutableLiveData<String>()
 
     fun getUserById(userId: String) {
         val query: ParseQuery<ParseUser> = ParseUser.getQuery()
@@ -49,10 +51,11 @@ class ChatViewModel(application: Application) : BaseViewModel(application) {
 
         message.saveInBackground(SaveCallback {e ->
             if(e == null){
-                mIsMsgSentMsg.value = "Message sent"
+                mIsMsgSentErrorMsg.value = "Message sent"
+                getChatList(recipientId)
             }else{
                 //TODO something goes wrong
-                mIsMsgSentMsg.value = e.localizedMessage
+                mIsMsgSentErrorMsg.value = e.localizedMessage
             }
         })
     }
