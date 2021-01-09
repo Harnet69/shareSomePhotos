@@ -24,7 +24,7 @@ class ChatFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         viewModel = ViewModelProvider(this).get(ChatViewModel::class.java)
         dataBinding = DataBindingUtil.inflate(inflater, R.layout.chat_fragment, container, false)
 
@@ -52,18 +52,27 @@ class ChatFragment : Fragment() {
         }
 
         viewModel.getUserById(userId)
+        viewModel.refresh()
     }
 
     private fun observeModel() {
         viewModel.mUser.observe(viewLifecycleOwner, Observer { user ->
             user?.let {
-                dataBinding.user = user
+                dataBinding.user = it
+            }
+        })
+
+        viewModel.mChatList.observe(viewLifecycleOwner, Observer { chatList ->
+            if(!chatList.isNullOrEmpty()){
+                loadingView_ProgressBar_chatFragment.visibility = View.INVISIBLE
+                chat_list.visibility = View.VISIBLE
+                //TODO update ListView Adapter
             }
         })
 
         viewModel.mIsUserLoadError.observe(viewLifecycleOwner, Observer { e ->
             if(e){
-                Toast.makeText(context, "User doesn't exist", Toast.LENGTH_SHORT).show()
+                listError_TextView_chatFragment.visibility = View.VISIBLE
             }
         })
     }
