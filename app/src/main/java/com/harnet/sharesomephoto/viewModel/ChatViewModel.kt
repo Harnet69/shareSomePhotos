@@ -45,11 +45,11 @@ class ChatViewModel(application: Application) : BaseViewModel(application) {
         })
     }
 
-    fun sendMessage(msg: Message, recipientId: String){
+    fun sendMessage(msgTxt: String, recipientId: String){
         val message = ParseObject("Message")
         message.put("sender", ParseUser.getCurrentUser().objectId)
         message.put("recipient", recipientId)
-        message.put("text", msg)
+        message.put("text", msgTxt)
 
         message.saveInBackground(SaveCallback {e ->
             if(e == null){

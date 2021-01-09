@@ -12,6 +12,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import com.harnet.sharesomephoto.R
 import com.harnet.sharesomephoto.databinding.ChatFragmentBinding
+import com.harnet.sharesomephoto.model.Message
 import com.harnet.sharesomephoto.viewModel.ChatViewModel
 import com.parse.ParseUser
 import kotlinx.android.synthetic.main.chat_fragment.*
@@ -55,6 +56,9 @@ class ChatFragment : Fragment() {
         }
 
         viewModel.getUserById(userId)
+
+        //TODO Get text from Input text view
+        sendingMsg("Hello", userId)
         viewModel.refresh()
     }
 
@@ -100,5 +104,11 @@ class ChatFragment : Fragment() {
         viewModel.mIsMsgSentMsg.observe(viewLifecycleOwner, Observer {
             Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
         })
+    }
+
+    private fun sendingMsg(msgTxt: String, recipientId: String){
+        send_msg_btn.setOnClickListener {
+            viewModel.sendMessage(msgTxt, recipientId)
+        }
     }
 }
