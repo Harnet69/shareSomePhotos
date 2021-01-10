@@ -27,6 +27,8 @@ class ChatFragment : Fragment() {
 
     private lateinit var chatAdapter: ChatAdapter
 
+    private var userId: String = ""
+
     // Repeating
     private var mInterval: Int = 5000 // 5 seconds by default, can be changed later
 
@@ -49,7 +51,6 @@ class ChatFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        lateinit var userId: String
 
         arguments?.let {
             userId = ChatFragmentArgs.fromBundle(it).userId
@@ -137,10 +138,11 @@ class ChatFragment : Fragment() {
                 //this function can change value of mInterval.
 //                updateStatus()
                 Log.i("IntervalsRun", "run: ")
+                viewModel.getChatList(userId)
             } finally {
                 // 100% guarantee that this always happens, even if
                 // your update method throws an exception
-                mHandler!!.postDelayed(this, mInterval.toLong())
+                mHandler?.postDelayed(this, mInterval.toLong())
             }
         }
     }
@@ -150,7 +152,7 @@ class ChatFragment : Fragment() {
     }
 
     fun stopRepeatingTask() {
-        mHandler!!.removeCallbacks(mStatusChecker!!)
+        mHandler?.removeCallbacks(mStatusChecker!!)
     }
 
 
