@@ -1,6 +1,5 @@
 package com.harnet.sharesomephoto.adapter
 
-import android.os.Message
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
@@ -10,6 +9,14 @@ import com.harnet.sharesomephoto.databinding.ItemChatBinding
 
 class ChatAdapter(private var chatList: ArrayList<com.harnet.sharesomephoto.model.Message>) :
     RecyclerView.Adapter<ChatAdapter.ChatViewHolder>() {
+
+    //for updating information from a backend
+    fun updateUsersList(newMsgList: List<com.harnet.sharesomephoto.model.Message>) {
+        chatList.clear()
+        chatList.addAll(newMsgList)
+        //reset RecycleView and recreate a list
+        notifyDataSetChanged()
+    }
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChatViewHolder {

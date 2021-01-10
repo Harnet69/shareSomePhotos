@@ -11,11 +11,15 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.harnet.sharesomephoto.R
+import com.harnet.sharesomephoto.adapter.ChatAdapter
 import com.harnet.sharesomephoto.databinding.ChatFragmentBinding
+import com.harnet.sharesomephoto.model.Message
 import com.harnet.sharesomephoto.viewModel.ChatViewModel
 import com.parse.ParseUser
 import kotlinx.android.synthetic.main.chat_fragment.*
+import kotlinx.android.synthetic.main.users_fragment.*
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.Locale.US
@@ -26,7 +30,7 @@ class ChatFragment : Fragment() {
 
     private lateinit var dataBinding: ChatFragmentBinding
 
-    private var chatListAdapter: ArrayAdapter<String>? = null
+    private lateinit var chatAdapter: ChatAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,6 +38,7 @@ class ChatFragment : Fragment() {
     ): View {
         viewModel = ViewModelProvider(this).get(ChatViewModel::class.java)
         dataBinding = DataBindingUtil.inflate(inflater, R.layout.chat_fragment, container, false)
+        chatAdapter = ChatAdapter(arrayListOf())
 
         return dataBinding.root
     }
@@ -48,8 +53,12 @@ class ChatFragment : Fragment() {
 
         observeModel()
 
-        // fix problem with a swipe and listView bug
-        fixSwipe()
+        chat_list.apply {
+            layoutManager = LinearLayoutManager(context)
+            //Fix blinking RecyclerView
+            chatAdapter.setHasStableIds(true)
+            adapter = chatAdapter
+        }
 
         // Swiper refresh listener(screen refreshing process)
         refreshLayout_chatFragment.setOnRefreshListener {
@@ -77,30 +86,29 @@ class ChatFragment : Fragment() {
 
         viewModel.mChatList.observe(viewLifecycleOwner, Observer { chatList ->
             if (!chatList.isNullOrEmpty()) {
-                loadingView_ProgressBar_chatFragment.visibility = View.INVISIBLE
-                chat_list.visibility = View.VISIBLE
 
                 //TODO implement RecyclerView Adapter
-                val chatListMsgs = arrayListOf<String>()
-                val df: DateFormat = SimpleDateFormat("dd-MM-yyyy HH:mm", US)
 
-                for (msg in chatList) {
-                    val msgDate: String = df.format(msg.createAt)
+                chatList.let {
+                    loadingView_ProgressBar_chatFragment.visibility = View.INVISIBLE
+                    chat_list.visibility = View.VISIBLE
+                    chatAdapter.updateUsersList(chatList)
 
-                    if (msg.senderId == ParseUser.getCurrentUser().objectId.toString()) {
-                        chatListMsgs.add(msgDate + " > " + msg.text)
-                    } else {
-                        chatListMsgs.add("$msgDate / ${msg.text}")
-                    }
                 }
-                chatListAdapter = context?.let {
-                    ArrayAdapter(
-                        it,
-                        android.R.layout.simple_list_item_1,
-                        chatListMsgs
-                    )
-                }
-                chat_list.adapter = chatListAdapter
+
+//                val chatListMsgs = arrayListOf<Message>()
+//                val df: DateFormat = SimpleDateFormat("dd-MM-yyyy HH:mm", US)
+
+//                for (msg in chatList) {
+//                    val msgDate: String = df.format(msg.createAt)
+//
+//                    if (msg.senderId == ParseUser.getCurrentUser().objectId.toString()) {
+//                        chatListMsgs.add(msgDate + " > " + msg.text)
+//                    } else {
+//                        chatListMsgs.add("$msgDate / ${msg.text}")
+//                    }
+//                }
+
             }
         })
 
@@ -135,23 +143,23 @@ class ChatFragment : Fragment() {
         }
     }
 
-    // allows to correct work of a swiper
-    private fun fixSwipe(){
-        chat_list.setOnScrollListener(object : AbsListView.OnScrollListener {
-            override fun onScrollStateChanged(view: AbsListView, scrollState: Int) {}
-            override fun onScroll(
-                view: AbsListView,
-                firstVisibleItem: Int,
-                visibleItemCount: Int,
-                totalItemCount: Int
-            ) {
-                if (chat_list.getChildAt(0) != null) {
-                    refreshLayout_chatFragment.isEnabled =
-                        chat_list.firstVisiblePosition == 0 && chat_list.getChildAt(
-                            0
-                        ).top == 0
-                }
-            }
-        })
-    }
+//    // allows to correct work of a swiper
+//    private fun fixSwipe(){
+//        chat_list.setOnScrollListener(object : AbsListView.OnScrollListener {
+//            override fun onScrollStateChanged(view: AbsListView, scrollState: Int) {}
+//            override fun onScroll(
+//                view: AbsListView,
+//                firstVisibleItem: Int,
+//                visibleItemCount: Int,
+//                totalItemCount: Int
+//            ) {
+//                if (chat_list.getChildAt(0) != null) {
+//                    refreshLayout_chatFragment.isEnabled =
+//                        chat_list.firstVisiblePosition == 0 && chat_list.getChildAt(
+//                            0
+//                        ).top == 0
+//                }
+//            }
+//        })
+//    }
 }
