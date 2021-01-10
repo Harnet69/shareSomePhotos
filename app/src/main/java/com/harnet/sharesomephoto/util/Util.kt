@@ -245,6 +245,21 @@ fun goToUsers(view: View, follow: ArrayList<String>?) {
     }
 }
 
+// go to Users page with users list
+@BindingAdapter("android:goToChatUsers")
+fun goToChatUsers(view: View, chatUsers: ArrayList<String>?) {
+    view.setOnClickListener {
+        chatUsers?.let {
+            if(it.isNotEmpty()){
+                Log.i("ChatUsres", "goToChatUsers: $chatUsers")
+            }else{
+                Toast.makeText(view.context, "No chats yet", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+    }
+}
+
 // get image from Image Library of device
 fun convertImageDataToBitmap(activity: Activity, data: Intent?): Bitmap? {
     val selectedImage = data?.data
