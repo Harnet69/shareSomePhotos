@@ -1,6 +1,7 @@
 package com.harnet.sharesomephoto.viewModel
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.harnet.sharesomephoto.model.Message
 import com.harnet.sharesomephoto.model.User
@@ -20,6 +21,8 @@ class ChatViewModel(application: Application) : BaseViewModel(application) {
     val mChatList = MutableLiveData<List<Message>>()
 
     val mIsMsgSentErrorMsg = MutableLiveData<String>()
+
+    private var msgsCounter = 0
 
     fun getUserById(userId: String) {
         val query: ParseQuery<ParseUser> = ParseUser.getQuery()
@@ -86,11 +89,17 @@ class ChatViewModel(application: Application) : BaseViewModel(application) {
                             val msgRecipient = msg.get("recipient").toString()
                             val msgText = msg.get("text").toString()
                             val msgCreatedAt = msg.createdAt
-                            // TODO think about Date format
+
                             msgsList.add(Message(msgSender, msgRecipient, msgText, msgCreatedAt))
                         }
 
-                        mChatList.value = msgsList
+                        // check if chat was changed
+                        if(msgsCounter != msgsList.size){
+                            mChatList.value = msgsList
+                            // update counter
+                            msgsCounter = msgsList.size
+                        }
+
                     }else{
                         mIsLoading.value = false
                     }

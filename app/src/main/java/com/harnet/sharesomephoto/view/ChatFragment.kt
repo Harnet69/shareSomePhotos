@@ -137,7 +137,7 @@ class ChatFragment : Fragment() {
             try {
                 //this function can change value of mInterval.
 //                updateStatus()
-                Log.i("IntervalsRun", "run: ")
+                // refresh a chat
                 viewModel.getChatList(userId)
             } finally {
                 // 100% guarantee that this always happens, even if
