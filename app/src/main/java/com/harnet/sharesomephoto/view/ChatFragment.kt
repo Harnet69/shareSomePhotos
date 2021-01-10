@@ -55,8 +55,6 @@ class ChatFragment : Fragment() {
 
         chat_list.apply {
             layoutManager = LinearLayoutManager(context)
-            //Fix blinking RecyclerView
-            chatAdapter.setHasStableIds(true)
             adapter = chatAdapter
         }
 
@@ -86,29 +84,13 @@ class ChatFragment : Fragment() {
 
         viewModel.mChatList.observe(viewLifecycleOwner, Observer { chatList ->
             if (!chatList.isNullOrEmpty()) {
-
-                //TODO implement RecyclerView Adapter
-
                 chatList.let {
                     loadingView_ProgressBar_chatFragment.visibility = View.INVISIBLE
                     chat_list.visibility = View.VISIBLE
                     chatAdapter.updateUsersList(chatList)
-
+                    //TODO
+                    chat_list.smoothScrollToPosition(chatList.size - 1)
                 }
-
-//                val chatListMsgs = arrayListOf<Message>()
-//                val df: DateFormat = SimpleDateFormat("dd-MM-yyyy HH:mm", US)
-
-//                for (msg in chatList) {
-//                    val msgDate: String = df.format(msg.createAt)
-//
-//                    if (msg.senderId == ParseUser.getCurrentUser().objectId.toString()) {
-//                        chatListMsgs.add(msgDate + " > " + msg.text)
-//                    } else {
-//                        chatListMsgs.add("$msgDate / ${msg.text}")
-//                    }
-//                }
-
             }
         })
 
@@ -142,24 +124,4 @@ class ChatFragment : Fragment() {
             }
         }
     }
-
-//    // allows to correct work of a swiper
-//    private fun fixSwipe(){
-//        chat_list.setOnScrollListener(object : AbsListView.OnScrollListener {
-//            override fun onScrollStateChanged(view: AbsListView, scrollState: Int) {}
-//            override fun onScroll(
-//                view: AbsListView,
-//                firstVisibleItem: Int,
-//                visibleItemCount: Int,
-//                totalItemCount: Int
-//            ) {
-//                if (chat_list.getChildAt(0) != null) {
-//                    refreshLayout_chatFragment.isEnabled =
-//                        chat_list.firstVisiblePosition == 0 && chat_list.getChildAt(
-//                            0
-//                        ).top == 0
-//                }
-//            }
-//        })
-//    }
 }
