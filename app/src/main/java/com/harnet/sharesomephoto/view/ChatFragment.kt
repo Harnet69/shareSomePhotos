@@ -58,7 +58,6 @@ class ChatFragment : Fragment() {
             refreshLayout_chatFragment.isRefreshing = false // disappears little spinner on the top
         }
 
-
         viewModel.getUserById(userId)
 
         //TODO Get text from Input text view
