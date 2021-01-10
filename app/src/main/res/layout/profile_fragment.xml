@@ -16,6 +16,10 @@
         <variable
             name="following"
             type="java.util.ArrayList&lt;String>" />
+
+        <variable
+            name="chats"
+            type="java.util.ArrayList&lt;String>" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -99,7 +103,8 @@
                         android:layout_height="wrap_content"
                         app:user="@{user}"
                         app:following="@{following}"
-                        app:followers="@{followers}"/>
+                        app:followers="@{followers}"
+                        app:chats="@{chats}"/>
 
                 </FrameLayout>
 

@@ -229,12 +229,12 @@ class ProfileFragment : Fragment(), UserParsable, ImageParsable {
         })
 
         viewModel.mFollowers.observe(viewLifecycleOwner, Observer { followersId ->
-            //TODO bind followers id list
             dataBinding.followers = followersId as java.util.ArrayList<String>
         })
 
-        viewModel.mChats.observe(viewLifecycleOwner, Observer {
-            Log.i("ChatUsers", "observeModel: $it")
+        viewModel.mChats.observe(viewLifecycleOwner, Observer {chats ->
+            //TODO
+            dataBinding.chats = chats.toCollection(ArrayList<String>())
         })
     }
 

@@ -16,6 +16,10 @@
         <variable
             name="following"
             type="java.util.ArrayList&lt;String>" />
+
+        <variable
+            name="chats"
+            type="java.util.ArrayList&lt;String>" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -119,7 +123,7 @@
                     style="@style/Theme.ShareSomePhoto.userStatisticField"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="0" />
+                    android:text="@{Integer.toString(chats.size)}" />
 
                 <TextView
                     style="@style/Theme.ShareSomePhoto.userStatisticLabel"
