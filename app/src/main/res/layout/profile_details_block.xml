@@ -106,6 +106,29 @@
 
             </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:goToUsers="@{following}"
+                android:tag="profileDetailsFragmentFollowing">
+
+                <TextView
+                    android:id="@+id/chats_UserDescr"
+                    style="@style/Theme.ShareSomePhoto.userStatisticField"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="0" />
+
+                <TextView
+                    style="@style/Theme.ShareSomePhoto.userStatisticLabel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/chats" />
+
+            </LinearLayout>
+
         </LinearLayout>
 
         <com.google.android.material.button.MaterialButton

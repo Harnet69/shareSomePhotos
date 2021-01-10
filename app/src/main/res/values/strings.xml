@@ -31,5 +31,6 @@
     <string name="followers">Followers</string>
     <string name="feeds">Feeds</string>
     <string name="send">Send</string>
+    <string name="chats">Chats</string>
 
 </resources>

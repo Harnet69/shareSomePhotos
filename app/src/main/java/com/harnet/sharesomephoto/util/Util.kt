@@ -285,6 +285,23 @@ fun loadUserNameById(textView: TextView, userId: String) {
     }
 }
 
+@BindingAdapter("android:bindUserImg")
+fun loadUserImgById(imageView: ImageView, userId: String) {
+    val query: ParseQuery<ParseUser> = ParseUser.getQuery()
+    // exclude user of this device
+    query.whereEqualTo("objectId", userId)
+    query.findInBackground{ objects, e ->
+        if (e == null) {
+            if (objects.isNotEmpty()) {
+                val userImgUrl: String = objects[0].get("profileImg").toString()
+                imageView.loadImage(userImgUrl, getProgressDrawable(imageView.context))
+            }
+        } else {
+            e.printStackTrace()
+        }
+    }
+}
+
 // convert json to array
 fun <T> jsonToArray(jArray: JSONArray?): MutableList<T> {
     val convertedArray = mutableListOf<T>()
