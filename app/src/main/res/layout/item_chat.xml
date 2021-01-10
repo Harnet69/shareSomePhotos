@@ -23,13 +23,16 @@
             android:layout_height="100dp"
             android:layout_gravity="top"
             android:layout_weight="1"
+            android:scaleType="centerCrop"
             android:bindUserImg="@{msg.senderId}" />
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="4"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingStart="5dp"
+            android:paddingEnd="5dp">
 
             <TextView
                 android:id="@+id/msg_date"
@@ -37,7 +40,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:bindDate="@{msg.createAt}"
-                android:textSize="15sp" />
+                android:textSize="12sp" />
 
             <TextView
                 android:id="@+id/msg_test"
