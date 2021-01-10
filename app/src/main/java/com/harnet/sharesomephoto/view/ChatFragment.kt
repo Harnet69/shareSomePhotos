@@ -80,7 +80,7 @@ class ChatFragment : Fragment() {
                 loadingView_ProgressBar_chatFragment.visibility = View.INVISIBLE
                 chat_list.visibility = View.VISIBLE
 
-                //TODO update ListView Adapter
+                //TODO implement RecyclerView Adapter
                 val chatListMsgs = arrayListOf<String>()
                 val df: DateFormat = SimpleDateFormat("dd-MM-yyyy HH:mm", US)
 
