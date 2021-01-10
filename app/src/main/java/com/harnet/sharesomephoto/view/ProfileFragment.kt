@@ -232,6 +232,10 @@ class ProfileFragment : Fragment(), UserParsable, ImageParsable {
             //TODO bind followers id list
             dataBinding.followers = followersId as java.util.ArrayList<String>
         })
+
+        viewModel.mChats.observe(viewLifecycleOwner, Observer {
+            Log.i("ChatUsers", "observeModel: $it")
+        })
     }
 
     // handle logIn signUp functionality

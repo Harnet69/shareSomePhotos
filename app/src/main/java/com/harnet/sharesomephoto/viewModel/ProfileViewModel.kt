@@ -2,13 +2,17 @@ package com.harnet.sharesomephoto.viewModel
 
 import android.app.Application
 import android.text.TextUtils
+import android.util.ArraySet
 import android.util.Log
 import android.util.Patterns
+import android.widget.ArrayAdapter
+import androidx.collection.arraySetOf
 import androidx.lifecycle.MutableLiveData
 import com.harnet.sharesomephoto.R
 import com.harnet.sharesomephoto.model.User
 import com.harnet.sharesomephoto.util.jsonToArray
 import com.parse.*
+import kotlinx.coroutines.launch
 
 class ProfileViewModel(application: Application) : BaseViewModel(application) {
     val mIsUserLogged = MutableLiveData<Boolean>()
@@ -23,12 +27,14 @@ class ProfileViewModel(application: Application) : BaseViewModel(application) {
     var mUserFeedsCount = MutableLiveData<Int>()
     var mUserListFollowingUsers = MutableLiveData<List<String>>()
     val mFollowers = MutableLiveData<List<String>>()
+    val mChats = MutableLiveData<ArraySet<String>>()
 
     // refresh user statistic
     fun refreshUserStats() {
         getQttUserFeeds()
         getFollowingUsers()
         getFollowers()
+        getChatsQtt()
     }
 
     // sign Up a new user
@@ -210,5 +216,45 @@ class ProfileViewModel(application: Application) : BaseViewModel(application) {
                 }
             }
         })
+    }
+
+    // get quantity of chats
+    private fun getChatsQtt() {
+        launch {
+            val query1 = ParseQuery<ParseObject>("Message")
+            query1.whereEqualTo("sender", ParseUser.getCurrentUser().objectId)
+
+            val query2 = ParseQuery<ParseObject>("Message")
+            query2.whereEqualTo("recipient", ParseUser.getCurrentUser().objectId)
+
+            val queries = arrayListOf<ParseQuery<ParseObject>>()
+            queries.add(query1)
+            queries.add(query2)
+
+            val query = ParseQuery.or(queries)
+
+            query.findInBackground { objects, e ->
+                if (e == null) {
+                    val chatUsersIds = ArraySet<String>()
+
+                    for (i in objects.indices) {
+                        if (objects[i].get("sender")
+                                .toString() == ParseUser.getCurrentUser().objectId
+                        ) {
+                            chatUsersIds.add(objects[i].get("recipient").toString())
+                        }
+                        if (objects[i].get("recipient")
+                                .toString() == (ParseUser.getCurrentUser().objectId)
+                        ) {
+                            chatUsersIds.add(objects[i].get("sender").toString())
+                        }
+                    }
+
+                    mChats.value = chatUsersIds
+                } else {
+                    e.printStackTrace()
+                }
+            }
+        }
     }
 }
