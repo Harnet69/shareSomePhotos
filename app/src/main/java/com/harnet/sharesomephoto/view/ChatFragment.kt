@@ -16,6 +16,9 @@ import com.harnet.sharesomephoto.databinding.ChatFragmentBinding
 import com.harnet.sharesomephoto.viewModel.ChatViewModel
 import com.parse.ParseUser
 import kotlinx.android.synthetic.main.chat_fragment.*
+import java.text.DateFormat
+import java.text.SimpleDateFormat
+import java.util.Locale.US
 
 
 class ChatFragment : Fragment() {
@@ -79,12 +82,15 @@ class ChatFragment : Fragment() {
 
                 //TODO update ListView Adapter
                 val chatListMsgs = arrayListOf<String>()
+                val df: DateFormat = SimpleDateFormat("dd-MM-yyyy HH:mm", US)
 
                 for (msg in chatList) {
+                    val msgDate: String = df.format(msg.createAt)
+
                     if (msg.senderId == ParseUser.getCurrentUser().objectId.toString()) {
-                        chatListMsgs.add("> " + msg.text)
+                        chatListMsgs.add(msgDate + " > " + msg.text)
                     } else {
-                        chatListMsgs.add(msg.text)
+                        chatListMsgs.add("$msgDate / ${msg.text}")
                     }
                 }
                 chatListAdapter = context?.let {
@@ -140,9 +146,10 @@ class ChatFragment : Fragment() {
                 totalItemCount: Int
             ) {
                 if (chat_list.getChildAt(0) != null) {
-                    refreshLayout_chatFragment.isEnabled = chat_list.firstVisiblePosition == 0 && chat_list.getChildAt(
-                        0
-                    ).top == 0
+                    refreshLayout_chatFragment.isEnabled =
+                        chat_list.firstVisiblePosition == 0 && chat_list.getChildAt(
+                            0
+                        ).top == 0
                 }
             }
         })

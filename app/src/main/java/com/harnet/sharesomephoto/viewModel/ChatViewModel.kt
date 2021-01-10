@@ -85,9 +85,9 @@ class ChatViewModel(application: Application) : BaseViewModel(application) {
                             val msgSender = msg.get("sender").toString()
                             val msgRecipient = msg.get("recipient").toString()
                             val msgText = msg.get("text").toString()
-                            val msgCreatedAt = msg.get("createdAt")
+                            val msgCreatedAt = msg.createdAt
                             // TODO think about Date format
-                            msgsList.add(Message(msgSender, msgRecipient, msgText))
+                            msgsList.add(Message(msgSender, msgRecipient, msgText, msgCreatedAt))
                         }
 
                         mChatList.value = msgsList
