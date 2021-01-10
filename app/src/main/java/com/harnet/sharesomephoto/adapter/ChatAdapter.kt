@@ -18,7 +18,6 @@ class ChatAdapter(private var chatList: ArrayList<com.harnet.sharesomephoto.mode
         notifyDataSetChanged()
     }
 
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChatViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         // elements of the list transforms into views. DataBinding approach
