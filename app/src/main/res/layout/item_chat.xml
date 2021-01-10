@@ -33,7 +33,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:text="01-01-2021 00:00"
+                android:bindDate="@{msg.createAt}"
                 android:textSize="15sp" />
 
             <TextView
@@ -41,7 +41,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="3"
-                android:text="Message text"
+                android:text="@{msg.text}"
                 android:textSize="20sp" />
         </LinearLayout>
     </androidx.appcompat.widget.LinearLayoutCompat>

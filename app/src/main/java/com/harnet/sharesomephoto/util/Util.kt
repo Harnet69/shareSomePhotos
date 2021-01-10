@@ -41,6 +41,11 @@ import com.harnet.sharesomephoto.view.UsersFragmentDirections
 import com.parse.ParseQuery
 import com.parse.ParseUser
 import org.json.JSONArray
+import java.text.DateFormat
+import java.text.SimpleDateFormat
+import java.util.*
+import java.util.Locale.US
+import kotlin.collections.ArrayList
 
 fun openImageChooser(activity: Activity) {
     val intent = Intent()
@@ -291,4 +296,11 @@ fun <T> jsonToArray(jArray: JSONArray?): MutableList<T> {
         }
     }
     return convertedArray
+}
+
+// convert Date to String
+@BindingAdapter("android:bindDate")
+fun dateToStr(textView: TextView, date: Date){
+    val df: DateFormat = SimpleDateFormat("dd-MM-yyyy HH:mm", US)
+    textView.text = df.format(date)
 }
