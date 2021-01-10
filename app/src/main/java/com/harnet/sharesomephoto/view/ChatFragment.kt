@@ -63,16 +63,6 @@ class ChatFragment : Fragment() {
             adapter = chatAdapter
         }
 
-        // Swiper refresh listener(screen refreshing process)
-        refreshLayout_chatFragment.setOnRefreshListener {
-            chat_list.visibility = View.GONE
-            listError_TextView_chatFragment.visibility = View.GONE
-            loadingView_ProgressBar_chatFragment.visibility = View.VISIBLE
-            viewModel.getChatList(userId)
-
-            refreshLayout_chatFragment.isRefreshing = false // disappears little spinner on the top
-        }
-
         viewModel.getUserById(userId)
 
         //get text from Input text view
