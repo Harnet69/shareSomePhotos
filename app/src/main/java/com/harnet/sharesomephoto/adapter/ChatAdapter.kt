@@ -38,10 +38,6 @@ class ChatAdapter(private var chatList: ArrayList<com.harnet.sharesomephoto.mode
     }
 
     override fun onBindViewHolder(holder: ChatViewHolder, position: Int) {
-//        if(chatList[position].senderId != ParseUser.getCurrentUser().objectId){
-//            //TODO here is the user image
-//            holder.view.userImage.setImageResource(R.drawable.ic_account)
-//        }
         holder.view.msg = chatList[position]
     }
 }

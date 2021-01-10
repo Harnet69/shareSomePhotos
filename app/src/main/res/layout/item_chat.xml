@@ -12,26 +12,29 @@
     <androidx.appcompat.widget.LinearLayoutCompat
 
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content"
+        android:minHeight="100dp"
+        android:orientation="horizontal"
+        android:padding="5dp">
 
         <ImageView
             android:id="@+id/userImage"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="100dp"
+            android:layout_gravity="top"
             android:layout_weight="1"
-            android:bindUserImg="@{msg.senderId}"/>
+            android:bindUserImg="@{msg.senderId}" />
 
         <LinearLayout
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="4"
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/msg_date"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:bindDate="@{msg.createAt}"
                 android:textSize="15sp" />
@@ -39,7 +42,7 @@
             <TextView
                 android:id="@+id/msg_test"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
+                android:layout_height="wrap_content"
                 android:layout_weight="3"
                 android:text="@{msg.text}"
                 android:textSize="20sp" />
