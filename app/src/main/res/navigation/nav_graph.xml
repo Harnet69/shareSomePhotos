@@ -43,6 +43,9 @@
         <action
             android:id="@+id/action_profileFragment_to_userDetailsFragment"
             app:destination="@id/userDetailsFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_chatsListFragment"
+            app:destination="@id/chatsListFragment" />
     </fragment>
     <fragment
         android:id="@+id/usersFragment"
@@ -110,5 +113,14 @@
         <argument
             android:name="userId"
             app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/chatsListFragment"
+        android:name="com.harnet.sharesomephoto.view.ChatsListFragment"
+        android:label="chats_list_fragment"
+        tools:layout="@layout/chats_list_fragment" >
+        <argument
+            android:name="chatUsersList"
+            app:argType="string[]" />
     </fragment>
 </navigation>
