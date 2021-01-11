@@ -64,6 +64,7 @@ fun getProgressDrawable(context: Context): CircularProgressDrawable {
 }
 
 //extension for auto loading image of ImageView element using Glide library
+//TODO add boolean argument for circular images
 fun ImageView.loadImage(uri: String?, progressDrawable: CircularProgressDrawable) {
     val options = RequestOptions()
         .placeholder(progressDrawable)
@@ -252,11 +253,11 @@ fun goToChatUsers(view: View, chatUsers: ArrayList<String>?) {
         chatUsers?.let {
             if(it.isNotEmpty()){
                 Log.i("ChatUsres", "goToChatUsers: $chatUsers")
+                //TODO implemented redirection to Chats page
             }else{
                 Toast.makeText(view.context, "No chats yet", Toast.LENGTH_SHORT).show()
             }
         }
-
     }
 }
 
