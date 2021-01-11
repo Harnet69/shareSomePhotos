@@ -9,7 +9,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
-import com.harnet.sharesomephoto.ChatsListFragmentArgs
 import com.harnet.sharesomephoto.viewModel.ChatsListViewModel
 import com.harnet.sharesomephoto.R
 import com.harnet.sharesomephoto.databinding.ChatsListFragmentBinding
@@ -35,6 +34,7 @@ class ChatsListFragment : Fragment() {
 
         arguments?.let {
             chatUsersId = ChatsListFragmentArgs.fromBundle(it).chatUsersList
+            Log.i("ChatUsresa", "onViewCreated: $chatUsersId")
         }
 
         viewModel.refresh(chatUsersId)
@@ -44,7 +44,7 @@ class ChatsListFragment : Fragment() {
 
     private fun observeViewModel(){
         viewModel.mChatsList.observe(viewLifecycleOwner, Observer { chatsList ->
-            Log.i("ListOfCHats", "observeViewModel: ")
+            Log.i("ListOfCHats", "observeViewModel: $chatsList")
         })
     }
 }

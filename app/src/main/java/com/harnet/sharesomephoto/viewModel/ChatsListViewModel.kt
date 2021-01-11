@@ -1,6 +1,7 @@
 package com.harnet.sharesomephoto.viewModel
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.harnet.sharesomephoto.model.ChatItem
 import com.parse.ParseObject
@@ -28,7 +29,6 @@ class ChatsListViewModel(application: Application) : BaseViewModel(application) 
     }
 
     private fun getChatsFromParseServer(chatUsersListIds: Array<String>) {
-
         launch {
             val chatsList = arrayListOf<ChatItem>()
 
@@ -46,11 +46,12 @@ class ChatsListViewModel(application: Application) : BaseViewModel(application) 
                 queries.add(query2)
 
                 val query = ParseQuery.or(queries)
-                query.orderByAscending("createdAt")
+                query.orderByDescending("createdAt")
 
                 query.getFirstInBackground { `object`, e ->
                     if(e == null){
                         val lastMsg = `object`?.get("text").toString()
+                        Log.i("getChatsFromParseServer", "$userId : $lastMsg ")
                         chatsList.add(ChatItem(userId, lastMsg))
                     }else{
                         e.printStackTrace()
@@ -59,6 +60,7 @@ class ChatsListViewModel(application: Application) : BaseViewModel(application) 
             }
 
            retrieveChats(chatsList)
+            Log.i("getChatsFromParseServer", "getChatsFromParseServer: $chatsList")
         }
     }
 }

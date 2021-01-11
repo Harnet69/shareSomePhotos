@@ -253,7 +253,8 @@ fun goToChatUsers(view: View, chatUsers: ArrayList<String>?) {
         chatUsers?.let {
             if(it.isNotEmpty()){
                 Log.i("ChatUsres", "goToChatUsers: $chatUsers")
-                //TODO implemented redirection to Chats page
+                val action = ProfileFragmentDirections.actionProfileFragmentToChatsListFragment(chatUsers.toTypedArray())
+                Navigation.findNavController(view).navigate(action)
             }else{
                 Toast.makeText(view.context, "No chats yet", Toast.LENGTH_SHORT).show()
             }
