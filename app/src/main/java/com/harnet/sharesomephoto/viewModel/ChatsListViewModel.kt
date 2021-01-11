@@ -13,7 +13,7 @@ class ChatsListViewModel(application: Application) : BaseViewModel(application) 
     val mIsLoading = MutableLiveData<Boolean>()
     val mIsChatsLoadError = MutableLiveData<Boolean>()
 
-    fun refresh(chatUsersListIds: ArrayList<String>) {
+    fun refresh(chatUsersListIds: Array<String>) {
         getChatsFromParseServer(chatUsersListIds)
     }
 
@@ -27,7 +27,7 @@ class ChatsListViewModel(application: Application) : BaseViewModel(application) 
         mIsLoading.postValue(false)
     }
 
-    private fun getChatsFromParseServer(chatUsersListIds: ArrayList<String>) {
+    private fun getChatsFromParseServer(chatUsersListIds: Array<String>) {
 
         launch {
             val chatsList = arrayListOf<ChatItem>()
@@ -58,7 +58,7 @@ class ChatsListViewModel(application: Application) : BaseViewModel(application) 
                 }
             }
 
-            mChatsList.value = chatsList
+           retrieveChats(chatsList)
         }
     }
 }

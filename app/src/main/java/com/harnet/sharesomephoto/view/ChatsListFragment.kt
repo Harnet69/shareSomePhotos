@@ -2,11 +2,14 @@ package com.harnet.sharesomephoto.view
 
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
+import com.harnet.sharesomephoto.ChatsListFragmentArgs
 import com.harnet.sharesomephoto.viewModel.ChatsListViewModel
 import com.harnet.sharesomephoto.R
 import com.harnet.sharesomephoto.databinding.ChatsListFragmentBinding
@@ -14,6 +17,8 @@ import com.harnet.sharesomephoto.databinding.ChatsListFragmentBinding
 class ChatsListFragment : Fragment() {
     private lateinit var viewModel: ChatsListViewModel
     private lateinit var dataBinding: ChatsListFragmentBinding
+
+    private lateinit var chatUsersId: Array<String>
 
 
     override fun onCreateView(
@@ -27,5 +32,19 @@ class ChatsListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(this).get(ChatsListViewModel::class.java)
+
+        arguments?.let {
+            chatUsersId = ChatsListFragmentArgs.fromBundle(it).chatUsersList
+        }
+
+        viewModel.refresh(chatUsersId)
+
+        observeViewModel()
+    }
+
+    private fun observeViewModel(){
+        viewModel.mChatsList.observe(viewLifecycleOwner, Observer { chatsList ->
+            Log.i("ListOfCHats", "observeViewModel: ")
+        })
     }
 }
