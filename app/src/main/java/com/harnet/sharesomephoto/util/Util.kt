@@ -33,11 +33,13 @@ import com.bumptech.glide.request.transition.Transition
 import com.google.android.material.appbar.MaterialToolbar
 import com.harnet.sharesomephoto.R
 import com.harnet.sharesomephoto.model.Fragments
+import com.harnet.sharesomephoto.model.User
 import com.harnet.sharesomephoto.service.OnSingleClickListenerService
 import com.harnet.sharesomephoto.view.FeedsFragmentDirections
 import com.harnet.sharesomephoto.view.ProfileFragmentDirections
 import com.harnet.sharesomephoto.view.UserDetailsFragmentDirections
 import com.harnet.sharesomephoto.view.UsersFragmentDirections
+import com.parse.FindCallback
 import com.parse.ParseQuery
 import com.parse.ParseUser
 import org.json.JSONArray
@@ -337,4 +339,18 @@ fun <T> jsonToArray(jArray: JSONArray?): MutableList<T> {
 fun dateToStr(textView: TextView, date: Date){
     val df: DateFormat = SimpleDateFormat("dd-MM-yyyy HH:mm", US)
     textView.text = df.format(date)
+}
+
+//set user profile image
+@BindingAdapter("android:bindProfileImageByUserId")
+fun setProfileImgByUserId(imageView: ImageView, userId: String){
+        val query: ParseQuery<ParseUser> = ParseUser.getQuery()
+        query.whereEqualTo("objectId", userId)
+    query.getFirstInBackground { `object`, e ->
+        if(e == null){
+            `object`?.let {
+                loadBindingImage(imageView, `object`.get("profileImg").toString())
+            }
+        }
+    }
 }
