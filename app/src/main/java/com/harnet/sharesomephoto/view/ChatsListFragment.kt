@@ -42,6 +42,9 @@ class ChatsListFragment : Fragment() {
             chatUsersId = ChatsListFragmentArgs.fromBundle(it).chatUsersList
         }
 
+        // fixed the bug with chats duplication
+        viewModel.mChatsList.value = arrayListOf()
+
         viewModel.refresh(chatUsersId)
 
         observeViewModel()
@@ -54,7 +57,7 @@ class ChatsListFragment : Fragment() {
 
     private fun observeViewModel(){
         viewModel.mChatsList.observe(viewLifecycleOwner, Observer { chatsList ->
-            if(chatsList.size == chatUsersId.size){
+            if (chatsList.size == chatUsersId.size) {
                 chatsListAdapter.updateChatsList(chatsList)
             }
         })
