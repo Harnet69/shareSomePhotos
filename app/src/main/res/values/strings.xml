@@ -32,5 +32,6 @@
     <string name="feeds">Feeds</string>
     <string name="send">Send</string>
     <string name="chats">Chats</string>
+    <string name="chats_with_users">Chats with users</string>
 
 </resources>

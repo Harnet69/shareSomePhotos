@@ -3,28 +3,29 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/feedsFragment"
+        android:contentDescription="@string/users_feeds_descr_menu_item"
         android:icon="@drawable/ic_feed"
         android:title="@string/users_feeds_descr_menu_item"
-        android:contentDescription="@string/users_feeds_descr_menu_item"
         app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/usersFragment"
+        android:contentDescription="@string/users_list_menu_item"
         android:icon="@drawable/ic_users"
         android:title="@string/users_list_descr_menu_item"
-        android:contentDescription="@string/users_list_menu_item"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/chatsListFragment"
+        android:contentDescription="@string/chats_with_users"
+        android:icon="@drawable/ic_chat"
+        android:title="@string/chats"
         app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/profileFragment"
+        android:contentDescription="@string/my_profile_descr_menu_item"
         android:icon="@drawable/ic_account"
         android:title="@string/profile_menu_item"
-        android:contentDescription="@string/my_profile_descr_menu_item"
         app:showAsAction="ifRoom" />
-
-<!--    <item-->
-<!--        android:id="@+id/more_top_appbar_menu"-->
-<!--        android:title="More_menu_item"-->
-<!--        android:contentDescription="Need more"-->
-<!--        app:showAsAction="never" />-->
 </menu>
