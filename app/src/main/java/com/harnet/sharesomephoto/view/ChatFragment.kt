@@ -2,7 +2,6 @@ package com.harnet.sharesomephoto.view
 
 import android.os.Bundle
 import android.os.Handler
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,7 +16,6 @@ import com.harnet.sharesomephoto.adapter.ChatAdapter
 import com.harnet.sharesomephoto.databinding.ChatFragmentBinding
 import com.harnet.sharesomephoto.viewModel.ChatViewModel
 import kotlinx.android.synthetic.main.chat_fragment.*
-import kotlinx.android.synthetic.main.users_fragment.*
 
 
 class ChatFragment : Fragment() {
@@ -43,7 +41,7 @@ class ChatFragment : Fragment() {
         chatAdapter = ChatAdapter(arrayListOf())
 
         //repeat
-        mHandler = Handler()
+        mHandler =  Handler()
         startRepeatingTask()
 
         return dataBinding.root
@@ -67,7 +65,6 @@ class ChatFragment : Fragment() {
 
         //get text from Input text view
         sendingMsg(userId)
-        //TODO Implement updater to chat
         viewModel.getChatList(userId)
     }
 
@@ -84,7 +81,6 @@ class ChatFragment : Fragment() {
                     loadingView_ProgressBar_chatFragment.visibility = View.INVISIBLE
                     chat_list.visibility = View.VISIBLE
                     chatAdapter.updateUsersList(chatList)
-                    //TODO
                     chat_list.smoothScrollToPosition(chatList.size - 1)
                 }
             }

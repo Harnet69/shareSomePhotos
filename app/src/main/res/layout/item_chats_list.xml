@@ -9,7 +9,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="70dp"
         android:padding="5dp"
         android:orientation="horizontal">
 
@@ -17,7 +17,8 @@
             android:id="@+id/chatUserImage"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="2" />
+            android:layout_weight="2"
+            />
 
         <LinearLayout
             android:layout_width="0dp"
@@ -29,12 +30,15 @@
                 android:id="@+id/chatUserName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@{chatItem.chatUserId}" />
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:bindUserName="@{chatItem.chatUserId}"/>
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/chatUserLastMsg"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:textSize="15sp"
                 android:text="@{chatItem.lastMsgText}" />
 
         </LinearLayout>
