@@ -254,8 +254,7 @@ fun goToChatUsers(view: View, chatUsers: ArrayList<String>?) {
     view.setOnClickListener {
         chatUsers?.let {
             if(it.isNotEmpty()){
-                Log.i("ChatUsres", "goToChatUsers: $chatUsers")
-                val action = ProfileFragmentDirections.actionProfileFragmentToChatsListFragment(chatUsers.toTypedArray())
+                val action = ProfileFragmentDirections.actionProfileFragmentToChatsListFragment()
                 Navigation.findNavController(view).navigate(action)
             }else{
                 Toast.makeText(view.context, "No chats yet", Toast.LENGTH_SHORT).show()

@@ -3,10 +3,7 @@ package com.harnet.sharesomephoto.viewModel
 import android.app.Application
 import android.text.TextUtils
 import android.util.ArraySet
-import android.util.Log
 import android.util.Patterns
-import android.widget.ArrayAdapter
-import androidx.collection.arraySetOf
 import androidx.lifecycle.MutableLiveData
 import com.harnet.sharesomephoto.R
 import com.harnet.sharesomephoto.model.User
@@ -34,7 +31,7 @@ class ProfileViewModel(application: Application) : BaseViewModel(application) {
         getQttUserFeeds()
         getFollowingUsers()
         getFollowers()
-        getChatsQtt()
+        getChatUsersId()
     }
 
     // sign Up a new user
@@ -218,8 +215,8 @@ class ProfileViewModel(application: Application) : BaseViewModel(application) {
         })
     }
 
-    // get quantity of chats
-    private fun getChatsQtt() {
+    // get users have a chat with
+    private fun getChatUsersId() {
         launch {
             val query1 = ParseQuery<ParseObject>("Message")
             query1.whereEqualTo("sender", ParseUser.getCurrentUser().objectId)

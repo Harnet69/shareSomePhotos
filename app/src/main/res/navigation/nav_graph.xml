@@ -119,9 +119,6 @@
         android:name="com.harnet.sharesomephoto.view.ChatsListFragment"
         android:label="chats_list_fragment"
         tools:layout="@layout/chats_list_fragment" >
-        <argument
-            android:name="chatUsersList"
-            app:argType="string[]" />
         <action
             android:id="@+id/action_chatsListFragment_to_chatFragment"
             app:destination="@id/chatFragment" />
