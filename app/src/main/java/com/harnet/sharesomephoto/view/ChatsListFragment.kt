@@ -44,7 +44,10 @@ class ChatsListFragment : Fragment() {
 
     private fun observeViewModel(){
         viewModel.mChatsList.observe(viewLifecycleOwner, Observer { chatsList ->
-            Log.i("ListOfCHats", "observeViewModel: $chatsList")
+            if(chatsList.size == chatUsersId.size){
+                //TODO implement notifying Adapter for changes
+                Log.i("ListOfChats", "observeViewModel: $chatsList")
+            }
         })
     }
 }

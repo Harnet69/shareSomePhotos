@@ -51,16 +51,16 @@ class ChatsListViewModel(application: Application) : BaseViewModel(application) 
                 query.getFirstInBackground { `object`, e ->
                     if(e == null){
                         val lastMsg = `object`?.get("text").toString()
-                        Log.i("getChatsFromParseServer", "$userId : $lastMsg ")
-                        chatsList.add(ChatItem(userId, lastMsg))
+                        Log.i("ListOfCHats", "$userId : $lastMsg ")
+                        val prevChats = arrayListOf<ChatItem>()
+                        mChatsList.value?.let { prevChats.addAll(it) }
+                        prevChats.add(ChatItem(userId, lastMsg))
+                        mChatsList.value = prevChats
                     }else{
                         e.printStackTrace()
                     }
                 }
             }
-
-           retrieveChats(chatsList)
-            Log.i("getChatsFromParseServer", "getChatsFromParseServer: $chatsList")
         }
     }
 }
