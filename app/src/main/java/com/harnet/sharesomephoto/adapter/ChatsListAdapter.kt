@@ -2,11 +2,14 @@ package com.harnet.sharesomephoto.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.harnet.sharesomephoto.R
 import com.harnet.sharesomephoto.databinding.ItemChatsListBinding
 import com.harnet.sharesomephoto.model.ChatItem
+import com.harnet.sharesomephoto.view.ChatsListFragmentDirections
 
 class ChatsListAdapter(private var chatsList: ArrayList<ChatItem>):
 RecyclerView.Adapter<ChatsListAdapter.ChatsListViewHolder>(){
@@ -34,6 +37,11 @@ RecyclerView.Adapter<ChatsListAdapter.ChatsListViewHolder>(){
     class ChatsListViewHolder(var view: ItemChatsListBinding): RecyclerView.ViewHolder(view.root)
 
     override fun onBindViewHolder(holder: ChatsListViewHolder, position: Int) {
+        holder.view.chatUserBlock.setOnClickListener {
+            val action = ChatsListFragmentDirections.actionChatsListFragmentToChatFragment(chatsList[position].chatUserId)
+            Navigation.findNavController(it).navigate(action)
+
+        }
         holder.view.chatItem = chatsList[position]
     }
 
