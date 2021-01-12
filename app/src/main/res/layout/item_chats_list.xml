@@ -19,13 +19,16 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="2"
+            android:scaleType="centerCrop"
             android:bindProfileImageByUserId="@{chatItem.chatUserId}"/>
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="6"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp">
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/chatUserName"
@@ -33,6 +36,8 @@
                 android:layout_height="wrap_content"
                 android:textSize="20sp"
                 android:textStyle="bold"
+                android:maxLines="1"
+                android:ellipsize="end"
                 android:bindUserName="@{chatItem.chatUserId}"/>
 
             <com.google.android.material.textview.MaterialTextView
@@ -40,7 +45,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:textSize="15sp"
-                android:text="@{chatItem.lastMsgText}" />
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:text="@{chatItem.lastMsgText}"
+                />
 
         </LinearLayout>
 
