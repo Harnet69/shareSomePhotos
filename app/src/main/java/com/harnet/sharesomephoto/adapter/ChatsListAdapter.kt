@@ -1,7 +1,9 @@
 package com.harnet.sharesomephoto.adapter
 
+import android.graphics.Typeface
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
@@ -11,6 +13,7 @@ import com.harnet.sharesomephoto.R
 import com.harnet.sharesomephoto.databinding.ItemChatsListBinding
 import com.harnet.sharesomephoto.model.ChatItem
 import com.harnet.sharesomephoto.view.ChatsListFragmentDirections
+import com.parse.ParseUser
 
 class ChatsListAdapter(private var chatsList: ArrayList<ChatItem>):
 RecyclerView.Adapter<ChatsListAdapter.ChatsListViewHolder>(){
@@ -44,6 +47,14 @@ RecyclerView.Adapter<ChatsListAdapter.ChatsListViewHolder>(){
 
         }
         holder.view.chatItem = chatsList[position]
+
+        if(!chatsList[position].lastMsg.isRead && chatsList[position].lastMsg.senderId != ParseUser.getCurrentUser().objectId) {
+            holder.view.chatUserLastMsg.setTypeface(null, Typeface.BOLD)
+            holder.view.chatUserIsRead.visibility = View.VISIBLE
+        }else{
+            // do not show blue dot of new message if it your message
+            holder.view.chatUserIsRead.visibility = View.INVISIBLE
+        }
     }
 
     override fun getItemCount(): Int {
