@@ -2,6 +2,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
+        <import type="android.view.View" />
         <variable
             name="chatItem"
             type="com.harnet.sharesomephoto.model.ChatItem" />
@@ -66,7 +67,8 @@
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_gravity="center"
-            android:src="@drawable/new_message_ico" />
+            android:src="@drawable/new_message_ico"
+            android:visibility="@{chatItem.lastMsg.isRead == false ? View.VISIBLE : View.GONE}"/>
 
     </LinearLayout>
 

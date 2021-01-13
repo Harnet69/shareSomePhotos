@@ -44,7 +44,6 @@ RecyclerView.Adapter<ChatsListAdapter.ChatsListViewHolder>(){
 
         }
         holder.view.chatItem = chatsList[position]
-        Log.i("isRead", "${chatsList[position].lastMsg.text} : ${chatsList[position].lastMsg.isRead}")
     }
 
     override fun getItemCount(): Int {
