@@ -40,15 +40,10 @@ class ChatsListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(this).get(ChatsListViewModel::class.java)
 
-//        arguments?.let {
-//            chatUsersId = ChatsListFragmentArgs.fromBundle(it).chatUsersList
-//        }
-
         // fixed the bug with chats duplication
         viewModel.mChatsList.value = arrayListOf()
 
         viewModel.getChatUsersId()
-//        viewModel.refresh(chatUsersId)
 
         observeViewModel()
 

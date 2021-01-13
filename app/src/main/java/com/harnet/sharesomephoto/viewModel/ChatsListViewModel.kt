@@ -55,7 +55,12 @@ class ChatsListViewModel(application: Application) : BaseViewModel(application) 
                     if(e == null){
                         val msgSender = `object`?.get("sender").toString()
                         val msgRecipient = `object`?.get("recipient").toString()
-                        val msgText = `object`?.get("text").toString()
+                        var msgText = ""
+                        msgText = if(msgSender == ParseUser.getCurrentUser().objectId) {
+                            "You: " + `object`?.get("text").toString()
+                        }else{
+                            `object`?.get("text").toString()
+                        }
                         val msgDate = `object`?.createdAt
                         val prevChats = arrayListOf<ChatItem>()
                         mChatsList.value?.let { prevChats.addAll(it) }
