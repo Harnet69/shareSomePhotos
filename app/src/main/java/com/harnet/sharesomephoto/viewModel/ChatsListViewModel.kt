@@ -5,6 +5,7 @@ import android.util.ArraySet
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.harnet.sharesomephoto.model.ChatItem
+import com.harnet.sharesomephoto.model.Message
 import com.parse.ParseObject
 import com.parse.ParseQuery
 import com.parse.ParseUser
@@ -52,11 +53,13 @@ class ChatsListViewModel(application: Application) : BaseViewModel(application) 
 
                 query.getFirstInBackground { `object`, e ->
                     if(e == null){
-                        val lastMsg = `object`?.get("text").toString()
-                        Log.i("ListOfCHats", "$userId : $lastMsg ")
+                        val msgSender = `object`?.get("sender").toString()
+                        val msgRecipient = `object`?.get("recipient").toString()
+                        val msgText = `object`?.get("text").toString()
+                        val msgDate = `object`?.createdAt
                         val prevChats = arrayListOf<ChatItem>()
                         mChatsList.value?.let { prevChats.addAll(it) }
-                        prevChats.add(ChatItem(userId, lastMsg))
+                        prevChats.add(ChatItem(userId, Message(msgSender, msgRecipient, msgText, msgDate)))
                         mChatsList.value = prevChats
                     }else{
                         e.printStackTrace()
@@ -86,14 +89,10 @@ class ChatsListViewModel(application: Application) : BaseViewModel(application) 
                     val chatUsersIds = ArraySet<String>()
 
                     for (i in objects.indices) {
-                        if (objects[i].get("sender")
-                                .toString() == ParseUser.getCurrentUser().objectId
-                        ) {
+                        if (objects[i].get("sender").toString() == ParseUser.getCurrentUser().objectId) {
                             chatUsersIds.add(objects[i].get("recipient").toString())
                         }
-                        if (objects[i].get("recipient")
-                                .toString() == (ParseUser.getCurrentUser().objectId)
-                        ) {
+                        if (objects[i].get("recipient").toString() == (ParseUser.getCurrentUser().objectId)) {
                             chatUsersIds.add(objects[i].get("sender").toString())
                         }
                     }
