@@ -62,9 +62,11 @@ class ChatsListViewModel(application: Application) : BaseViewModel(application) 
                             `object`?.get("text").toString()
                         }
                         val msgDate = `object`?.createdAt
+                        val isRead = `object`.getBoolean("isRead")
+
                         val prevChats = arrayListOf<ChatItem>()
                         mChatsList.value?.let { prevChats.addAll(it) }
-                        prevChats.add(ChatItem(userId, Message(msgSender, msgRecipient, msgText, msgDate)))
+                        prevChats.add(ChatItem(userId, Message(msgSender, msgRecipient, msgText, msgDate, isRead)))
                         mChatsList.value = prevChats
                     }else{
                         e.printStackTrace()

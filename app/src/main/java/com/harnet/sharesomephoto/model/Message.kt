@@ -6,5 +6,6 @@ data class Message(
     val senderId: String,
     val recipientId: String,
     val text: String,
-    val createAt: Date? = null
+    val createAt: Date? = null,
+    val isRead: Boolean
 )

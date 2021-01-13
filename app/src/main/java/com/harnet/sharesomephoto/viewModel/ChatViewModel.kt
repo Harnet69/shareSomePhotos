@@ -50,6 +50,7 @@ class ChatViewModel(application: Application) : BaseViewModel(application) {
         message.put("sender", ParseUser.getCurrentUser().objectId)
         message.put("recipient", recipientId)
         message.put("text", msgTxt)
+        message.put("isRead", false)
 
         message.saveInBackground(SaveCallback {e ->
             if(e == null){
@@ -89,8 +90,9 @@ class ChatViewModel(application: Application) : BaseViewModel(application) {
                             val msgRecipient = msg.get("recipient").toString()
                             val msgText = msg.get("text").toString()
                             val msgCreatedAt = msg.createdAt
+                            val isRead = msg.getBoolean("isRead")
 
-                            msgsList.add(Message(msgSender, msgRecipient, msgText, msgCreatedAt))
+                            msgsList.add(Message(msgSender, msgRecipient, msgText, msgCreatedAt, isRead))
                         }
 
                         // check if chat was changed

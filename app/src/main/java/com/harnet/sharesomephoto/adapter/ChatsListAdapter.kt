@@ -1,5 +1,6 @@
 package com.harnet.sharesomephoto.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Toast
@@ -43,6 +44,7 @@ RecyclerView.Adapter<ChatsListAdapter.ChatsListViewHolder>(){
 
         }
         holder.view.chatItem = chatsList[position]
+        Log.i("isRead", "${chatsList[position].lastMsg.text} : ${chatsList[position].lastMsg.isRead}")
     }
 
     override fun getItemCount(): Int {
