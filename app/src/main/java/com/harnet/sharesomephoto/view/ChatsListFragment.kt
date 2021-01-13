@@ -70,7 +70,8 @@ class ChatsListFragment : Fragment() {
         // get users chats list
         viewModel.mChatsList.observe(viewLifecycleOwner, Observer { chatsList ->
             if (chatsList.size == chatUsersId.size) {
-                chatsListAdapter.updateChatsList(chatsList)
+                val sortedList = chatsList.sortedBy { it.lastMsg.createAt }.reversed().toCollection(ArrayList())
+                chatsListAdapter.updateChatsList(sortedList)
             }
         })
     }
