@@ -1,7 +1,7 @@
 # SHARE SOME PHOTO [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=Harnet69_shareSomePhotos&metric=alert_status)](https://sonarcloud.io/dashboard?id=Harnet69_shareSomePhotos)
 
 ## ABOUT APP
-Photo service for sharing and storing images. According to Google plans to make its Google Photos service paid up to 15GB
+Social photo service for sharing and storing images with users chat. According to Google plans to make its Google Photos service paid up to 15GB
 
 ## Application video:
 ![Game process](https://github.com/Harnet69/shareSomePhotos/blob/main/app/GitHubMediaFiles/video.gif)
@@ -22,6 +22,7 @@ Photo service for sharing and storing images. According to Google plans to make 
 - Fragments
 - Navigation
 - DataBinding
+- Dagger2
 - Permissions
 - KTX
 - Glide
@@ -54,14 +55,14 @@ Self-configured remote virtual machine with:
 - Error validation messages under an error field
 - Keyboard 'DONE' button sends data without clicking on the sending button
 
-### PROFILE SCREEN 
-- short click to a Profile picture redirect to image preview screen 
-- long click - change profile page through a preview screen (ask for the permission to access to an image library with rationale (explanation of reasons))
-- top app bar with user icon image and name
-- statistic block with counters:
-  - feeds by short click redirect to all user feeds
-  - followers --> to following users list
-  - following  --> to following users list 
+### FEEDS
+- displaying users feeds with an image and the author name
+- short click to an author name redirect to the user profile page
+- short click on an image redirect to an image viewer page
+- floating button add a new feed(with asking permission if it haven't been granted already)
+- images load dynamically
+- feeds sorted by descending order by its date of adding
+- waiting spinner for better UX
 
 ### USERS LIST
 - displaying user image(or default if it haven't been added) and user name
@@ -72,6 +73,20 @@ Self-configured remote virtual machine with:
 - list refreshes by swiping down
 - error message is shown if something goes wrong
 
+### USERS CHATS
+- displaying list of users have conversation with
+- show user profile image, name, last message date and text. Three dots are showing if message is too long
+- short click on list item redirects to a chat with the user
+
+### PROFILE SCREEN 
+- short click to a Profile picture redirect to image preview screen 
+- long click - change profile page through a preview screen (ask for the permission to access to an image library with rationale (explanation of reasons))
+- top app bar with user icon image and name
+- statistic block with counters:
+  - feeds by short click redirect to all user feeds
+  - followers --> to following users list
+  - following  --> to following users list 
+
 ### USER DETAILS
 - user images gallery
 - short click on image redirect to an image viewer page for full screen view
@@ -79,15 +94,12 @@ Self-configured remote virtual machine with:
   = thumbnail icon of user profile image
   = user's name
   = follow/unfollow icon
-
-### FEEDS
-- displaying users feeds with an image and the author name
-- short click to an author name redirect to the user profile page
-- short click on an image redirect to an image viewer page
-- floating button add a new feed(with asking permission if it haven't been granted already)
-- images load dynamically
-- feeds sorted by descending order by its date of adding
-- waiting spinner for better UX
+  
+### USER CHAT
+- displaying a chat messages
+- show user image, date and text of a message
+- message text with an unlimited dynamic size(hight) 
+- preventing against sending an empty message
 
 ### IMAGE VIEWER PAGE
 - zooming image by tapping or pinching
