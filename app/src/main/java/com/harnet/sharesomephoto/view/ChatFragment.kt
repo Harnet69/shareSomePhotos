@@ -81,7 +81,7 @@ class ChatFragment : Fragment() {
                     loadingView_ProgressBar_chatFragment.visibility = View.INVISIBLE
                     chat_list.visibility = View.VISIBLE
                     chatAdapter.updateUsersList(chatList)
-                    chat_list.smoothScrollToPosition(chatList.size - 1)
+                    chat_list.smoothScrollToPosition(chatList.size)
                 }
             }
         })
