@@ -1,7 +1,7 @@
 # SHARE SOME PHOTO [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=Harnet69_shareSomePhotos&metric=alert_status)](https://sonarcloud.io/dashboard?id=Harnet69_shareSomePhotos)
 
 ## ABOUT APP
-Social photo service for sharing and storing images with users chat. According to Google plans to make its Google Photos service paid up to 15GB
+Social photo service for sharing and storing images with users chats. According to Google plans to make its Google Photos service paid.
 
 ## Application video:
 ![Game process](https://github.com/Harnet69/shareSomePhotos/blob/main/app/GitHubMediaFiles/video.gif)
@@ -9,7 +9,7 @@ Social photo service for sharing and storing images with users chat. According t
 ## Application installation:
 - scan this QR code by an Android phone, download and install the app 
 ![QR](https://github.com/Harnet69/shareSomePhotos/blob/main/app/GitHubMediaFiles/apk_QR.png)
-- download .apk [ShareSomePhoto v.2.0 installer](hhttps://drive.google.com/file/d/1gSdnP98Z4r44CZTxZXRe8ekfndRdqjxa/view?usp=sharing) and install it
+- download .apk [ShareSomePhoto v.2.0 installer](https://drive.google.com/file/d/1gSdnP98Z4r44CZTxZXRe8ekfndRdqjxa/view?usp=sharing) and run it on Android phone
 - clone a project code from this repo to your computer and run it via Android studio or another Android emulator
 
 ## Application pdf presentation: 
