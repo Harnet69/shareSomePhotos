@@ -2,7 +2,9 @@ package com.harnet.sharesomephoto.view
 
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
+import android.os.Handler
 import android.util.ArraySet
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -25,6 +27,11 @@ class ChatsListFragment : Fragment() {
 
     private var chatUsersId = ArraySet<String>()
 
+    // Repeating
+    private var mInterval: Int = 5000 // 5 seconds by default, can be changed later
+
+    private var mHandler: Handler? = null
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -33,17 +40,24 @@ class ChatsListFragment : Fragment() {
         dataBinding =
             DataBindingUtil.inflate(inflater, R.layout.chats_list_fragment, container, false)
         chatsListAdapter = ChatsListAdapter(arrayListOf())
+
+        viewModel = ViewModelProvider(this).get(ChatsListViewModel::class.java)
+
+        //repeat
+        mHandler =  Handler()
+
         return dataBinding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = ViewModelProvider(this).get(ChatsListViewModel::class.java)
 
         // fixed the bug with chats duplication
         viewModel.mChatsList.value = arrayListOf()
 
-        viewModel.getChatUsersId()
+//        viewModel.getChatUsersId()
+
+        startRepeatingTask()
 
         observeViewModel()
 
@@ -68,6 +82,38 @@ class ChatsListFragment : Fragment() {
                 val sortedList = chatsList.sortedBy { it.lastMsg.createAt }.reversed().toCollection(ArrayList())
                 chatsListAdapter.updateChatsList(sortedList)
             }
+
         })
+    }
+
+    //repeating
+    private var mStatusChecker: Runnable? = object : Runnable {
+        override fun run() {
+            try {
+                //this function can change value of mInterval.
+//                updateStatus()
+                // refresh a chat
+                    //TODO here is the problem
+                viewModel.getChatUsersId()
+            } finally {
+                // 100% guarantee that this always happens, even if
+                // your update method throws an exception
+                mHandler?.postDelayed(this, mInterval.toLong())
+            }
+        }
+    }
+
+    private fun startRepeatingTask() {
+        mStatusChecker!!.run()
+    }
+
+    private fun stopRepeatingTask() {
+        mHandler?.removeCallbacks(mStatusChecker!!)
+    }
+
+
+    override fun onDestroy() {
+        super.onDestroy()
+        stopRepeatingTask()
     }
 }

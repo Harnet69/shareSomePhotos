@@ -151,7 +151,6 @@ fun goToImagePage(view: ImageView, imageUrl: String?) {
     }
 
     view.setOnSingleClickListener { imageView ->
-        Log.i("RedirectToImg", "goToImagePage: " + Fragments.PROFILE.name)
         imageUrl?.let { url ->
             when (imageView.tag.toString()) {
                 Fragments.PROFILE.fragmentName -> {

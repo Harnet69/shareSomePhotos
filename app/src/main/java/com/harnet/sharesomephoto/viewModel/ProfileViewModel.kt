@@ -205,7 +205,6 @@ class ProfileViewModel(application: Application) : BaseViewModel(application) {
             if (e == null) {
                 if (objects.isNotEmpty()) {
                     for (user in objects) {
-//                        Log.i("getFollowers:", "getFollowers: ${user.objectId}")
                         followersId.add(user.objectId)
                     }
 

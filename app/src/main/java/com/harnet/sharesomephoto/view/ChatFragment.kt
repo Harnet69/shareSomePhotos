@@ -137,7 +137,7 @@ class ChatFragment : Fragment() {
         mStatusChecker!!.run()
     }
 
-    fun stopRepeatingTask() {
+    private fun stopRepeatingTask() {
         mHandler?.removeCallbacks(mStatusChecker!!)
     }
 
