@@ -104,6 +104,7 @@ class ChatsListViewModel(application: Application) : BaseViewModel(application) 
                         }
                     }
 
+                    mChatsList.value = arrayListOf()
                     mChatUsersList.value = chatUsersIds
                 } else {
                     e.printStackTrace()
