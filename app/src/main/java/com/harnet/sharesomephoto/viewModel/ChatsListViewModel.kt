@@ -6,6 +6,7 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.harnet.sharesomephoto.model.ChatItem
 import com.harnet.sharesomephoto.model.Message
+import com.harnet.sharesomephoto.service.SoundService
 import com.parse.ParseObject
 import com.parse.ParseQuery
 import com.parse.ParseUser
@@ -16,6 +17,9 @@ class ChatsListViewModel(application: Application) : BaseViewModel(application) 
     val mChatsList = MutableLiveData<ArrayList<ChatItem>>()
     val mIsLoading = MutableLiveData<Boolean>()
     val mIsChatsLoadError = MutableLiveData<Boolean>()
+
+    val soundService = SoundService(getApplication())
+    private var isIncomingSoundPlayed = false
 
     fun refresh(chatUsersListIds: ArraySet<String>) {
         getChatsFromParseServer(chatUsersListIds)
@@ -63,6 +67,12 @@ class ChatsListViewModel(application: Application) : BaseViewModel(application) 
                         }
                         val msgDate = `object`?.createdAt
                         val isRead = `object`.getBoolean("isRead")
+
+                        // play incoming message sound
+                        if (msgSender != ParseUser.getCurrentUser().objectId && !isRead && !isIncomingSoundPlayed) {
+                            soundService.playSound("new_msg")
+                            isIncomingSoundPlayed = true
+                        }
 
                         val prevChats = arrayListOf<ChatItem>()
                         mChatsList.value?.let { prevChats.addAll(it) }
