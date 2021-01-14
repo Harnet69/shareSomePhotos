@@ -1,9 +1,11 @@
 package com.harnet.sharesomephoto.viewModel
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.harnet.sharesomephoto.model.Message
 import com.harnet.sharesomephoto.model.User
+import com.harnet.sharesomephoto.service.SoundService
 import com.parse.*
 import kotlinx.coroutines.launch
 
@@ -17,6 +19,9 @@ class ChatViewModel(application: Application) : BaseViewModel(application) {
     val mIsMsgSentErrorMsg = MutableLiveData<String>()
 
     private var msgsCounter = 0
+
+    // sound service
+    var soundService: SoundService = SoundService(getApplication())
 
     fun getUserById(userId: String) {
         val query: ParseQuery<ParseUser> = ParseUser.getQuery()
@@ -95,11 +100,14 @@ class ChatViewModel(application: Application) : BaseViewModel(application) {
                                     isRead
                                 )
                             )
+                            // play incoming message sound
+                            if (msgSender != ParseUser.getCurrentUser().objectId && !isRead) {
+                                soundService.playSound("new_msg")
+                            }
 
-                            //TODO mark as read for test purposes
+                            //mark as read for test purposes
                             markMsgAsRead(objects[i].objectId)
                         }
-
 
                         // check if chat was changed
                         if (msgsCounter != msgsList.size) {

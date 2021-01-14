@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.harnet.sharesomephoto.R
 import com.harnet.sharesomephoto.adapter.ChatAdapter
 import com.harnet.sharesomephoto.databinding.ChatFragmentBinding
+import com.harnet.sharesomephoto.service.SoundService
 import com.harnet.sharesomephoto.viewModel.ChatViewModel
 import kotlinx.android.synthetic.main.chat_fragment.*
 
@@ -145,5 +146,6 @@ class ChatFragment : Fragment() {
     override fun onDestroy() {
         super.onDestroy()
         stopRepeatingTask()
+        viewModel.soundService.releaseSoundPool()
     }
 }
