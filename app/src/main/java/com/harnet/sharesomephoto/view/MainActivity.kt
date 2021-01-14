@@ -7,7 +7,6 @@ import android.view.MotionEvent
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
@@ -66,7 +65,7 @@ class MainActivity : AppCompatActivity() {
         if (permissions.isNotEmpty()) {
             when (permissions[0]) {
                 android.Manifest.permission.READ_EXTERNAL_STORAGE -> {
-                    appPermissions.imagesService.onRequestPermissionsResult(
+                    appPermissions.imagesPermissionService.onRequestPermissionsResult(
                         requestCode,
                         permissions,
                         grantResults

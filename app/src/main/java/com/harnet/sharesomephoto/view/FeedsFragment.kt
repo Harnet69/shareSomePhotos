@@ -1,15 +1,10 @@
 package com.harnet.sharesomephoto.view
 
 import android.Manifest
-import android.app.ActionBar
 import android.app.Activity
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.util.Log
 import android.view.*
-import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.view.menu.ActionMenuItemView
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -114,7 +109,7 @@ class FeedsFragment : Fragment() {
             if (this.context?.checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
                 openImageChooser(activity as Activity)
             } else {
-                (activity as MainActivity).appPermissions.imagesService.checkPermission()
+                (activity as MainActivity).appPermissions.imagesPermissionService.checkPermission()
             }
         }
 

@@ -6,7 +6,7 @@ import androidx.fragment.app.Fragment
 import com.harnet.sharesomephoto.R
 import com.harnet.sharesomephoto.model.ImageParsable
 
-class ImagesService(activity: Activity, fragment: Fragment) :
+class ImagesPermissionService(activity: Activity, fragment: Fragment) :
     PermissionService(activity, fragment){
     override val permissionCode: Int =
         activity.resources.getString(R.string.permissionImagesCode).toInt()
