@@ -1,16 +1,10 @@
 package com.harnet.sharesomephoto.viewModel
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.harnet.sharesomephoto.model.Message
 import com.harnet.sharesomephoto.model.User
-import com.parse.FindCallback
-import com.parse.ParseObject
-import com.parse.ParseQuery
-import com.parse.ParseUser
-import com.parse.SaveCallback
-import kotlinx.coroutines.delay
+import com.parse.*
 import kotlinx.coroutines.launch
 
 class ChatViewModel(application: Application) : BaseViewModel(application) {
