@@ -45,17 +45,17 @@ class ChatViewModel(application: Application) : BaseViewModel(application) {
         })
     }
 
-    fun sendMessage(msgTxt: String, recipientId: String){
+    fun sendMessage(msgTxt: String, recipientId: String) {
         val message = ParseObject("Message")
         message.put("sender", ParseUser.getCurrentUser().objectId)
         message.put("recipient", recipientId)
         message.put("text", msgTxt)
         message.put("isRead", false)
 
-        message.saveInBackground(SaveCallback {e ->
-            if(e == null){
+        message.saveInBackground(SaveCallback { e ->
+            if (e == null) {
                 getChatList(recipientId)
-            }else{
+            } else {
                 // if something goes wrong
                 mIsMsgSentErrorMsg.value = e.localizedMessage
             }
@@ -80,11 +80,11 @@ class ChatViewModel(application: Application) : BaseViewModel(application) {
             query.orderByAscending("createdAt")
 
             query.findInBackground(FindCallback { objects, e ->
-                if(e == null){
-                    if(objects.isNotEmpty()){
+                if (e == null) {
+                    if (objects.isNotEmpty()) {
                         val msgsList = arrayListOf<Message>()
 
-                        for(i in objects.indices){
+                        for (i in objects.indices) {
                             val msg = objects[i]
                             val msgSender = msg.get("sender").toString()
                             val msgRecipient = msg.get("recipient").toString()
@@ -92,23 +92,54 @@ class ChatViewModel(application: Application) : BaseViewModel(application) {
                             val msgCreatedAt = msg.createdAt
                             val isRead = msg.getBoolean("isRead")
 
-                            msgsList.add(Message(msgSender, msgRecipient, msgText, msgCreatedAt, isRead))
+                            msgsList.add(
+                                Message(
+                                    msgSender,
+                                    msgRecipient,
+                                    msgText,
+                                    msgCreatedAt,
+                                    isRead
+                                )
+                            )
+
+                            //TODO mark as read for test purposes
+                            markMsgAsRead(objects[i].objectId)
                         }
 
+
                         // check if chat was changed
-                        if(msgsCounter != msgsList.size){
+                        if (msgsCounter != msgsList.size) {
                             mChatList.value = msgsList
                             // update counter
                             msgsCounter = msgsList.size
                         }
 
-                    }else{
+                    } else {
                         mIsLoading.value = false
                     }
-                }else{
+                } else {
                     mIsLoadingError.value = true
                 }
             })
+        }
+    }
+
+    // mark message as read
+    fun markMsgAsRead(msgId: String) {
+        launch {
+            val query = ParseQuery<ParseObject>("Message")
+            query.whereEqualTo("objectId", msgId)
+
+            query.getFirstInBackground { `object`, e ->
+                if (e == null) {
+                    if (`object`.get("sender") != ParseUser.getCurrentUser().objectId) {
+                        `object`.put("isRead", true)
+                        `object`.saveInBackground()
+                    }
+                }else{
+                    e.printStackTrace()
+                }
+            }
         }
     }
 }
