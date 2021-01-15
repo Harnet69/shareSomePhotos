@@ -16,6 +16,7 @@ import com.harnet.sharesomephoto.viewModel.ChatsListViewModel
 import com.harnet.sharesomephoto.R
 import com.harnet.sharesomephoto.adapter.ChatsListAdapter
 import com.harnet.sharesomephoto.databinding.ChatsListFragmentBinding
+import com.harnet.sharesomephoto.util.markChatsBtnAsHasNewMsg
 import kotlinx.android.synthetic.main.chats_list_fragment.*
 
 class ChatsListFragment : Fragment() {
@@ -77,8 +78,16 @@ class ChatsListFragment : Fragment() {
         // get users chats list
         viewModel.mChatsList.observe(viewLifecycleOwner, Observer { chatsList ->
             if (chatsList.size == chatUsersId.size) {
-                val sortedList = chatsList.sortedBy { it.lastMsg.createAt }.reversed().toCollection(ArrayList())
+                val sortedList =
+                    chatsList.sortedBy { it.lastMsg.createAt }.reversed().toCollection(ArrayList())
                 chatsListAdapter.updateChatsList(sortedList)
+
+                //if chat list contains unread messages
+                if (chatsList.any { chat -> !chat.lastMsg.isRead }) {
+                    markChatsBtnAsHasNewMsg(activity as MainActivity, true)
+                } else {
+                    markChatsBtnAsHasNewMsg(activity as MainActivity, false)
+                }
             }
 
         })

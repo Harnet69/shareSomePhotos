@@ -105,6 +105,7 @@ class ChatViewModel(application: Application) : BaseViewModel(application) {
                                 soundService.playSound("new_msg")
                             }
 
+
                             //mark as read for test purposes
                             markMsgAsRead(objects[i].objectId)
                         }
