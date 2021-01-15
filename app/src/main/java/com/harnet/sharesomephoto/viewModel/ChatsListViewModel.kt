@@ -71,8 +71,8 @@ class ChatsListViewModel(application: Application) : BaseViewModel(application) 
                         val msgDate = `object`?.createdAt
                         val isRead = `object`.getBoolean("isRead")
 
-                        // play incoming message sound
                         if (msgSender != ParseUser.getCurrentUser().objectId && !isRead && !isIncomingSoundPlayed) {
+                            // play incoming message sound
                             soundService.playSound("new_msg")
                             isIncomingSoundPlayed = true
                             // mark chats button

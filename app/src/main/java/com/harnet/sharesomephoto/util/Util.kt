@@ -13,6 +13,7 @@ import android.os.Build
 import android.provider.MediaStore
 import android.util.Log
 import android.view.View
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
@@ -357,10 +358,13 @@ fun setProfileImgByUserId(imageView: ImageView, userId: String){
 // mark chats button in BottomNavigationMenuView
 fun markChatsBtnAsHasNewMsg(activity: Activity, isNewMsg: Boolean){
     val bottomNavigationView = (activity as MainActivity).findViewById<BottomNavigationView>(R.id.bottom_nav_bar)
-    val menu = bottomNavigationView[0] as BottomNavigationMenuView
+    val menu = bottomNavigationView.menu
+    val chatsBtn = menu.findItem(R.id.chatsListFragment)
+
     if(isNewMsg){
-        menu[2].setBackgroundColor(Color.BLUE)
+        //TODO change it to different icons
+        chatsBtn.setIcon(R.drawable.ic_chat_unread)
     }else{
-        menu[2].setBackgroundColor(Color.TRANSPARENT)
+        chatsBtn.setIcon(R.drawable.ic_chat)
     }
 }
