@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.res.Resources
 import android.graphics.Bitmap
+import android.graphics.Color
 import android.graphics.ImageDecoder
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
@@ -17,6 +18,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.get
 import androidx.databinding.BindingAdapter
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavDirections
@@ -31,14 +33,13 @@ import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.target.Target
 import com.bumptech.glide.request.transition.Transition
 import com.google.android.material.appbar.MaterialToolbar
+import com.google.android.material.bottomnavigation.BottomNavigationMenuView
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.harnet.sharesomephoto.R
 import com.harnet.sharesomephoto.model.Fragments
 import com.harnet.sharesomephoto.model.User
 import com.harnet.sharesomephoto.service.OnSingleClickListenerService
-import com.harnet.sharesomephoto.view.FeedsFragmentDirections
-import com.harnet.sharesomephoto.view.ProfileFragmentDirections
-import com.harnet.sharesomephoto.view.UserDetailsFragmentDirections
-import com.harnet.sharesomephoto.view.UsersFragmentDirections
+import com.harnet.sharesomephoto.view.*
 import com.parse.FindCallback
 import com.parse.ParseQuery
 import com.parse.ParseUser
@@ -350,5 +351,16 @@ fun setProfileImgByUserId(imageView: ImageView, userId: String){
                 loadBindingImage(imageView, `object`.get("profileImg").toString())
             }
         }
+    }
+}
+
+// mark chats button in BottomNavigationMenuView
+fun markChatsBtnAsHasNewMsg(activity: Activity, isNewMsg: Boolean){
+    val bottomNavigationView = (activity as MainActivity).findViewById<BottomNavigationView>(R.id.bottom_nav_bar)
+    val menu = bottomNavigationView[0] as BottomNavigationMenuView
+    if(isNewMsg){
+        menu[2].setBackgroundColor(Color.BLUE)
+    }else{
+        menu[2].setBackgroundColor(Color.TRANSPARENT)
     }
 }

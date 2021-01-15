@@ -1,5 +1,6 @@
 package com.harnet.sharesomephoto.viewModel
 
+import android.app.Activity
 import android.app.Application
 import android.util.ArraySet
 import android.util.Log
@@ -7,6 +8,8 @@ import androidx.lifecycle.MutableLiveData
 import com.harnet.sharesomephoto.model.ChatItem
 import com.harnet.sharesomephoto.model.Message
 import com.harnet.sharesomephoto.service.SoundService
+import com.harnet.sharesomephoto.util.markChatsBtnAsHasNewMsg
+import com.harnet.sharesomephoto.view.MainActivity
 import com.parse.ParseObject
 import com.parse.ParseQuery
 import com.parse.ParseUser
@@ -21,8 +24,8 @@ class ChatsListViewModel(application: Application) : BaseViewModel(application) 
     val soundService = SoundService(getApplication())
     private var isIncomingSoundPlayed = false
 
-    fun refresh(chatUsersListIds: ArraySet<String>) {
-        getChatsFromParseServer(chatUsersListIds)
+    fun refresh(activity: Activity, chatUsersListIds: ArraySet<String>) {
+        getChatsFromParseServer(activity, chatUsersListIds)
     }
 
     // retrieve images
@@ -35,7 +38,7 @@ class ChatsListViewModel(application: Application) : BaseViewModel(application) 
         mIsLoading.postValue(false)
     }
 
-    private fun getChatsFromParseServer(chatUsersListIds: ArraySet<String>) {
+    private fun getChatsFromParseServer(activity: Activity, chatUsersListIds: ArraySet<String>) {
         launch {
             val chatsList = arrayListOf<ChatItem>()
 
@@ -72,6 +75,8 @@ class ChatsListViewModel(application: Application) : BaseViewModel(application) 
                         if (msgSender != ParseUser.getCurrentUser().objectId && !isRead && !isIncomingSoundPlayed) {
                             soundService.playSound("new_msg")
                             isIncomingSoundPlayed = true
+                            // mark chats button
+                            markChatsBtnAsHasNewMsg(activity, true)
                         }
 
                         val prevChats = arrayListOf<ChatItem>()

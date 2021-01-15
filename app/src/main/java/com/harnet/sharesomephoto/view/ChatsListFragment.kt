@@ -55,8 +55,6 @@ class ChatsListFragment : Fragment() {
         // fixed the bug with chats duplication
         viewModel.mChatsList.value = arrayListOf()
 
-//        viewModel.getChatUsersId()
-
         startRepeatingTask()
 
         observeViewModel()
@@ -72,7 +70,7 @@ class ChatsListFragment : Fragment() {
         viewModel.mChatUsersList.observe(viewLifecycleOwner, Observer { chatUsersIdList ->
             chatUsersIdList?.let {
                 chatUsersId.addAll(it)
-                viewModel.refresh(it)
+                viewModel.refresh(activity as MainActivity, it)
             }
         })
 

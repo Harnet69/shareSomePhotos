@@ -2,14 +2,17 @@ package com.harnet.sharesomephoto.view
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.view.MotionEvent
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.get
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
+import com.google.android.material.bottomnavigation.BottomNavigationMenuView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.harnet.sharesomephoto.R
 import com.harnet.sharesomephoto.model.AppPermissions
@@ -43,6 +46,9 @@ class MainActivity : AppCompatActivity() {
                 it.navController
             )
         }
+        //TODO
+//        val menu = bottomNavigationView[0] as BottomNavigationMenuView
+//        menu[2].setBackgroundColor(Color.BLUE)
     }
 
     // make keyboard hides by clicking outside an EditView
