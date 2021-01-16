@@ -1,9 +1,12 @@
 package com.harnet.sharesomephoto.view
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.os.Handler
+import android.util.Log
 import android.view.MotionEvent
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
@@ -17,14 +20,23 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.harnet.sharesomephoto.R
 import com.harnet.sharesomephoto.model.AppPermissions
 import com.harnet.sharesomephoto.util.convertImageDataToBitmap
+import com.harnet.sharesomephoto.util.findNewMessage
+import com.parse.ParseUser
 import kotlinx.android.synthetic.main.activity_main.*
 
 
 class MainActivity : AppCompatActivity() {
+    private lateinit var activity: Activity
+
     private lateinit var bottomNavigationView: BottomNavigationView
 
     // permission service
     lateinit var appPermissions: AppPermissions
+
+    // Repeating
+    private var mInterval: Int = 5000 // 5 seconds by default, can be changed later
+
+    private var mHandler: Handler? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,7 +45,14 @@ class MainActivity : AppCompatActivity() {
         // setup bottom bar
         setUpNavigation()
 
+        activity = this
+
         appPermissions = AppPermissions(this, fragments)
+
+        //repeat
+        mHandler = Handler()
+        startRepeatingTask()
+
     }
 
     private fun setUpNavigation() {
@@ -121,4 +140,35 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
+
+    //repeating
+    private var mStatusChecker: Runnable? = object : Runnable {
+        override fun run() {
+            try {
+                //is new messages
+                    ParseUser.getCurrentUser()?.let {
+                        findNewMessage(activity)
+                    }
+            } finally {
+                // 100% guarantee that this always happens, even if
+                // your update method throws an exception
+                mHandler?.postDelayed(this, mInterval.toLong())
+            }
+        }
+    }
+
+    private fun startRepeatingTask() {
+        mStatusChecker!!.run()
+    }
+
+    private fun stopRepeatingTask() {
+        mHandler?.removeCallbacks(mStatusChecker!!)
+    }
+
+
+    override fun onDestroy() {
+        super.onDestroy()
+        stopRepeatingTask()
+    }
+
 }

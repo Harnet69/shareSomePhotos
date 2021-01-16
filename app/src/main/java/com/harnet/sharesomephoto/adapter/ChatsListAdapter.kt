@@ -54,12 +54,12 @@ RecyclerView.Adapter<ChatsListAdapter.ChatsListViewHolder>(){
         if(!chatsList[position].lastMsg.isRead && chatsList[position].lastMsg.senderId != ParseUser.getCurrentUser().objectId) {
             holder.view.chatUserLastMsg.setTypeface(null, Typeface.BOLD)
             holder.view.chatUserIsRead.visibility = View.VISIBLE
-            markChatsBtnAsHasNewMsg(activity, true)
+//            markChatsBtnAsHasNewMsg(activity, true)
             isAnyUnread = true
         }else{
             // do not show blue dot of new message if it your message
             holder.view.chatUserIsRead.visibility = View.INVISIBLE
-            if(!isAnyUnread){markChatsBtnAsHasNewMsg(activity, false)}
+//            if(!isAnyUnread){markChatsBtnAsHasNewMsg(activity, false)}
         }
     }
 

@@ -83,11 +83,11 @@ class ChatsListFragment : Fragment() {
                 chatsListAdapter.updateChatsList(sortedList)
 
                 //if chat list contains unread messages
-                if (chatsList.any { chat -> !chat.lastMsg.isRead }) {
-                    markChatsBtnAsHasNewMsg(activity as MainActivity, true)
-                } else {
-                    markChatsBtnAsHasNewMsg(activity as MainActivity, false)
-                }
+//                if (chatsList.any { chat -> !chat.lastMsg.isRead }) {
+//                    markChatsBtnAsHasNewMsg(activity as MainActivity, true)
+//                } else {
+//                    markChatsBtnAsHasNewMsg(activity as MainActivity, false)
+//                }
             }
 
         })

@@ -42,6 +42,7 @@ import com.harnet.sharesomephoto.model.User
 import com.harnet.sharesomephoto.service.OnSingleClickListenerService
 import com.harnet.sharesomephoto.view.*
 import com.parse.FindCallback
+import com.parse.ParseObject
 import com.parse.ParseQuery
 import com.parse.ParseUser
 import org.json.JSONArray
@@ -366,5 +367,24 @@ fun markChatsBtnAsHasNewMsg(activity: Activity, isNewMsg: Boolean){
         chatsBtn.setIcon(R.drawable.ic_chat_unread)
     }else{
         chatsBtn.setIcon(R.drawable.ic_chat)
+    }
+}
+
+fun findNewMessage(activity: Activity){
+    val query = ParseQuery<ParseObject>("Message")
+    query.whereEqualTo("recipient", ParseUser.getCurrentUser().objectId)
+    query.whereEqualTo("isRead", false)
+
+    query.getFirstInBackground { `object`, e ->
+        if(e == null){
+            if(`object` != null){
+                markChatsBtnAsHasNewMsg(activity, true)
+                //TODO make it sound
+            }else{
+                markChatsBtnAsHasNewMsg(activity, false)
+            }
+        }else{
+            markChatsBtnAsHasNewMsg(activity, false)
+        }
     }
 }

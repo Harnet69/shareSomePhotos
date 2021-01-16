@@ -76,7 +76,7 @@ class ChatsListViewModel(application: Application) : BaseViewModel(application) 
                             soundService.playSound("new_msg")
                             isIncomingSoundPlayed = true
                             // mark chats button
-                            markChatsBtnAsHasNewMsg(activity, true)
+//                            markChatsBtnAsHasNewMsg(activity, true)
                         }
 
                         val prevChats = arrayListOf<ChatItem>()
