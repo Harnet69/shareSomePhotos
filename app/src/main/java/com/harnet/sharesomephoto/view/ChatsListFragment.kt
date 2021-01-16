@@ -40,7 +40,7 @@ class ChatsListFragment : Fragment() {
     ): View {
         dataBinding =
             DataBindingUtil.inflate(inflater, R.layout.chats_list_fragment, container, false)
-        chatsListAdapter = ChatsListAdapter(arrayListOf())
+        chatsListAdapter = ChatsListAdapter(activity as MainActivity, arrayListOf())
 
         viewModel = ViewModelProvider(this).get(ChatsListViewModel::class.java)
 

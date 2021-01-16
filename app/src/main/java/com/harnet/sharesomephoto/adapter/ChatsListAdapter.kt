@@ -1,5 +1,6 @@
 package com.harnet.sharesomephoto.adapter
 
+import android.app.Activity
 import android.graphics.Typeface
 import android.util.Log
 import android.view.LayoutInflater
@@ -12,11 +13,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.harnet.sharesomephoto.R
 import com.harnet.sharesomephoto.databinding.ItemChatsListBinding
 import com.harnet.sharesomephoto.model.ChatItem
+import com.harnet.sharesomephoto.util.markChatsBtnAsHasNewMsg
 import com.harnet.sharesomephoto.view.ChatsListFragmentDirections
 import com.parse.ParseUser
 
-class ChatsListAdapter(private var chatsList: ArrayList<ChatItem>):
+class ChatsListAdapter(val activity: Activity, private var chatsList: ArrayList<ChatItem>):
 RecyclerView.Adapter<ChatsListAdapter.ChatsListViewHolder>(){
+    private var isAnyUnread = false
 
     //for updating information from a backend
     fun updateChatsList(newChatsList: ArrayList<ChatItem>) {
@@ -51,9 +54,12 @@ RecyclerView.Adapter<ChatsListAdapter.ChatsListViewHolder>(){
         if(!chatsList[position].lastMsg.isRead && chatsList[position].lastMsg.senderId != ParseUser.getCurrentUser().objectId) {
             holder.view.chatUserLastMsg.setTypeface(null, Typeface.BOLD)
             holder.view.chatUserIsRead.visibility = View.VISIBLE
+            markChatsBtnAsHasNewMsg(activity, true)
+            isAnyUnread = true
         }else{
             // do not show blue dot of new message if it your message
             holder.view.chatUserIsRead.visibility = View.INVISIBLE
+            if(!isAnyUnread){markChatsBtnAsHasNewMsg(activity, false)}
         }
     }
 
