@@ -55,10 +55,18 @@ class MainActivity : AppCompatActivity() {
 
         appPermissions = AppPermissions(this, fragments)
 
+        observeViwModel()
+
         //repeat
         mHandler = Handler()
         startRepeatingTask()
 
+    }
+
+    private fun observeViwModel(){
+        viewModel.mIsNewMsgTrigger.observeForever {
+            viewModel.markChatsBtnAsHasNewMsg(this, it)
+        }
     }
 
     private fun setUpNavigation() {

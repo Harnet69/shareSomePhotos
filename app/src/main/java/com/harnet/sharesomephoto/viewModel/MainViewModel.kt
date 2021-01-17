@@ -2,7 +2,6 @@ package com.harnet.sharesomephoto.viewModel
 
 import android.app.Activity
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.harnet.sharesomephoto.R
@@ -15,9 +14,9 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 class MainViewModel(application: Application) : BaseViewModel(application) {
-    private val mNewMessages = MutableLiveData<ArrayList<Message>>()
+    val mNewMessages = MutableLiveData<ArrayList<Message>>()
     private var mIsNewMsg = false
-    private var mIsNewMsgTrigger = MutableLiveData<Boolean>()
+    var mIsNewMsgTrigger = MutableLiveData<Boolean>()
 
     fun refresh() {
         findNewMessage()
@@ -29,19 +28,13 @@ class MainViewModel(application: Application) : BaseViewModel(application) {
         query.whereEqualTo("isRead", false)
 
         query.findInBackground { objects, e ->
-//            if(e != null){
-//                Log.i("HasNewMessage", "$e: ")
-//            }else{
-//                Log.i("HasNewMessage", "$objects: ")
-//            }
-
             if (e == null) {
                 if (objects.isNotEmpty()) {
                     val oldNewMsgsList = ArrayList<Message>()
                     mNewMessages.value?.let { oldNewMsgsList.addAll(it) }
                     val newNewMsgsList = ArrayList<Message>()
                     for (newMsg in objects) {
-                        val newMsg = Message(
+                        val newMsgForAdd = Message(
                             newMsg.objectId,
                             newMsg.get("sender").toString(),
                             newMsg.get("recipient").toString(),
@@ -52,27 +45,25 @@ class MainViewModel(application: Application) : BaseViewModel(application) {
                         //check if list which isn't empty contains the message
                         if (oldNewMsgsList.isNotEmpty()) {
                             for (oldMsg in oldNewMsgsList) {
-                                Log.i("IsMsgNew", "${oldMsg.id} / ${newMsg.id}")
-                                if (oldMsg.id != newMsg.id) {
-                                    newNewMsgsList.add(newMsg)
+                                if (oldMsg.id != newMsgForAdd.id) {
+                                    newNewMsgsList.add(newMsgForAdd)
                                     mIsNewMsg = true
                                 }
                             }
                         } else {
-                            newNewMsgsList.add(newMsg)
+                            newNewMsgsList.add(newMsgForAdd)
                             mIsNewMsg = true
                         }
                     }
                     // update newMessagesList if new message
                     if (mIsNewMsg) {
-                        Log.i("HasNewMessage", "NewMessage ")
                         mIsNewMsgTrigger.value = true
                         mNewMessages.value = newNewMsgsList
                         mIsNewMsg = false
-                    }else {
-                        Log.i("HasNewMessage", "Any New message: ")
-                        mIsNewMsgTrigger.value = false
+
                     }
+                } else {
+                    mIsNewMsgTrigger.value = false
                 }
             }
         }
