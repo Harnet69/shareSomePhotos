@@ -3,6 +3,7 @@ package com.harnet.sharesomephoto.viewModel
 import android.app.Activity
 import android.app.Application
 import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.harnet.sharesomephoto.R
@@ -45,12 +46,16 @@ class MainViewModel(application: Application) : BaseViewModel(application) {
                         )
                         newNewMsgsList.add(newMsgForAdd)
                     }
-                    val newLastMsg = newNewMsgsList[newNewMsgsList.size - 1]
-                    if (lastMsg == null) {
+                    val newLastMsg = newNewMsgsList[newNewMsgsList.size-1]
+                    if(lastMsg == null){
                         lastMsg = newLastMsg
-                    } else {
-                        if (lastMsg?.id != newLastMsg.id) {
+                        //TODO Do a sound, show notification
+                        Toast.makeText(getApplication(), newLastMsg.text, Toast.LENGTH_SHORT).show()
+                    }else{
+                        if(lastMsg?.id != newLastMsg.id){
                             //TODO Do a sound, show notification
+                        Toast.makeText(getApplication(), newLastMsg.text, Toast.LENGTH_SHORT).show()
+                            Log.i("newnewMessage", "Sound and notif. " + newLastMsg.text)
                             lastMsg = newLastMsg
                         }
                     }
