@@ -67,6 +67,10 @@ class MainActivity : AppCompatActivity() {
         viewModel.mIsNewMsgTrigger.observeForever {
             viewModel.markChatsBtnAsHasNewMsg(this, it)
         }
+
+        viewModel.mNewMessages.observeForever { newMsgs ->
+            Log.i("newMessages", "New messages: ${newMsgs[newMsgs.size-1]}")
+        }
     }
 
     private fun setUpNavigation() {

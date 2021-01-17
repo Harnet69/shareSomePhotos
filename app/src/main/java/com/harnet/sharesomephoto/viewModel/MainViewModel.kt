@@ -30,8 +30,6 @@ class MainViewModel(application: Application) : BaseViewModel(application) {
         query.findInBackground { objects, e ->
             if (e == null) {
                 if (objects.isNotEmpty()) {
-                    val oldNewMsgsList = ArrayList<Message>()
-                    mNewMessages.value?.let { oldNewMsgsList.addAll(it) }
                     val newNewMsgsList = ArrayList<Message>()
                     for (newMsg in objects) {
                         val newMsgForAdd = Message(
@@ -42,32 +40,17 @@ class MainViewModel(application: Application) : BaseViewModel(application) {
                             newMsg.get("createdAt") as Date?,
                             newMsg.get("isRead") as Boolean
                         )
-                        //check if list which isn't empty contains the message
-                        if (oldNewMsgsList.isNotEmpty()) {
-                            for (oldMsg in oldNewMsgsList) {
-                                if (oldMsg.id != newMsgForAdd.id) {
-                                    newNewMsgsList.add(newMsgForAdd)
-                                    mIsNewMsg = true
-                                }
-                            }
-                        } else {
-                            newNewMsgsList.add(newMsgForAdd)
-                            mIsNewMsg = true
-                        }
+                        newNewMsgsList.add(newMsgForAdd)
                     }
-                    // update newMessagesList if new message
-                    if (mIsNewMsg) {
-                        mIsNewMsgTrigger.value = true
-                        mNewMessages.value = newNewMsgsList
-                        mIsNewMsg = false
-
-                    }
+                    mIsNewMsgTrigger.value = true
+                    mNewMessages.value = newNewMsgsList
                 } else {
                     mIsNewMsgTrigger.value = false
                 }
             }
         }
     }
+
 
     fun markChatsBtnAsHasNewMsg(activity: Activity, isNewMsg: Boolean) {
         val bottomNavigationView =
