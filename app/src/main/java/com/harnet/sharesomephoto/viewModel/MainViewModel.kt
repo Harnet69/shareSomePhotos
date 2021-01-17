@@ -20,15 +20,16 @@ class MainViewModel(application: Application) : BaseViewModel(application) {
     val mNewMessages = MutableLiveData<ArrayList<Message>>()
     var mIsNewMsgTrigger = MutableLiveData<Boolean>()
 
+    val soundService = SoundService(getApplication())
+
     private var lastMsg: Message? = null
+
 
     fun refresh() {
         findNewMessage()
     }
 
     private fun findNewMessage() {
-        val soundService = SoundService(getApplication())
-
         val query = ParseQuery<ParseObject>("Message")
         query.whereEqualTo("recipient", ParseUser.getCurrentUser().objectId)
         query.whereEqualTo("isRead", false)
