@@ -2,6 +2,7 @@ package com.harnet.sharesomephoto.viewModel
 
 import android.app.Activity
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.harnet.sharesomephoto.R
@@ -15,8 +16,9 @@ import kotlin.collections.ArrayList
 
 class MainViewModel(application: Application) : BaseViewModel(application) {
     val mNewMessages = MutableLiveData<ArrayList<Message>>()
-    private var mIsNewMsg = false
     var mIsNewMsgTrigger = MutableLiveData<Boolean>()
+
+    private var lastMsg: Message? = null
 
     fun refresh() {
         findNewMessage()
@@ -26,6 +28,7 @@ class MainViewModel(application: Application) : BaseViewModel(application) {
         val query = ParseQuery<ParseObject>("Message")
         query.whereEqualTo("recipient", ParseUser.getCurrentUser().objectId)
         query.whereEqualTo("isRead", false)
+        query.orderByAscending("createdAt")
 
         query.findInBackground { objects, e ->
             if (e == null) {
@@ -41,6 +44,15 @@ class MainViewModel(application: Application) : BaseViewModel(application) {
                             newMsg.get("isRead") as Boolean
                         )
                         newNewMsgsList.add(newMsgForAdd)
+                    }
+                    val newLastMsg = newNewMsgsList[newNewMsgsList.size - 1]
+                    if (lastMsg == null) {
+                        lastMsg = newLastMsg
+                    } else {
+                        if (lastMsg?.id != newLastMsg.id) {
+                            //TODO Do a sound, show notification
+                            lastMsg = newLastMsg
+                        }
                     }
                     mIsNewMsgTrigger.value = true
                     mNewMessages.value = newNewMsgsList
