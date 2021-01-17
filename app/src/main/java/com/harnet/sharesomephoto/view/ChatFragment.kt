@@ -146,6 +146,5 @@ class ChatFragment : Fragment() {
     override fun onDestroy() {
         super.onDestroy()
         stopRepeatingTask()
-        viewModel.soundService.releaseSoundPool()
     }
 }

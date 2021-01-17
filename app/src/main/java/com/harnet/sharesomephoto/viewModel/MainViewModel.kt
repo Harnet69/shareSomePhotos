@@ -8,6 +8,7 @@ import androidx.lifecycle.MutableLiveData
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.harnet.sharesomephoto.R
 import com.harnet.sharesomephoto.model.Message
+import com.harnet.sharesomephoto.service.SoundService
 import com.harnet.sharesomephoto.view.MainActivity
 import com.parse.ParseObject
 import com.parse.ParseQuery
@@ -26,6 +27,8 @@ class MainViewModel(application: Application) : BaseViewModel(application) {
     }
 
     private fun findNewMessage() {
+        val soundService = SoundService(getApplication())
+
         val query = ParseQuery<ParseObject>("Message")
         query.whereEqualTo("recipient", ParseUser.getCurrentUser().objectId)
         query.whereEqualTo("isRead", false)
@@ -49,11 +52,13 @@ class MainViewModel(application: Application) : BaseViewModel(application) {
                     val newLastMsg = newNewMsgsList[newNewMsgsList.size-1]
                     if(lastMsg == null){
                         lastMsg = newLastMsg
-                        //TODO Do a sound, show notification
+                        //TODO Do a sound, show notification. Possibility to switch off a sound
+                        soundService.playSound("new_msg")
                         Toast.makeText(getApplication(), newLastMsg.text, Toast.LENGTH_SHORT).show()
                     }else{
                         if(lastMsg?.id != newLastMsg.id){
                             //TODO Do a sound, show notification
+                        soundService.playSound("new_msg")
                         Toast.makeText(getApplication(), newLastMsg.text, Toast.LENGTH_SHORT).show()
                             Log.i("newnewMessage", "Sound and notif. " + newLastMsg.text)
                             lastMsg = newLastMsg
@@ -67,7 +72,6 @@ class MainViewModel(application: Application) : BaseViewModel(application) {
             }
         }
     }
-
 
     fun markChatsBtnAsHasNewMsg(activity: Activity, isNewMsg: Boolean) {
         val bottomNavigationView =

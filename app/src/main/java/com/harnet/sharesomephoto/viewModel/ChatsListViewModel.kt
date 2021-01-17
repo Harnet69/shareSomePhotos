@@ -21,9 +21,6 @@ class ChatsListViewModel(application: Application) : BaseViewModel(application) 
     val mIsLoading = MutableLiveData<Boolean>()
     val mIsChatsLoadError = MutableLiveData<Boolean>()
 
-    val soundService = SoundService(getApplication())
-    private var isIncomingSoundPlayed = false
-
     fun refresh(activity: Activity, chatUsersListIds: ArraySet<String>) {
         getChatsFromParseServer(activity, chatUsersListIds)
     }
@@ -72,15 +69,7 @@ class ChatsListViewModel(application: Application) : BaseViewModel(application) 
                         val msgDate = `object`?.createdAt
                         val isRead = `object`.getBoolean("isRead")
 
-                        if (msgSender != ParseUser.getCurrentUser().objectId && !isRead && !isIncomingSoundPlayed) {
-                            // play incoming message sound
-                            soundService.playSound("new_msg")
-                            isIncomingSoundPlayed = true
-                            // mark chats button
-//                            markChatsBtnAsHasNewMsg(activity, true)
-                        }
-
-                        val prevChats = arrayListOf<ChatItem>()
+                         val prevChats = arrayListOf<ChatItem>()
                         mChatsList.value?.let { prevChats.addAll(it) }
                         prevChats.add(ChatItem(userId, Message(msgId, msgSender, msgRecipient, msgText, msgDate, isRead)))
                         mChatsList.value = prevChats

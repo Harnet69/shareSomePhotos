@@ -21,9 +21,6 @@ class ChatViewModel(application: Application) : BaseViewModel(application) {
 
     private var msgsCounter = 0
 
-    // sound service
-    var soundService: SoundService = SoundService(getApplication())
-
     fun getUserById(userId: String) {
         val query: ParseQuery<ParseUser> = ParseUser.getQuery()
         query.whereEqualTo("objectId", userId)
@@ -103,11 +100,6 @@ class ChatViewModel(application: Application) : BaseViewModel(application) {
                                     isRead
                                 )
                             )
-                            // play incoming message sound
-                            if (msgSender != ParseUser.getCurrentUser().objectId && !isRead) {
-                                soundService.playSound("new_msg")
-                            }
-
 
                             //mark as read for test purposes
                             markMsgAsRead(objects[i].objectId)
