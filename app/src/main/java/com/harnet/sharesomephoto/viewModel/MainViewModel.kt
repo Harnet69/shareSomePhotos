@@ -49,18 +49,17 @@ class MainViewModel(application: Application) : BaseViewModel(application) {
                         )
                         newNewMsgsList.add(newMsgForAdd)
                     }
-                    val newLastMsg = newNewMsgsList[newNewMsgsList.size-1]
-                    if(lastMsg == null){
+                    val newLastMsg = newNewMsgsList[newNewMsgsList.size - 1]
+                    if (lastMsg == null) {
                         lastMsg = newLastMsg
-                        //TODO Do a sound, show notification. Possibility to switch off a sound
+                        //do a sound, show a toast
+                        //TODO Possibility to switch off a sound
                         soundService.playSound("new_msg")
-                        Toast.makeText(getApplication(), newLastMsg.text, Toast.LENGTH_SHORT).show()
-                    }else{
-                        if(lastMsg?.id != newLastMsg.id){
-                            //TODO Do a sound, show notification
-                        soundService.playSound("new_msg")
-                        Toast.makeText(getApplication(), newLastMsg.text, Toast.LENGTH_SHORT).show()
-                            Log.i("newnewMessage", "Sound and notif. " + newLastMsg.text)
+                        showNewMsgToast(newLastMsg.senderId, newLastMsg.text)
+                    } else {
+                        if (lastMsg?.id != newLastMsg.id) {
+                            soundService.playSound("new_msg")
+                            showNewMsgToast(newLastMsg.senderId, newLastMsg.text)
                             lastMsg = newLastMsg
                         }
                     }
@@ -84,6 +83,32 @@ class MainViewModel(application: Application) : BaseViewModel(application) {
             chatsBtn.setIcon(R.drawable.ic_chat_unread)
         } else {
             chatsBtn.setIcon(R.drawable.ic_chat)
+        }
+    }
+
+    // get username by id and show message
+    private fun showNewMsgToast(userId: String, msgText: String) {
+        val query: ParseQuery<ParseUser> = ParseUser.getQuery()
+        // exclude user of this device
+        query.whereEqualTo("objectId", userId)
+        query.findInBackground { objects, e ->
+            if (e == null) {
+                if (objects.isNotEmpty()) {
+                    var cutMsg = ""
+                    cutMsg = if(msgText.length > 20){
+                        msgText.substring(0..20)
+                    }else{
+                        msgText
+                    }
+                    Toast.makeText(
+                        getApplication(),
+                        "${objects[0].username}: $cutMsg",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            } else {
+                e.printStackTrace()
+            }
         }
     }
 }

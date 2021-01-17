@@ -135,7 +135,7 @@ class ChatFragment : Fragment() {
     }
 
     private fun startRepeatingTask() {
-        mStatusChecker!!.run()
+        mStatusChecker?.run()
     }
 
     private fun stopRepeatingTask() {
