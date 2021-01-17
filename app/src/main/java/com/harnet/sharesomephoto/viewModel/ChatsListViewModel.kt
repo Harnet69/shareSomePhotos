@@ -60,6 +60,7 @@ class ChatsListViewModel(application: Application) : BaseViewModel(application) 
 
                 query.getFirstInBackground { `object`, e ->
                     if(e == null){
+                        val msgId = `object`?.objectId
                         val msgSender = `object`?.get("sender").toString()
                         val msgRecipient = `object`?.get("recipient").toString()
                         var msgText = ""
@@ -81,7 +82,7 @@ class ChatsListViewModel(application: Application) : BaseViewModel(application) 
 
                         val prevChats = arrayListOf<ChatItem>()
                         mChatsList.value?.let { prevChats.addAll(it) }
-                        prevChats.add(ChatItem(userId, Message(msgSender, msgRecipient, msgText, msgDate, isRead)))
+                        prevChats.add(ChatItem(userId, Message(msgId, msgSender, msgRecipient, msgText, msgDate, isRead)))
                         mChatsList.value = prevChats
                     }else{
                         e.printStackTrace()

@@ -12,6 +12,7 @@ import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.get
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
@@ -21,11 +22,14 @@ import com.harnet.sharesomephoto.R
 import com.harnet.sharesomephoto.model.AppPermissions
 import com.harnet.sharesomephoto.util.convertImageDataToBitmap
 import com.harnet.sharesomephoto.util.findNewMessage
+import com.harnet.sharesomephoto.viewModel.MainViewModel
 import com.parse.ParseUser
 import kotlinx.android.synthetic.main.activity_main.*
 
 
 class MainActivity : AppCompatActivity() {
+    private lateinit var viewModel: MainViewModel
+
     private lateinit var activity: Activity
 
     private lateinit var bottomNavigationView: BottomNavigationView
@@ -41,6 +45,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
 
         // setup bottom bar
         setUpNavigation()
@@ -65,9 +71,6 @@ class MainActivity : AppCompatActivity() {
                 it.navController
             )
         }
-        //TODO
-//        val menu = bottomNavigationView[0] as BottomNavigationMenuView
-//        menu[2].setBackgroundColor(Color.BLUE)
     }
 
     // make keyboard hides by clicking outside an EditView
@@ -147,7 +150,8 @@ class MainActivity : AppCompatActivity() {
             try {
                 //is new messages
                     ParseUser.getCurrentUser()?.let {
-                        findNewMessage(activity)
+                        viewModel.refresh()
+//                        Log.i("HasNewMessage", "refresh ")
                     }
             } finally {
                 // 100% guarantee that this always happens, even if

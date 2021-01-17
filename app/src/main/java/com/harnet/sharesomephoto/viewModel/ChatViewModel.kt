@@ -8,6 +8,7 @@ import com.harnet.sharesomephoto.model.User
 import com.harnet.sharesomephoto.service.SoundService
 import com.parse.*
 import kotlinx.coroutines.launch
+import java.util.*
 
 class ChatViewModel(application: Application) : BaseViewModel(application) {
 
@@ -85,14 +86,16 @@ class ChatViewModel(application: Application) : BaseViewModel(application) {
 
                         for (i in objects.indices) {
                             val msg = objects[i]
+                            val msgId = msg.objectId
                             val msgSender = msg.get("sender").toString()
                             val msgRecipient = msg.get("recipient").toString()
                             val msgText = msg.get("text").toString()
-                            val msgCreatedAt = msg.createdAt
+                            val msgCreatedAt = msg.createdAt  as Date
                             val isRead = msg.getBoolean("isRead")
 
                             msgsList.add(
                                 Message(
+                                    msgId,
                                     msgSender,
                                     msgRecipient,
                                     msgText,
