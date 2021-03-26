@@ -1,5 +1,7 @@
 # SHARE SOME PHOTO [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=Harnet69_shareSomePhotos&metric=alert_status)](https://sonarcloud.io/dashboard?id=Harnet69_shareSomePhotos)
 
+## ATTENTION! !!! Project haven't maintained. Backend have been switched off.
+
 ## ABOUT APP
 Social photo service for sharing and storing images with users chats. According to Google plans to make its Google Photos service paid.
 
